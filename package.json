@@ -11,6 +11,7 @@
     },
     "devDependencies": {
         "axios": "^0.19",
+        "bootstrap-sass": "^3.3.7",
         "cross-env": "^7.0",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.13",
@@ -26,5 +27,8 @@
         "tui-editor": "^1.4.10",
         "vuex": "^3.4.0",
         "vue-router": "^3.2.0"
+    },
+    "dependencies": {
+        "@toast-ui/vue-editor": "^2.5.0"
     }
 }

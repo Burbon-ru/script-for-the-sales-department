@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('/scripts', 'ScriptController@index');
+
+
+Route::post('/question/create', 'QuestionController@create');
+Route::get('/question/getQuestionsByScriptId', 'QuestionController@getQuestionsByScriptId');
+Route::get('/question/getQuestionById', 'QuestionController@getQuestionById');
+Route::patch('/question/update', 'QuestionController@update');
