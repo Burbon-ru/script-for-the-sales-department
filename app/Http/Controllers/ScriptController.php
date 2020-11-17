@@ -13,20 +13,22 @@ class ScriptController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index ()
     {
         return response(Script::all()->jsonSerialize(), Response::HTTP_OK);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Создать скрипт
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function create()
+    public function create (Request $request)
     {
-        $script = new Script();
-        $script->name = 'test';
+        $data = $request->input();
+
+        $script = new Script($data);
         $script->save();
 
         return response($script->jsonSerialize(), Response::HTTP_CREATED);
@@ -39,7 +41,7 @@ class ScriptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update (Request $request, $id)
     {
         //
     }
@@ -50,7 +52,7 @@ class ScriptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy ($id)
     {
         //
     }

@@ -33,7 +33,7 @@
                 'createScript'
             ]),
             addScript () {
-                this.$store.dispatch('createScript', this.name);
+                this.$store.dispatch('createScript', {name: this.name});
                 this.name = '';
             }
         }

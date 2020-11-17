@@ -105,11 +105,17 @@ export default new Vuex.Store({
     },
     actions: {
         /* creators */
-        async createScript (context, name) {
+        async createScript (context, payload) {
             try {
-                const { data } = await axios.get('/api/scripts/create');
+                const { status, data } = await axios.post('/api/script/create', payload);
 
-                context.commit('addItemScripts', data);
+                if (201 == status) {
+                    context.commit('addItemScripts', data);
+
+                    return true;
+                }
+
+                return false;
             } catch (err) {
                 console.error(error);
                 return error;
@@ -136,8 +142,17 @@ export default new Vuex.Store({
         /* getters */
         async getScripts (context) {
             try {
-                const { data } = await window.axios.get('/api/scripts');
+                const { data } = await window.axios.get('/api/script');
                 context.commit('setScriptsList', data);
+            } catch (error) {
+                console.error(error);
+                return error;
+            }
+        },
+        async getAnswerStatuses (context) {
+            try {
+                const { data } = await window.axios.get('/api/statuses');
+                context.commit('setAnswerStatuses', data);
             } catch (error) {
                 console.error(error);
                 return error;

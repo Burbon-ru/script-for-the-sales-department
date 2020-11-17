@@ -107,16 +107,21 @@
                 this.text = data.text;
             },
             async submitQuestion () {
-                let objFormData = serializeFormByDomSelector('#edit_question_form');
-                objFormData.text = this.getHtml();
+                try {
+                    let objFormData = serializeFormByDomSelector('#edit_question_form');
+                    objFormData.text = this.getHtml();
 
-                let { status } = await this.updateQuestion({
-                    id: this.current,
-                    data: objFormData
-                });
+                    // todo: не работает, почему-то ...
+                    let { status } = await this.updateQuestion({
+                        id: this.current,
+                        data: objFormData
+                    });
 
-                if (200 == status) {
-                    this.editIsDone = true;
+                    if (200 == status) {
+                        this.editIsDone = true;
+                    }
+                } catch (e) {
+                    console.error(e);
                 }
             }
         }

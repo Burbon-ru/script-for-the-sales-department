@@ -2074,7 +2074,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['createScript'])), {}, {
     addScript: function addScript() {
-      this.$store.dispatch('createScript', this.name);
+      this.$store.dispatch('createScript', {
+        name: this.name
+      });
       this.name = '';
     }
   })
@@ -51984,9 +51986,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
   },
   actions: {
     /* creators */
-    createScript: function createScript(context, name) {
+    createScript: function createScript(context, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _yield$axios$get, data;
+        var _yield$axios$post, status, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -51994,32 +51996,41 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/scripts/create');
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/script/create', payload);
 
               case 3:
-                _yield$axios$get = _context.sent;
-                data = _yield$axios$get.data;
-                context.commit('addItemScripts', data);
-                _context.next = 12;
-                break;
+                _yield$axios$post = _context.sent;
+                status = _yield$axios$post.status;
+                data = _yield$axios$post.data;
 
-              case 8:
-                _context.prev = 8;
+                if (!(201 == status)) {
+                  _context.next = 9;
+                  break;
+                }
+
+                context.commit('addItemScripts', data);
+                return _context.abrupt("return", true);
+
+              case 9:
+                return _context.abrupt("return", false);
+
+              case 12:
+                _context.prev = 12;
                 _context.t0 = _context["catch"](0);
                 console.error(error);
                 return _context.abrupt("return", error);
 
-              case 12:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 12]]);
       }))();
     },
     createQuestion: function createQuestion(context, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _yield$axios$post, status, data;
+        var _yield$axios$post2, status, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -52030,9 +52041,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/question/create', payload);
 
               case 3:
-                _yield$axios$post = _context2.sent;
-                status = _yield$axios$post.status;
-                data = _yield$axios$post.data;
+                _yield$axios$post2 = _context2.sent;
+                status = _yield$axios$post2.status;
+                data = _yield$axios$post2.data;
 
                 if (!(201 == status)) {
                   _context2.next = 10;
@@ -52072,7 +52083,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return window.axios.get('/api/scripts');
+                return window.axios.get('/api/script');
 
               case 3:
                 _yield$window$axios$g = _context3.sent;
@@ -52095,24 +52106,57 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee3, null, [[0, 8]]);
       }))();
     },
-
-    /* updaters */
-    updateQuestion: function updateQuestion(context, _ref) {
+    getAnswerStatuses: function getAnswerStatuses(context) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var id, data;
+        var _yield$window$axios$g2, data;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                id = _ref.id, data = _ref.data;
-                return _context4.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_3___default.a.patch('/api/question/update/?id=' + id, data));
+                _context4.prev = 0;
+                _context4.next = 3;
+                return window.axios.get('/api/statuses');
 
-              case 2:
+              case 3:
+                _yield$window$axios$g2 = _context4.sent;
+                data = _yield$window$axios$g2.data;
+                context.commit('setAnswerStatuses', data);
+                _context4.next = 12;
+                break;
+
+              case 8:
+                _context4.prev = 8;
+                _context4.t0 = _context4["catch"](0);
+                console.error(_context4.t0);
+                return _context4.abrupt("return", _context4.t0);
+
+              case 12:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4);
+        }, _callee4, null, [[0, 8]]);
+      }))();
+    },
+
+    /* updaters */
+    updateQuestion: function updateQuestion(context, _ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var id, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                id = _ref.id, data = _ref.data;
+                return _context5.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_3___default.a.patch('/api/question/update/?id=' + id, data));
+
+              case 2:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5);
       }))();
     },
 
@@ -52123,27 +52167,27 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     setQuestionsInCurrentScript: function setQuestionsInCurrentScript(context) {
       var _this = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var _yield$window$axios$g2, data;
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var _yield$window$axios$g3, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context6.prev = _context6.next) {
               case 0:
-                _context5.next = 2;
+                _context6.next = 2;
                 return window.axios.get('/api/question/getQuestionsByScriptId/?id=' + _this.getters.currentScriptId);
 
               case 2:
-                _yield$window$axios$g2 = _context5.sent;
-                data = _yield$window$axios$g2.data;
+                _yield$window$axios$g3 = _context6.sent;
+                data = _yield$window$axios$g3.data;
                 context.commit('setQuestionsInCurrentScriptInState', data);
 
               case 5:
               case "end":
-                return _context5.stop();
+                return _context6.stop();
             }
           }
-        }, _callee5);
+        }, _callee6);
       }))();
     }
   }

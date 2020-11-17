@@ -51,12 +51,9 @@ class QuestionController extends Controller
      */
     public function create (Request $request) {
         $data = $request->input();
+        $data['coords'] = serialize($data['coords']);
 
-        $item = new Question();
-        $item->name = $data['name'];
-        $item->text = $data['text'];
-        $item->coords = serialize($data['coords']);
-        $item->script_id = $data['script_id'];
+        $item = new Question($data);
         $item->save();
 
         return response($item->jsonSerialize(), Response::HTTP_CREATED);
@@ -72,8 +69,6 @@ class QuestionController extends Controller
         $data = $request->input();
         $id = $data['id'];
 
-        //$this->writeLogArray($data);
-
         if ($data['coords']) {
             $data['coords'] = serialize($data['coords']);
         }
@@ -82,8 +77,6 @@ class QuestionController extends Controller
 
         $result = Question::find($id)
             ->update($data);
-
-        $this->writeLogArray($result);
 
         if ($result) {
             $question = Question::where('id', $id)->first();
