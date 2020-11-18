@@ -259,7 +259,7 @@
              * @param coords
              */
             questionMoveHandler ({questionId, coords}) {
-                if (this.answer.bind_to == questionId) {
+                if (this.answer.next_question_id == questionId) {
                     this.pathCoords = `M 0 0 L ${coords.x - this.answer.coords.x} ${coords.y - this.answer.coords.y}`;
                 }
             }
