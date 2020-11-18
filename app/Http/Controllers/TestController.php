@@ -10,23 +10,17 @@ class TestController extends Controller
     /**
      *
      */
-    public function index()
+    public function index ()
     {
-        $data = [
-            'name' => 'Привет',
-            'coords' => 'a:2:{s:1:"x";i:356;s:1:"y";i:37;}',
-            'question_id' => 1,
-            'status_id' => 1
-        ];
+        $id = 1;
+        $answers = Answer::where('question_id', $id)
+            ->get();
 
-        $item = new Answer();
-        $item->name = $data['name'];
-        $item->coords = $data['coords'];
-        $item->question_id = $data['question_id'];
-        $item->status_id = $data['status_id'];
-        $item->save();
+        foreach ($answers as $answer) {
+            $answer->coords = unserialize($answer->coords);
+        }
 
-        dd($item);
+        dd($answers);
     }
 
     /**

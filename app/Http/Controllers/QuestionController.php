@@ -44,7 +44,7 @@ class QuestionController extends Controller
 
         unset($data['id']);
 
-        $result = Question::find($id)
+        $result = Question::findOrFail($id)
             ->update($data);
 
         if ($result) {
@@ -80,7 +80,8 @@ class QuestionController extends Controller
         $data = $request->input();
         $id = $data['id'];
 
-        $questions = Question::where('script_id', $id)->get();
+        $questions = Question::where('script_id', $id)
+            ->get();
 
         foreach ($questions as $question) {
             $question->coords = unserialize($question->coords);
@@ -99,7 +100,9 @@ class QuestionController extends Controller
         $data = $request->input();
         $id = $data['id'];
 
-        $question = Question::where('id', $id)->first();
+        $question = Question::where('id', $id)
+            ->first();
+
         $question->coords = unserialize($question->coords);
 
         return response($question->jsonSerialize(), Response::HTTP_OK);

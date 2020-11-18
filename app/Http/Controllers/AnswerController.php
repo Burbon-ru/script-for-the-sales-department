@@ -27,4 +27,41 @@ class AnswerController extends Controller
 
         return response($item->jsonSerialize(), Response::HTTP_CREATED);
     }
+
+    /**
+     * Получить все ответы вопроса по его id
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function getAnswersOfQuestionById (Request $request) {
+        $data = $request->input();
+
+        $answers = Answer::where('question_id', $data['id'])
+            ->get();
+
+        foreach ($answers as $answer) {
+            $answer->coords = unserialize($answer->coords);
+        }
+
+        return response($answers->jsonSerialize(), Response::HTTP_OK);
+    }
+
+    /**
+     * Получить ответ по его id
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function getAnswerById (Request $request) {
+        $data = $request->input();
+        $id = $data['id'];
+
+        $answer = Answer::find($id);
+
+        $answer->coords = unserialize($answer->coords);
+
+        return response($answer->jsonSerialize(), Response::HTTP_OK);
+    }
+
 }

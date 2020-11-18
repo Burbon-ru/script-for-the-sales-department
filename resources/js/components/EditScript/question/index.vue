@@ -128,7 +128,7 @@
     import Answer from './../../../components/EditScript/answer/index.vue';
     import {mapActions, mapGetters} from 'vuex';
 
-    import { getQuestionById } from './../../../functions/getStuffById';
+    import { getQuestionById, getAnswersOfQuestionById } from './../../../functions/getStuffById';
 
     import { bus } from './../../../bus/index.js';
 
@@ -169,14 +169,14 @@
                 this.stylesCoords = `translate(${this.question.coords.x}, ${this.question.coords.y})`;
             }
 
-            // this.answers = await getAnswersOfQuestionById(this.questionId);
-            //
-            // for (let answer of this.answers) {
-            //     this.pathsCoords.push({
-            //         id: answer.id,
-            //         value: `M ${this.question.coords.x} ${this.question.coords.y} L ${answer.coords.x} ${answer.coords.y}`
-            //     });
-            // }
+            this.answers = await getAnswersOfQuestionById(this.questionId);
+
+            for (let answer of this.answers) {
+                this.pathsCoords.push({
+                    id: answer.id,
+                    value: `M ${this.question.coords.x} ${this.question.coords.y} L ${answer.coords.x} ${answer.coords.y}`
+                });
+            }
         },
         computed: {
             ...mapGetters([

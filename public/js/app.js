@@ -52123,7 +52123,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/statuses');
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/status');
 
               case 3:
                 _yield$axios$get2 = _context4.sent;

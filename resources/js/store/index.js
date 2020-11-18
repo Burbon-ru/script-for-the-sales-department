@@ -157,7 +157,7 @@ export default new Vuex.Store({
         },
         async getAnswerStatuses (context) {
             try {
-                const { data } = await axios.get('/api/statuses');
+                const { data } = await axios.get('/api/status');
                 context.commit('setAnswerStatuses', data);
             } catch (error) {
                 console.error(error);

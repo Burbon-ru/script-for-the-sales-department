@@ -79,6 +79,8 @@
 
     import { bus } from './../../../bus/index.js';
 
+    import { getAnswerById, getAnswerStatusById, getQuestionById } from './../../../functions/getStuffById.js';
+
     export default {
         name: "answer",
         props: ['answerId', 'currentQuestion'],
@@ -97,28 +99,28 @@
             blockColor: ''
         }),
         async mounted () {
-            // this.answer = await getAnswerById(this.answerId);
-            // this.answer = this.answer.data[0];
-            //
-            // if (this.answer.status) {
-            //     const answerStatus = await getAnswerStatusById(this.answer.status);
-            //     this.blockColor = answerStatus.data[0].color;
-            // }
-            //
-            // if (this.answer.bind_to) {
-            //     this.question = await getQuestionById(this.answer.bind_to);
-            //     this.question = this.question.data[0];
-            // }
-            //
-            // if (this.question.coords) {
-            //     this.pathCoords = `M 0 0 L ${this.question.coords.x - this.answer.coords.x} ${this.question.coords.y - this.answer.coords.y}`;
-            // }
-            //
-            // if (this.answer.coords) {
-            //     this.stylesCoords =  `translate(${this.answer.coords.x}, ${this.answer.coords.y})`;
-            // }
-            //
-            // bus.$on('question-move', this.questionMoveHandler);
+            const { data } = await getAnswerById(this.answerId);
+            this.answer = data;
+
+            if (this.answer.status_id) {
+                const { data } = await getAnswerStatusById(this.answer.status_id);
+                this.blockColor = data.color;
+            }
+
+            if (this.answer.next_question_id) {
+                const { data } = await getQuestionById(this.answer.next_question_id);
+                this.question = data;
+            }
+
+            if (this.question.coords) {
+                this.pathCoords = `M 0 0 L ${this.question.coords.x - this.answer.coords.x} ${this.question.coords.y - this.answer.coords.y}`;
+            }
+
+            if (this.answer.coords) {
+                this.stylesCoords =  `translate(${this.answer.coords.x}, ${this.answer.coords.y})`;
+            }
+
+            bus.$on('question-move', this.questionMoveHandler);
         },
         methods: {
             ...mapActions([
@@ -136,14 +138,14 @@
              *
              * вызывается в событии drop
              */
-            async dragEnd (e) {
+            async dragEnd ({offsetX, offsetY}) {
                 try {
                     let updatedAnswer = await this.updateAnswer({
                         id: this.answer.id,
                         data: {
                             coords: {
-                                x: e.offsetX - this.square.x,
-                                y: e.offsetY - this.square.y,
+                                x: offsetX - this.square.x,
+                                y: offsetY - this.square.y
                             }
                         }
                     });
