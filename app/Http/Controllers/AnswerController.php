@@ -29,6 +29,35 @@ class AnswerController extends Controller
     }
 
     /**
+     * Обновляет ответ и если все ок возвращает обновленный ответ
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function update (Request $request) {
+        $data = $request->input();
+        $id = $data['id'];
+
+        $this->writeLogArray($data);
+
+        if ($data['coords']) {
+            $data['coords'] = serialize($data['coords']);
+        }
+
+        unset($data['id']);
+
+        $result = Answer::findOrFail($id)
+            ->update($data);
+
+        if ($result) {
+            $answer = Answer::find($id);
+            $answer->coords = unserialize($answer->coords);
+
+            return response($answer->jsonSerialize(), Response::HTTP_OK);
+        }
+    }
+
+    /**
      * Получить все ответы вопроса по его id
      *
      * @param Request $request

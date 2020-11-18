@@ -92,8 +92,7 @@
         },
         methods: {
             ...mapActions([
-                'getAnswerStatuses',
-                'updateQuestion'
+                'getAnswerStatuses'
             ]),
             closeModal () {
                 this.$emit('close-modal');

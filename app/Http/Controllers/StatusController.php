@@ -9,7 +9,7 @@ use Illuminate\Http\Response;
 class StatusController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Получить все статусы
      *
      * @return \Illuminate\Http\Response
      */

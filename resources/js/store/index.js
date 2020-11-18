@@ -166,6 +166,7 @@ export default new Vuex.Store({
         },
 
         /* updaters */
+        // todo: сделать еще и комит
         async updateQuestion (context, { id, data }) {
             return axios.patch('/api/question/update/?id=' + id, data);
         },

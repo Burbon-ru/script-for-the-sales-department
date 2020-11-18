@@ -52148,6 +52148,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
 
     /* updaters */
+    // todo: сделать еще и комит
     updateQuestion: function updateQuestion(context, _ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var id, data;

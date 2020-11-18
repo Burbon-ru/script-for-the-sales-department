@@ -26,7 +26,7 @@ Route::delete('/question/delete', 'QuestionController@destroy');
 /**
  * Статусы вопросов
  */
-Route::get('/statuses', 'StatusController@index');
+Route::get('/status', 'StatusController@index');
 Route::get('/status/getStatusById', 'StatusController@getStatusById');
 
 /**
@@ -35,3 +35,4 @@ Route::get('/status/getStatusById', 'StatusController@getStatusById');
 Route::post('/answer/create', 'AnswerController@create');
 Route::get('/answer/getAnswersOfQuestionById', 'AnswerController@getAnswersOfQuestionById');
 Route::get('/answer/getAnswerById', 'AnswerController@getAnswerById');
+Route::patch('/answer/update', 'AnswerController@update');

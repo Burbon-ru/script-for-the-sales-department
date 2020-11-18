@@ -80,6 +80,7 @@
     import { bus } from './../../../bus/index.js';
 
     import { getAnswerById, getAnswerStatusById, getQuestionById } from './../../../functions/getStuffById.js';
+    import { updateAnswer } from './../../../functions/updateStuff.js';
 
     export default {
         name: "answer",
@@ -124,7 +125,6 @@
         },
         methods: {
             ...mapActions([
-                'updateAnswer',
                 'deleteAnswer'
             ]),
 
@@ -140,7 +140,7 @@
              */
             async dragEnd ({offsetX, offsetY}) {
                 try {
-                    let updatedAnswer = await this.updateAnswer({
+                    const { data } = await updateAnswer({
                         id: this.answer.id,
                         data: {
                             coords: {
@@ -150,13 +150,18 @@
                         }
                     });
 
-                    this.answer = updatedAnswer.data;
+                    this.answer = data;
+
                     this.$emit('answer-change');
                 } catch (e) {
                     console.error(e);
                 }
             },
 
+            /**
+             * эмитит событие в родителя чтобы вызвать модальное окно
+             * для редактирования ответа
+             */
             editAnswer () {
                 this.$emit('click-answer-edit', this.answer.id);
             },
@@ -166,7 +171,7 @@
              */
             async deleteA () {
                 if (confirm('Ответ будет удален. Продолжить?')) {
-                    const res = await this.deleteAnswer({answerId: this.answer.id, questionId: this.question.id});
+                    const res = await deleteAnswer({answerId: this.answer.id, questionId: this.question.id});
 
                     if (res) {
                         this.$emit('answer-change');
