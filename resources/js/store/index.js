@@ -93,6 +93,12 @@ export default new Vuex.Store({
         addQuestionInCurrentScriptInState (state, question) {
             state.questionsInCurrentScript.push(question);
         },
+        /**
+         * Удалить вопрос из текущего скрипта
+         *
+         * @param state
+         * @param questionId
+         */
         deleteQuestionInCurrentScriptInState (state, questionId) {
             state.questionsInCurrentScript = state.questionsInCurrentScript.filter(el => el.id != questionId);
         },
@@ -142,7 +148,7 @@ export default new Vuex.Store({
         /* getters */
         async getScripts (context) {
             try {
-                const { data } = await window.axios.get('/api/script');
+                const { data } = await axios.get('/api/script');
                 context.commit('setScriptsList', data);
             } catch (error) {
                 console.error(error);
@@ -151,7 +157,7 @@ export default new Vuex.Store({
         },
         async getAnswerStatuses (context) {
             try {
-                const { data } = await window.axios.get('/api/statuses');
+                const { data } = await axios.get('/api/statuses');
                 context.commit('setAnswerStatuses', data);
             } catch (error) {
                 console.error(error);
@@ -164,12 +170,21 @@ export default new Vuex.Store({
             return axios.patch('/api/question/update/?id=' + id, data);
         },
 
+        /* delete */
+        async deleteQuestion (context, id) {
+            const { status } = await axios.delete('/api/question/delete/?id=' + id);
+
+            if (200 == status) {
+                context.commit('deleteQuestionInCurrentScriptInState', id);
+            }
+        },
+
         /* setters */
         setCurrentScriptId (context, id) {
             context.commit('setCurrentScriptId', id);
         },
         async setQuestionsInCurrentScript (context) {
-            const { data } = await window.axios.get('/api/question/getQuestionsByScriptId/?id=' + this.getters.currentScriptId);
+            const { data } = await axios.get('/api/question/getQuestionsByScriptId/?id=' + this.getters.currentScriptId);
             context.commit('setQuestionsInCurrentScriptInState', data);
         }
     }

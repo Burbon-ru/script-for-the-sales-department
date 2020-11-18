@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Question;
+use App\Models\Answer;
 use App\Models\Status;
 
 class TestController extends Controller
@@ -12,17 +12,21 @@ class TestController extends Controller
      */
     public function index()
     {
-        $id = 1;
-
         $data = [
             'name' => 'Привет',
-            'text' => '<p>asdfasdfas<br>dfasdf</p>'
+            'coords' => 'a:2:{s:1:"x";i:356;s:1:"y";i:37;}',
+            'question_id' => 1,
+            'status_id' => 1
         ];
 
-        $result = Question::find($id)
-            ->update($data);
+        $item = new Answer();
+        $item->name = $data['name'];
+        $item->coords = $data['coords'];
+        $item->question_id = $data['question_id'];
+        $item->status_id = $data['status_id'];
+        $item->save();
 
-        dd($result);
+        dd($item);
     }
 
     /**

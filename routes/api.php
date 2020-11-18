@@ -31,6 +31,7 @@ Route::post('/question/create', 'QuestionController@create');
 Route::get('/question/getQuestionsByScriptId', 'QuestionController@getQuestionsByScriptId');
 Route::get('/question/getQuestionById', 'QuestionController@getQuestionById');
 Route::patch('/question/update', 'QuestionController@update');
+Route::delete('/question/delete', 'QuestionController@destroy');
 
 /**
  * Статусы вопросов

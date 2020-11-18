@@ -51972,6 +51972,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     addQuestionInCurrentScriptInState: function addQuestionInCurrentScriptInState(state, question) {
       state.questionsInCurrentScript.push(question);
     },
+
+    /**
+     * Удалить вопрос из текущего скрипта
+     *
+     * @param state
+     * @param questionId
+     */
     deleteQuestionInCurrentScriptInState: function deleteQuestionInCurrentScriptInState(state, questionId) {
       state.questionsInCurrentScript = state.questionsInCurrentScript.filter(function (el) {
         return el.id != questionId;
@@ -52075,7 +52082,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     /* getters */
     getScripts: function getScripts(context) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var _yield$window$axios$g, data;
+        var _yield$axios$get, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
@@ -52083,11 +52090,11 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 0:
                 _context3.prev = 0;
                 _context3.next = 3;
-                return window.axios.get('/api/script');
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/script');
 
               case 3:
-                _yield$window$axios$g = _context3.sent;
-                data = _yield$window$axios$g.data;
+                _yield$axios$get = _context3.sent;
+                data = _yield$axios$get.data;
                 context.commit('setScriptsList', data);
                 _context3.next = 12;
                 break;
@@ -52108,7 +52115,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
     getAnswerStatuses: function getAnswerStatuses(context) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var _yield$window$axios$g2, data;
+        var _yield$axios$get2, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
@@ -52116,11 +52123,11 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return window.axios.get('/api/statuses');
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/statuses');
 
               case 3:
-                _yield$window$axios$g2 = _context4.sent;
-                data = _yield$window$axios$g2.data;
+                _yield$axios$get2 = _context4.sent;
+                data = _yield$axios$get2.data;
                 context.commit('setAnswerStatuses', data);
                 _context4.next = 12;
                 break;
@@ -52160,27 +52167,25 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       }))();
     },
 
-    /* setters */
-    setCurrentScriptId: function setCurrentScriptId(context, id) {
-      context.commit('setCurrentScriptId', id);
-    },
-    setQuestionsInCurrentScript: function setQuestionsInCurrentScript(context) {
-      var _this = this;
-
+    /* delete */
+    deleteQuestion: function deleteQuestion(context, id) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var _yield$window$axios$g3, data;
+        var _yield$axios$delete, status;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
                 _context6.next = 2;
-                return window.axios.get('/api/question/getQuestionsByScriptId/?id=' + _this.getters.currentScriptId);
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]('/api/question/delete/?id=' + id);
 
               case 2:
-                _yield$window$axios$g3 = _context6.sent;
-                data = _yield$window$axios$g3.data;
-                context.commit('setQuestionsInCurrentScriptInState', data);
+                _yield$axios$delete = _context6.sent;
+                status = _yield$axios$delete.status;
+
+                if (200 == status) {
+                  context.commit('deleteQuestionInCurrentScriptInState', id);
+                }
 
               case 5:
               case "end":
@@ -52188,6 +52193,37 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
             }
           }
         }, _callee6);
+      }))();
+    },
+
+    /* setters */
+    setCurrentScriptId: function setCurrentScriptId(context, id) {
+      context.commit('setCurrentScriptId', id);
+    },
+    setQuestionsInCurrentScript: function setQuestionsInCurrentScript(context) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+        var _yield$axios$get3, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                _context7.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/question/getQuestionsByScriptId/?id=' + _this.getters.currentScriptId);
+
+              case 2:
+                _yield$axios$get3 = _context7.sent;
+                data = _yield$axios$get3.data;
+                context.commit('setQuestionsInCurrentScriptInState', data);
+
+              case 5:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7);
       }))();
     }
   }

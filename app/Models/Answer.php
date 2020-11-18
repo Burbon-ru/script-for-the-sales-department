@@ -9,6 +9,14 @@ class Answer extends Model
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'next_question_id',
+        'coords',
+        'status_id',
+        'question_id'
+    ];
+
     /**
      * Получить следующий вопрос
      *

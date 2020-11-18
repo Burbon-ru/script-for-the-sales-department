@@ -19,7 +19,7 @@ class CreateAnswersTable extends Migration
             $table->string('name');
             $table->string('coords');
 
-            $table->bigInteger('next_question_id')->unsigned();
+            $table->bigInteger('next_question_id')->unsigned()->nullable();
             $table->bigInteger('status_id')->unsigned();
             $table->bigInteger('question_id')->unsigned();
 

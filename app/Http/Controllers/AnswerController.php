@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AnswerController extends Controller
 {
@@ -16,9 +17,12 @@ class AnswerController extends Controller
     public function create (Request $request) {
         $data = $request->input();
         $data['coords'] = serialize($data['coords']);
-        $this->writeLogArray($data);
 
-        $item = new Answer($data);
+        $item = new Answer();
+        $item->name = $data['name'];
+        $item->coords = $data['coords'];
+        $item->question_id = $data['question_id'];
+        $item->status_id = $data['status_id'];
         $item->save();
 
         return response($item->jsonSerialize(), Response::HTTP_CREATED);

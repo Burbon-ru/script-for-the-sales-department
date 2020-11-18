@@ -39,9 +39,9 @@
                                     </label>
 
                                     <select
-                                        v-model="status"
+                                        v-model="status_id"
                                         id="status"
-                                        name="status"
+                                        name="status_id"
                                         class="form-control"
                                     >
                                         <option
@@ -50,27 +50,6 @@
                                             :key="status.id"
                                         >
                                             {{ status.text }}
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="bind_to">
-                                        Привязать к вопросу (по id)
-                                    </label>
-
-                                    <select
-                                        v-model="bindTo"
-                                        id="bind_to"
-                                        name="bind_to"
-                                        class="form-control"
-                                    >
-                                        <option
-                                            v-for="question in questionsInCurrentScript"
-                                            :value="question.id"
-                                            :key="question.id"
-                                        >
-                                            {{ question.id }}
                                         </option>
                                     </select>
                                 </div>
@@ -91,21 +70,21 @@
 
 <script>
     import {mapActions, mapGetters} from 'vuex';
-    //import serializeFormByDomSelector from './../../functions/serializeFormByDomSelector.js';
+    import serializeFormByDomSelector from './../../../functions/serializeFormByDomSelector.js';
+    import { createAnswer } from './../../../functions/createStuff.js';
+    import delay from "../../../functions/delay";
 
     export default {
         name: "createAnswer",
-        props: ['currentQuestion'],
+        props: ['currentQuestion', 'newAnswerCoords'],
         data: () => ({
-            status: 0,
+            status_id: 0,
             name: '',
-            bindTo: 0,
             createIsDone: false
         }),
         computed: {
             ...mapGetters([
-                'answerStatusesList',
-                'questionsInCurrentScript'
+                'answerStatusesList'
             ])
         },
         mounted () {
@@ -114,26 +93,23 @@
         methods: {
             ...mapActions([
                 'getAnswerStatuses',
-                'createAnswer',
                 'updateQuestion'
             ]),
             closeModal () {
                 this.$emit('close-modal');
             },
             async submitAnswer () {
-                // let objFormData = serializeFormByDomSelector('#create_answer_form');
-                //
-                // let createdAnswer = await this.createAnswer(objFormData);
-                // let updatedQuestion = await getQuestionById(this.currentQuestion);
-                //
-                // let answers = updatedQuestion.data[0].answers;
-                //
-                // answers.push(createdAnswer.data.id);
-                // let updateQuestion = await this.updateQuestion({id: this.currentQuestion, data: {answers: answers}});
-                //
-                // if (updateQuestion.status == 200) {
-                //     this.createIsDone = true;
-                // }
+                let objFormData = serializeFormByDomSelector('#create_answer_form');
+                objFormData.coords = JSON.parse(JSON.stringify(this.newAnswerCoords));
+                objFormData.question_id = this.currentQuestion;
+
+                let { status } = await createAnswer(objFormData);
+
+                if (201 == status) {
+                    this.createIsDone = true;
+                    await delay(2);
+                    this.closeModal();
+                }
             }
         }
     }

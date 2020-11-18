@@ -76,7 +76,7 @@
                 width="80"
                 height="80"
                 class="question add-answer"
-                @click="addAnswer"
+                @mousedown="addAnswerMousedown"
             />
 
             <circle
@@ -193,12 +193,10 @@
             ]),
 
             /**
-             * в дальнейшем не понадобится
-             * сейчас говорит родительскому компоненту чтобы вызвал модальное окно добавления ответа
-             * заберу тело функции (this.$emit('click-answer-add');)
+             * событие передает родительскому компоненту
              */
-            addAnswer () {
-                this.$emit('click-answer-add');
+            addAnswerMousedown (e) {
+                this.$emit('click-answer-add-mousedown', e, this.question.id);
             },
 
             /**
@@ -234,10 +232,7 @@
              */
             deleteQ () {
                 if (confirm('Все связанные сущности будут удалены. Продолжить?')) {
-                    this.deleteQuestion({
-                        questionId: this.question.id,
-                        scriptId: this.currentScriptId
-                    });
+                    this.deleteQuestion(this.question.id);
                 }
             },
 
@@ -253,11 +248,11 @@
              *
              * вызывается в событии drop
              */
-            async dragEnd (e) {
+            async dragEnd ({offsetX, offsetY}) {
                 try {
                     const coords = {
-                        x: e.offsetX - this.square.x,
-                        y: e.offsetY - this.square.y
+                        x: offsetX - this.square.x,
+                        y: offsetY - this.square.y
                     };
 
                     let { data } = await this.updateQuestion({
@@ -285,7 +280,10 @@
             move ({offsetX, offsetY}) {
                 for (let answer of this.answers) {
                     this.pathsCoords = this.pathsCoords.map(el => {
-                        el.value = `M ${offsetX} ${offsetY} L ${answer.coords.x} ${answer.coords.y}`;
+                        if (el.id == answer.id) {
+                            el.value = `M ${offsetX} ${offsetY} L ${answer.coords.x} ${answer.coords.y}`;
+                        }
+
                         return el;
                     });
                 }
@@ -311,9 +309,7 @@
              */
             drop (e) {
                 this.dragOffsetX = this.dragOffsetY = null;
-
                 this.dragEnd(e);
-
                 this.$refs.box.removeEventListener('mousemove', this.move);
             }
         }
