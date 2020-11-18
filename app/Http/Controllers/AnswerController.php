@@ -58,6 +58,20 @@ class AnswerController extends Controller
     }
 
     /**
+     * Удаляет ответ
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function destroy (Request $request) {
+        $data = $request->input();
+
+        Answer::destroy($data['id']);
+
+        return response(null, Response::HTTP_OK);
+    }
+
+    /**
      * Получить все ответы вопроса по его id
      *
      * @param Request $request
@@ -87,7 +101,6 @@ class AnswerController extends Controller
         $id = $data['id'];
 
         $answer = Answer::find($id);
-
         $answer->coords = unserialize($answer->coords);
 
         return response($answer->jsonSerialize(), Response::HTTP_OK);

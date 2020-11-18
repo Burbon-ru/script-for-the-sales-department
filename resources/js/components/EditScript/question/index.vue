@@ -224,7 +224,7 @@
              * @returns {Promise<void>}
              */
             async changeAnswers () {
-                //this.answers = await getAnswersOfQuestionById(this.questionId);
+                this.answers = await getAnswersOfQuestionById(this.questionId);
             },
 
             /**

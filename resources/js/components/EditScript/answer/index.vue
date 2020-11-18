@@ -81,6 +81,7 @@
 
     import { getAnswerById, getAnswerStatusById, getQuestionById } from './../../../functions/getStuffById.js';
     import { updateAnswer } from './../../../functions/updateStuff.js';
+    import { deleteAnswer } from './../../../functions/deleteStuff.js';
 
     export default {
         name: "answer",
@@ -171,9 +172,9 @@
              */
             async deleteA () {
                 if (confirm('Ответ будет удален. Продолжить?')) {
-                    const res = await deleteAnswer({answerId: this.answer.id, questionId: this.question.id});
+                    const { status } = await deleteAnswer(this.answer.id);
 
-                    if (res) {
+                    if (200 == status) {
                         this.$emit('answer-change');
                     }
                 }
@@ -204,9 +205,8 @@
             },
 
             /**
-             * перерисовывает линию от ответа к привязанному к нему вопросу
-             *
-             * вызывается по событию question-move из шины событий
+             * Перерисовывает линию от ответа к привязанному к нему вопросу/
+             * Вызывается по событию question-move из шины событий
              *
              * @param questionId
              * @param coords
@@ -235,9 +235,7 @@
              */
             drop (e) {
                 this.dragOffsetX = this.dragOffsetY = null;
-
                 this.dragEnd(e);
-
                 this.$refs.box.removeEventListener('mousemove', this.move);
             }
         }

@@ -17,44 +17,104 @@ export default new Vuex.Store({
         currentScriptId: 0,
 
         /**
-         * массив всех ответов
-         */
-        questions: [],
-
-        /**
          * массив из полных объектов вопросов в текущем скрипте
          */
         questionsInCurrentScript: [],
 
         /**
          * массив всех ответов
+         * todo: хорошая идея, надо бы использовать
          */
-        answers: [],
+        answersInCurrentScript: [],
 
+        /**
+         * массив всех статусов ответов
+         */
         answerStatuses: [],
+
+        /**
+         * массив всех переменных
+         * todo: он не нужен
+         */
         variables: [],
+
+        /**
+         * массив переменных в текущем скрипте
+         */
         variablesInCurrentScript: [],
+
+        /**
+         * массив значений переменных в текущем запущенном скрипте
+         */
         variableValuesInRunningScript: []
     },
     getters: {
+        /**
+         * Массив всех скриптов
+         *
+         * @param state
+         * @returns {[]|*[]|HTMLCollectionOf<HTMLScriptElement>}
+         */
         scriptsList (state) {
             return state.scripts;
         },
-        variablesInCurrentScript (state) {
-            return state.variablesInCurrentScript;
-        },
+
+        /**
+         * Id текущего скрипта
+         *
+         * @param state
+         * @returns {number}
+         */
         currentScriptId (state) {
             return state.currentScriptId;
         },
+
+        /**
+         * Вопросы в текущем скрипте
+         *
+         * @param state
+         * @returns {Array}
+         */
         questionsInCurrentScript (state) {
             return state.questionsInCurrentScript;
         },
-        answersList (state) {
-            return state.answers;
+
+        /**
+         * Ответы в текущем скрипте
+         *
+         * @param state
+         * @returns {Array}
+         */
+        answersInCurrentScript (state) {
+            return state.answersInCurrentScript;
         },
+
+        /**
+         * Статусы ответов
+         *
+         * @param state
+         * @returns {[]|*[]}
+         */
         answerStatusesList (state) {
             return state.answerStatuses;
         },
+
+        /**
+         * Переменные в текущем скрипте
+         *
+         * @param state
+         * @returns {any}
+         */
+        variablesInCurrentScript (state) {
+            return state.variablesInCurrentScript;
+        },
+
+        /**
+         * Значения переменных в текущем запущенном скрипте
+         *
+         * @param state
+         * @returns {[]|*[]}
+         */
         valuesOfVariableInRunningScript (state) {
             return state.variableValuesInRunningScript;
         }
@@ -93,6 +153,7 @@ export default new Vuex.Store({
         addQuestionInCurrentScriptInState (state, question) {
             state.questionsInCurrentScript.push(question);
         },
+
         /**
          * Удалить вопрос из текущего скрипта
          *
@@ -102,6 +163,7 @@ export default new Vuex.Store({
         deleteQuestionInCurrentScriptInState (state, questionId) {
             state.questionsInCurrentScript = state.questionsInCurrentScript.filter(el => el.id != questionId);
         },
+
         setVariablesInCurrentScriptInState (state, variables) {
             state.variablesInCurrentScript = variables;
         },

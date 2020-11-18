@@ -51897,43 +51897,104 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     currentScriptId: 0,
 
     /**
-     * массив всех ответов
-     */
-    questions: [],
-
-    /**
      * массив из полных объектов вопросов в текущем скрипте
      */
     questionsInCurrentScript: [],
 
     /**
      * массив всех ответов
+     * todo: хорошая идея, надо бы использовать
      */
-    answers: [],
+    answersInCurrentScript: [],
+
+    /**
+     * массив всех статусов ответов
+     */
     answerStatuses: [],
+
+    /**
+     * массив всех переменных
+     * todo: он не нужен
+     */
     variables: [],
+
+    /**
+     * массив переменных в текущем скрипте
+     */
     variablesInCurrentScript: [],
+
+    /**
+     * массив значений переменных в текущем запущенном скрипте
+     */
     variableValuesInRunningScript: []
   },
   getters: {
+    /**
+     * Массив всех скриптов
+     *
+     * @param state
+     * @returns {[]|*[]|HTMLCollectionOf<HTMLScriptElement>}
+     */
     scriptsList: function scriptsList(state) {
       return state.scripts;
     },
-    variablesInCurrentScript: function variablesInCurrentScript(state) {
-      return state.variablesInCurrentScript;
-    },
+
+    /**
+     * Id текущего скрипта
+     *
+     * @param state
+     * @returns {number}
+     */
     currentScriptId: function currentScriptId(state) {
       return state.currentScriptId;
     },
+
+    /**
+     * Вопросы в текущем скрипте
+     *
+     * @param state
+     * @returns {Array}
+     */
     questionsInCurrentScript: function questionsInCurrentScript(state) {
       return state.questionsInCurrentScript;
     },
-    answersList: function answersList(state) {
-      return state.answers;
+
+    /**
+     * Ответы в текущем скрипте
+     *
+     * @param state
+     * @returns {Array}
+     */
+    answersInCurrentScript: function answersInCurrentScript(state) {
+      return state.answersInCurrentScript;
     },
+
+    /**
+     * Статусы ответов
+     *
+     * @param state
+     * @returns {[]|*[]}
+     */
     answerStatusesList: function answerStatusesList(state) {
       return state.answerStatuses;
     },
+
+    /**
+     * Переменные в текущем скрипте
+     *
+     * @param state
+     * @returns {any}
+     */
+    variablesInCurrentScript: function variablesInCurrentScript(state) {
+      return state.variablesInCurrentScript;
+    },
+
+    /**
+     * Значения переменных в текущем запущенном скрипте
+     *
+     * @param state
+     * @returns {[]|*[]}
+     */
     valuesOfVariableInRunningScript: function valuesOfVariableInRunningScript(state) {
       return state.variableValuesInRunningScript;
     }

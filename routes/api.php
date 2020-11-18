@@ -36,3 +36,4 @@ Route::post('/answer/create', 'AnswerController@create');
 Route::get('/answer/getAnswersOfQuestionById', 'AnswerController@getAnswersOfQuestionById');
 Route::get('/answer/getAnswerById', 'AnswerController@getAnswerById');
 Route::patch('/answer/update', 'AnswerController@update');
+Route::delete('/answer/delete', 'AnswerController@destroy');
