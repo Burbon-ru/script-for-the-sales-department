@@ -38,9 +38,7 @@ class AnswerController extends Controller
         $data = $request->input();
         $id = $data['id'];
 
-        $this->writeLogArray($data);
-
-        if ($data['coords']) {
+        if (isset($data['coords'])) {
             $data['coords'] = serialize($data['coords']);
         }
 

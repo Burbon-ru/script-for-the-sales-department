@@ -45,7 +45,7 @@
                 @mouseup="drop"
             >
                 <rect
-                    class="question"
+                    class="question for_bind"
                     :id="question.id"
                     width="200"
                     height="40"
@@ -120,6 +120,7 @@
             :key="answer.id"
             @click-answer-edit="clickEditAnswer(answer.id)"
             @answer-change="changeAnswers"
+            @click-answer-bind-to-next-question="clickBindToNextQuestion"
         />
     </g>
 </template>
@@ -177,6 +178,9 @@
                     value: `M ${this.question.coords.x} ${this.question.coords.y} L ${answer.coords.x} ${answer.coords.y}`
                 });
             }
+
+            // todo: это временно, нужно хранить все ответы в схроне
+            bus.$on('add-answer', this.changeAnswers);
         },
         computed: {
             ...mapGetters([
@@ -191,6 +195,14 @@
                 'updateQuestion',
                 'deleteQuestion'
             ]),
+
+            /**
+             * эмитится из компонента answer
+             * и передается дальше в компонент EditScript
+             */
+            clickBindToNextQuestion (e, answerId) {
+                this.$emit('click-answer-bind-to-next-question', e, answerId);
+            },
 
             /**
              * событие передает родительскому компоненту

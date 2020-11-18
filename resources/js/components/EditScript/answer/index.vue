@@ -41,6 +41,23 @@
         </g>
 
         <circle
+            cy="40" cx="100" r="10"
+            stroke="#cfcfcf"
+            stroke-width="1"
+            fill="#fff"
+        />
+        <path
+            d="M108.66,48.66h2.57a.51.51,0,0,0,.51-.51v-.34a.51.51,0,0,0-.51-.52h-2.57V44.73a.51.51,0,0,0-.51-.52h-.34a.52.52,0,0,0-.52.52v2.56h-2.56a.52.52,0,0,0-.52.52v.34a.51.51,0,0,0,.52.51h2.56v2.57a.51.51,0,0,0,.52.51h.34a.51.51,0,0,0,.51-.51Z"
+            y="0" x="280"
+            transform="translate(-40 -22) scale(1.3)"
+            style="fill: #2f700f"
+            width="80"
+            height="80"
+            class="question add-answer"
+            @mousedown="bindToNextQuestion"
+        />
+
+        <circle
             cy="0" cx="200" r="10"
             stroke="#f58d0f"
             stroke-width="2"
@@ -130,33 +147,11 @@
             ]),
 
             /**
-             * Событие завершения перетаскивания
-             * Метод сохраняет значения координат ответа в базу,
-             * обновляет данные this.answer,
-             * и вызывает событие answer-change в родителе (question)
-             * не передает данные какой ответ изменился
-             * todo: здесь передать id, в question обновлять не все ответы а только измененные
-             *
-             * вызывается в событии drop
+             * Событие эмитит в родительский компонет зажатую мышку для отрисовки пути
+             * и привязывания к следующему вопросу
              */
-            async dragEnd ({offsetX, offsetY}) {
-                try {
-                    const { data } = await updateAnswer({
-                        id: this.answer.id,
-                        data: {
-                            coords: {
-                                x: offsetX - this.square.x,
-                                y: offsetY - this.square.y
-                            }
-                        }
-                    });
-
-                    this.answer = data;
-
-                    this.$emit('answer-change');
-                } catch (e) {
-                    console.error(e);
-                }
+            async bindToNextQuestion (e) {
+                this.$emit('click-answer-bind-to-next-question', e, this.answerId);
             },
 
             /**
@@ -205,15 +200,32 @@
             },
 
             /**
-             * Перерисовывает линию от ответа к привязанному к нему вопросу/
-             * Вызывается по событию question-move из шины событий
+             * Событие завершения перетаскивания
+             * Метод сохраняет значения координат ответа в базу,
+             * обновляет данные this.answer,
+             * и вызывает событие answer-change в родителе (question)
+             * не передает данные какой ответ изменился
+             * todo: здесь передать id, в question обновлять не все ответы а только измененные
              *
-             * @param questionId
-             * @param coords
+             * вызывается в событии drop
              */
-            questionMoveHandler ({questionId, coords}) {
-                if (this.answer.bind_to == questionId) {
-                    this.pathCoords = `M 0 0 L ${coords.x - this.answer.coords.x} ${coords.y - this.answer.coords.y}`;
+            async dragEnd ({offsetX, offsetY}) {
+                try {
+                    const { data } = await updateAnswer({
+                        id: this.answer.id,
+                        data: {
+                            coords: {
+                                x: offsetX - this.square.x,
+                                y: offsetY - this.square.y
+                            }
+                        }
+                    });
+
+                    this.answer = data;
+
+                    this.$emit('answer-change');
+                } catch (e) {
+                    console.error(e);
                 }
             },
 
@@ -237,6 +249,19 @@
                 this.dragOffsetX = this.dragOffsetY = null;
                 this.dragEnd(e);
                 this.$refs.box.removeEventListener('mousemove', this.move);
+            },
+
+            /**
+             * Перерисовывает линию от ответа к привязанному к нему вопросу/
+             * Вызывается по событию question-move из шины событий
+             *
+             * @param questionId
+             * @param coords
+             */
+            questionMoveHandler ({questionId, coords}) {
+                if (this.answer.bind_to == questionId) {
+                    this.pathCoords = `M 0 0 L ${coords.x - this.answer.coords.x} ${coords.y - this.answer.coords.y}`;
+                }
             }
         }
     }

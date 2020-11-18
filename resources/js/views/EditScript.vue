@@ -16,6 +16,7 @@
                     @click-question-edit="selectEditQuestion(question.id)"
                     @click-answer-edit="selectEditAnswer"
                     @click-answer-add-mousedown="drag"
+                    @click-answer-bind-to-next-question="dragForBind"
                 />
             </g>
 
@@ -39,14 +40,14 @@
         <!-- Компонент-модальное окно редактирования вопроса -->
         <edit-question
             v-if="CreatingUpdatingState.editingQuestion"
-            :current="currentQuestion"
+            :current="currentEditQuestionId"
             @close-modal="closeAllModal"
         />
 
         <!-- Компонент-модальное окно создания ответа -->
         <create-answer
             v-if="CreatingUpdatingState.creatingAnswer"
-            :currentQuestion="currentQuestion"
+            :currentQuestion="currentEditQuestionId"
             :newAnswerCoords="newAnswerCoords"
             @close-modal="closeAllModal"
         />
@@ -54,8 +55,8 @@
         <!-- Компонент-модальное окно редактирования ответа -->
         <edit-answer
             v-if="CreatingUpdatingState.editingAnswer"
-            :currentQuestion="currentQuestion"
-            :current="currentAnswer"
+            :currentQuestion="currentEditQuestionId"
+            :current="currentEditAnswerId"
             @close-modal="closeAllModal"
         />
     </div>
@@ -69,6 +70,8 @@
     import EditQuestion from './../components/EditScript/question/edit.vue';
     import createAnswer from './../components/EditScript/answer/create.vue';
     import editAnswer from './../components/EditScript/answer/edit.vue';
+
+    import { updateAnswer } from './../functions/updateStuff.js';
 
     // стили для текстового редактора
     import 'tui-editor/dist/tui-editor.css'
@@ -84,8 +87,9 @@
             createQuestion
         },
         data: () => ({
-            currentQuestion: 0,
-            currentAnswer: 0,
+            currentEditQuestionId: 0,
+            currentEditAnswerId: 0,
+            currentQuestionBindId: 0,
             CreatingUpdatingState: {
                 creatingAnswer: false,
                 creatingQuestion: false,
@@ -120,10 +124,67 @@
             ]),
 
             /**
+             * todo: написать комментарий
+             */
+            dragForBind ({offsetX, offsetY}, answerId) {
+                this.currentEditAnswerId = answerId;
+
+                this.dragOffsetX = offsetX - this.square.x;
+                this.dragOffsetY = offsetY - this.square.y;
+
+                this.$refs.dynamicLine.addEventListener('mousemove', this.moveForBind);
+                this.$refs.dynamicLine.addEventListener('mouseup', this.dropForBind);
+            },
+
+            /**
+             * todo: написать комментарий
+             */
+            moveForBind ({offsetX, offsetY}) {
+                this.pathCoords = `M ${this.dragOffsetX - offsetX} ${this.dragOffsetY - offsetY} L 0 0`;
+                this.stylesCoords = `translate(${offsetX}, ${offsetY})`;
+
+                // todo: высчитать размер шапки и заменить магическое число
+                const test = document.elementFromPoint(offsetX, offsetY + 152);
+
+                if (test.classList.contains('for_bind')) {
+                    this.currentEditQuestionId = test.id;
+                } else {
+                    this.currentEditQuestionId = 0;
+                }
+            },
+
+            /**
+             * todo: написать комментарий
+             */
+            dropForBind () {
+                this.dragOffsetX = this.dragOffsetY = null;
+                this.dragEndForBind();
+                this.$refs.dynamicLine.removeEventListener('mousemove', this.moveForBind);
+            },
+
+            /**
+             * todo: написать комментарий
+             */
+            async dragEndForBind () {
+                if (this.currentEditQuestionId) {
+                    if (confirm('Привязать к этому элементу?')) {
+                        const { status } = await updateAnswer({
+                            id: this.currentEditAnswerId,
+                            data: {
+                                next_question_id: this.currentEditQuestionId
+                            }
+                        });
+
+                        console.log(status);
+                    }
+                }
+            },
+
+            /**
              * эмитится из компонента question
              */
             drag ({offsetX, offsetY}, questionId) {
-                this.currentQuestion = questionId;
+                this.currentEditQuestionId = questionId;
 
                 this.dragOffsetX = offsetX - this.square.x;
                 this.dragOffsetY = offsetY - this.square.y;
@@ -177,7 +238,7 @@
              * @param id
              */
             selectCreateQuestion (id) {
-                this.currentQuestion = id;
+                this.currentEditQuestionId = id;
                 this.updateCreatingUpdatingState('creatingAnswer');
             },
 
@@ -187,7 +248,7 @@
              * @param id
              */
             selectEditQuestion (id) {
-                this.currentQuestion = id;
+                this.currentEditQuestionId = id;
                 this.updateCreatingUpdatingState('editingQuestion');
             },
 
@@ -197,7 +258,7 @@
              * @param id
              */
             selectEditAnswer (id) {
-                this.currentAnswer = id;
+                this.currentEditAnswerId = id;
                 this.updateCreatingUpdatingState('editingAnswer');
             },
 

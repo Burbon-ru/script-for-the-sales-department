@@ -73,6 +73,7 @@
     import serializeFormByDomSelector from './../../../functions/serializeFormByDomSelector.js';
     import { createAnswer } from './../../../functions/createStuff.js';
     import delay from "../../../functions/delay";
+    import {bus} from "../../../bus";
 
     export default {
         name: "createAnswer",
@@ -106,6 +107,7 @@
 
                 if (201 == status) {
                     this.createIsDone = true;
+                    bus.$emit('add-answer');
                     await delay(2);
                     this.closeModal();
                 }

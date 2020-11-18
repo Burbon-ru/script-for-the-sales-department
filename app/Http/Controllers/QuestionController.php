@@ -38,7 +38,7 @@ class QuestionController extends Controller
         $data = $request->input();
         $id = $data['id'];
 
-        if ($data['coords']) {
+        if (isset($data['coords'])) {
             $data['coords'] = serialize($data['coords']);
         }
 

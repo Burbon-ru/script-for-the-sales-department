@@ -39,9 +39,9 @@
                                     </label>
 
                                     <select
-                                        v-model="status"
+                                        v-model="status_id"
                                         id="status"
-                                        name="status"
+                                        name="status_id"
                                         class="form-control"
                                     >
                                         <option
@@ -50,27 +50,6 @@
                                             :key="status.id"
                                         >
                                             {{ status.text }}
-                                        </option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="bind_to">
-                                        Привязать к вопросу (по id)
-                                    </label>
-
-                                    <select
-                                        v-model="bindTo"
-                                        id="bind_to"
-                                        name="bind_to"
-                                        class="form-control"
-                                    >
-                                        <option
-                                            v-for="question in questionsInCurrentScript"
-                                            :value="question.id"
-                                            :key="question.id"
-                                        >
-                                            {{ question.id }}
                                         </option>
                                     </select>
                                 </div>
@@ -91,7 +70,10 @@
 
 <script>
     import {mapActions, mapGetters} from 'vuex';
-    //import serializeFormByDomSelector from '@/functions/serializeFormByDomSelector.js';
+
+    import serializeFormByDomSelector from './../../../functions/serializeFormByDomSelector.js';
+    import { getAnswerById } from './../../../functions/getStuffById.js';
+    import { updateAnswer } from './../../../functions/updateStuff.js';
 
     export default {
         name: "editAnswer",
@@ -103,11 +85,14 @@
             ])
         },
         data: () => ({
-            status: 0,
+            status_id: 0,
             name: '',
-            bindTo: 0,
             editIsDone: false,
         }),
+        mounted () {
+            this.$store.dispatch('getAnswerStatuses');
+            this.setAnswerData();
+        },
         watch: {
             current: function () {
                 this.setAnswerData();
@@ -121,25 +106,20 @@
                 this.$emit('close-modal');
             },
             async submitAnswer () {
-                // let objFormData = serializeFormByDomSelector('#edit_answer_form');
-                //
-                // let updatedAnswer = await this.updateAnswer({id: this.current, data: objFormData});
-                //
-                // if (updatedAnswer.status == 200) {
-                //     this.editIsDone = true;
-                // }
+                let objFormData = serializeFormByDomSelector('#edit_answer_form');
+
+                let { status } = await updateAnswer({id: this.current, data: objFormData});
+
+                if (200 == status) {
+                    this.editIsDone = true;
+                }
             },
             async setAnswerData () {
-                // const answer = await getAnswerById(this.current);
-                //
-                // this.name = answer.data[0].name;
-                // this.status = answer.data[0].status;
-                // this.bindTo = answer.data[0].bind_to;
+                const { data } = await getAnswerById(this.current);
+
+                this.name = data.name;
+                this.status_id = data.status_id;
             }
-        },
-        mounted () {
-            this.$store.dispatch('getAnswerStatuses');
-            this.setAnswerData();
         }
     }
 </script>
