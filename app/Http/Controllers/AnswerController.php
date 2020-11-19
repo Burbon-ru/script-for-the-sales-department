@@ -49,6 +49,8 @@ class AnswerController extends Controller
 
         if ($result) {
             $answer = Answer::find($id);
+
+            // todo: это почему-то не работает
             $answer->coords = unserialize($answer->coords);
 
             return response($answer->jsonSerialize(), Response::HTTP_OK);

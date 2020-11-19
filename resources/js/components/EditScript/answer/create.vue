@@ -118,11 +118,14 @@
                 objFormData.coords = JSON.parse(JSON.stringify(this.newAnswerCoords));
                 objFormData.question_id = this.currentQuestion;
 
-                let { status } = await createAnswer(objFormData);
+                let { status, data } = await createAnswer(objFormData);
 
                 if (201 == status) {
                     this.createIsDone = true;
-                    bus.$emit('add-answer');
+
+                    // todo: исправить этот костыль
+                    bus.$emit('add-answer', this.currentQuestion);
+
                     await delay(2);
                     this.closeModal();
                 }

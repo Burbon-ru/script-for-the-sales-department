@@ -175,7 +175,7 @@
 
             this.setPathsCoords();
 
-            bus.$on('add-answer', this.changeAnswers);
+            bus.$on('add-answer', this.addAnswer);
         },
         computed: {
             ...mapGetters([
@@ -240,11 +240,15 @@
             },
 
             /**
-             * Удалить координаты пути и ответ до удаленного ответа
+             * событие при добавлении ответа
+             * todo: обновлять более конкретно
              */
-            deletePathCoordsAndAnswerByAnswerId (answerId) {
-                this.pathsCoords = this.pathsCoords.filter(item => item.id != answerId);
-                this.answers = this.answers.filter(item => item.id != answerId);
+            async addAnswer (questionId) {
+                if (questionId == this.questionId) {
+                    this.answers = await getAnswersOfQuestionById(this.questionId);
+                    this.pathsCoords = [];
+                    this.setPathsCoords();
+                }
             },
 
             /**
@@ -260,6 +264,14 @@
                         return el;
                     });
                 }
+            },
+
+            /**
+             * Удалить координаты пути и ответ до удаленного ответа
+             */
+            deletePathCoordsAndAnswerByAnswerId (answerId) {
+                this.pathsCoords = this.pathsCoords.filter(item => item.id != answerId);
+                this.answers = this.answers.filter(item => item.id != answerId);
             },
 
             /**

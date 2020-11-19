@@ -187,8 +187,6 @@
                             this.currentEditAnswerId = 0;
                         }
                     }
-
-                    this.currentEditQuestionId = 0;
                 }
             },
 
