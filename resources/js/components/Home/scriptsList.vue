@@ -10,9 +10,6 @@
                 <router-link :to="{ path: '/scripts/edit/' + script.id }">
                     {{ script.name }} (редактирование)
                 </router-link> |
-                <router-link :to="{ path: '/scripts/variables/' + script.id }">
-                    {{ script.name }} (переменные)
-                </router-link> |
                 <router-link :to="{ path: '/scripts/run/' + script.id }">
                     {{ script.name }} (запустить)
                 </router-link>
