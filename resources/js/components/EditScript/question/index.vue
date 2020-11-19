@@ -120,6 +120,7 @@
             :key="answer.id"
             @click-answer-edit="clickEditAnswer(answer.id)"
             @answer-change="changeAnswers"
+            @answer-deleted="deletePathCoordsAndAnswerByAnswerId"
             @click-answer-bind-to-next-question="clickBindToNextQuestion"
         />
     </g>
@@ -239,11 +240,17 @@
             },
 
             /**
+             * Удалить координаты пути и ответ до удаленного ответа
+             */
+            deletePathCoordsAndAnswerByAnswerId (answerId) {
+                this.pathsCoords = this.pathsCoords.filter(item => item.id != answerId);
+                this.answers = this.answers.filter(item => item.id != answerId);
+            },
+
+            /**
              * Изменить координаты путей до ответов
              */
             changePathCoords ({offsetX, offsetY}) {
-                console.log('this.answers', this.answers);
-
                 for (let answer of this.answers) {
                     this.pathsCoords = this.pathsCoords.map(el => {
                         if (el.id == answer.id) {
@@ -256,6 +263,15 @@
             },
 
             /**
+             * Удаление вопроса
+             */
+            deleteQ () {
+                if (confirm('Все связанные сущности будут удалены. Продолжить?')) {
+                    this.deleteQuestion(this.question.id);
+                }
+            },
+
+            /**
              * Установить линии от вопросов к ответам.
              */
             setPathsCoords () {
@@ -264,15 +280,6 @@
                         id: answer.id,
                         value: `M ${this.question.coords.x} ${this.question.coords.y} L ${answer.coords.x} ${answer.coords.y}`
                     });
-                }
-            },
-
-            /**
-             * Удаление вопроса
-             */
-            deleteQ () {
-                if (confirm('Все связанные сущности будут удалены. Продолжить?')) {
-                    this.deleteQuestion(this.question.id);
                 }
             },
 

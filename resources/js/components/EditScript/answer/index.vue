@@ -170,7 +170,7 @@
                     const { status } = await deleteAnswer(this.answer.id);
 
                     if (200 == status) {
-                        this.$emit('answer-change');
+                        this.$emit('answer-deleted', this.answer.id);
                     }
                 }
             },
