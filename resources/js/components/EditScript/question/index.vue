@@ -225,7 +225,7 @@
              * Событие вызывается из компонента answer
              * чтобы обновить данные о ответах здесь:
              * перерисовать линии
-             * todo: чтобы конкретный ответ обовлялся а не все
+             * todo: чтобы конкретный вопрос обовлялся а не все
              *
              * @returns {Promise<void>}
              */
@@ -242,6 +242,8 @@
              * Изменить координаты путей до ответов
              */
             changePathCoords ({offsetX, offsetY}) {
+                console.log('this.answers', this.answers);
+
                 for (let answer of this.answers) {
                     this.pathsCoords = this.pathsCoords.map(el => {
                         if (el.id == answer.id) {

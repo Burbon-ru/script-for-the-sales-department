@@ -102,7 +102,7 @@
 
     export default {
         name: "answer",
-        props: ['answerId', 'currentQuestion'],
+        props: ['answerId'],
         data: () => ({
             currentAnswer: 0,
             answer: {},
