@@ -170,7 +170,6 @@
             /**
              * вызывается в методе dropForBind (там где заканчивается перетаскивание)
              * и если мышь с концом линии попала на вопрос обновить вопрос (создать привязку)
-             * todo: перерисовать линии
              */
             async dragEndForBind () {
                 if (this.currentEditQuestionId) {
@@ -183,6 +182,11 @@
                         });
 
                         if (200 == status) {
+                            bus.$emit('question_is_bind', this.currentEditQuestionId);
+
+                            this.pathCoords = '';
+                            this.stylesCoords = '';
+
                             this.currentEditQuestionId = 0;
                             this.currentEditAnswerId = 0;
                         }

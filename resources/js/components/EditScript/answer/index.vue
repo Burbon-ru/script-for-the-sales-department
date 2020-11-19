@@ -140,6 +140,8 @@
             }
 
             bus.$on('question-move', this.questionMoveHandler);
+
+            bus.$on('question_is_bind', this.drawBindLine);
         },
         methods: {
             ...mapActions([
@@ -160,6 +162,28 @@
              */
             editAnswer () {
                 this.$emit('click-answer-edit', this.answer.id);
+            },
+
+            /**
+             * Когда случилась привязка
+             * todo: код скопирован из mounted (знаешь что это значит)
+             */
+            async drawBindLine () {
+                const { data } = await getAnswerById(this.answerId);
+                this.answer = data;
+
+                if (this.answer.next_question_id) {
+                    const { data } = await getQuestionById(this.answer.next_question_id);
+                    this.question = data;
+                }
+
+                if (this.question.coords) {
+                    this.pathCoords = `M 0 0 L ${this.question.coords.x - this.answer.coords.x} ${this.question.coords.y - this.answer.coords.y}`;
+                }
+
+                if (this.answer.coords) {
+                    this.stylesCoords =  `translate(${this.answer.coords.x}, ${this.answer.coords.y})`;
+                }
             },
 
             /**
