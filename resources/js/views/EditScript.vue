@@ -107,15 +107,15 @@
             pathCoords: '',
             stylesCoords: ''
         }),
+        mounted () {
+            this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
+            this.$store.dispatch('setQuestionsInCurrentScript');
+        },
         computed: {
             ...mapGetters([
                 'currentScriptId',
                 'questionsInCurrentScript'
             ])
-        },
-        mounted () {
-            this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
-            this.$store.dispatch('setQuestionsInCurrentScript');
         },
         methods: {
             ...mapActions([
@@ -175,7 +175,7 @@
                             }
                         });
 
-                        console.log(status);
+                        // todo: обновить линии и удалить старую
                     }
                 }
             },

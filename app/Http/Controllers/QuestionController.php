@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -56,18 +57,39 @@ class QuestionController extends Controller
     }
 
     /**
-     * Удаляет вопрос
-     * todo: и все связанные с ним ответы
+     * Удаляет вопрос, все связанные с ним ответы
+     * и привязки ответов к этому вопросу
+     * todo: нужен репозиторий, не дело это все в контроллере делать
      *
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
     public function destroy (Request $request) {
         $data = $request->input();
+        $id = $data['id'];
 
-        Question::destroy($data['id']);
+        $question = Question::find($id);
 
-        return response(null, Response::HTTP_OK);
+        $deleteResult = true;
+
+        foreach ($question->answers as $answer) {
+            $res = Answer::destroy($answer->id);
+
+            if (!$res) {
+                $deleteResult = false;
+            }
+        }
+
+        Answer::where('next_question_id', $id)
+            ->update([
+                'next_question_id' => null
+            ]);
+
+        if ($deleteResult && Question::destroy($id)) {
+            return response(null, Response::HTTP_OK);
+        }
+
+        return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
