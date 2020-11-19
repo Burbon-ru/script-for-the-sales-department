@@ -172,14 +172,8 @@
 
             this.answers = await getAnswersOfQuestionById(this.questionId);
 
-            for (let answer of this.answers) {
-                this.pathsCoords.push({
-                    id: answer.id,
-                    value: `M ${this.question.coords.x} ${this.question.coords.y} L ${answer.coords.x} ${answer.coords.y}`
-                });
-            }
+            this.setPathsCoords();
 
-            // todo: это временно, нужно хранить все ответы в схроне
             bus.$on('add-answer', this.changeAnswers);
         },
         computed: {
@@ -205,7 +199,7 @@
             },
 
             /**
-             * событие передает родительскому компоненту
+             * Событие передает родительскому компоненту
              */
             addAnswerMousedown (e) {
                 this.$emit('click-answer-add-mousedown', e, this.question.id);
@@ -237,6 +231,38 @@
              */
             async changeAnswers () {
                 this.answers = await getAnswersOfQuestionById(this.questionId);
+
+                this.changePathCoords({
+                    offsetX: this.question.coords.x,
+                    offsetY: this.question.coords.y
+                });
+            },
+
+            /**
+             * Изменить координаты путей до ответов
+             */
+            changePathCoords ({offsetX, offsetY}) {
+                for (let answer of this.answers) {
+                    this.pathsCoords = this.pathsCoords.map(el => {
+                        if (el.id == answer.id) {
+                            el.value = `M ${offsetX} ${offsetY} L ${answer.coords.x} ${answer.coords.y}`;
+                        }
+
+                        return el;
+                    });
+                }
+            },
+
+            /**
+             * Установить линии от вопросов к ответам.
+             */
+            setPathsCoords () {
+                for (let answer of this.answers) {
+                    this.pathsCoords.push({
+                        id: answer.id,
+                        value: `M ${this.question.coords.x} ${this.question.coords.y} L ${answer.coords.x} ${answer.coords.y}`
+                    });
+                }
             },
 
             /**
@@ -290,16 +316,7 @@
              * @param offsetY
              */
             move ({offsetX, offsetY}) {
-                for (let answer of this.answers) {
-                    this.pathsCoords = this.pathsCoords.map(el => {
-                        if (el.id == answer.id) {
-                            el.value = `M ${offsetX} ${offsetY} L ${answer.coords.x} ${answer.coords.y}`;
-                        }
-
-                        return el;
-                    });
-                }
-
+                this.changePathCoords({offsetX, offsetY});
                 this.stylesCoords = `translate(${offsetX - this.square.x}, ${offsetY - this.square.y})`;
             },
 

@@ -84,12 +84,28 @@
             ...mapActions([
                 'createQuestion'
             ]),
+
+            /**
+             * эмитит событие для закрытия модальных окон
+             */
             closeModal () {
                 this.$emit('close-modal');
             },
+
+            /**
+             * Получить html из редактора
+             *
+             * @returns {*}
+             */
             getHtml() {
                 return this.$refs.toastuiEditor.invoke('getHtml');
             },
+
+            /**
+             * Создать вопрос
+             *
+             * @returns {Promise<void>}
+             */
             async submitQuestion () {
                 let objFormData = serializeFormByDomSelector('#create_question_form');
 

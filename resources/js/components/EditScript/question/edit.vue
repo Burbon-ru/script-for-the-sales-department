@@ -77,11 +77,6 @@
         components: {
             Editor
         },
-        computed: {
-            ...mapGetters([
-                'questionsInCurrentScript'
-            ])
-        },
         mounted () {
             this.setQuestionData();
         },
@@ -90,28 +85,54 @@
                 this.setQuestionData();
             }
         },
+        computed: {
+            ...mapGetters([
+                'questionsInCurrentScript'
+            ])
+        },
         methods: {
             ...mapActions([
                 'updateQuestion'
             ]),
+
+            /**
+             * эмитит событие для закрытия модальных окон
+             */
             closeModal () {
                 this.$emit('close-modal');
             },
+
+            /**
+             * Получить html из редактора
+             *
+             * @returns {*}
+             */
             getHtml() {
                 return this.$refs.toastuiEditor.invoke('getHtml');
             },
+
+            /**
+             * Устанавливает начальные данные для редактирования
+             *
+             * @returns {Promise<void>}
+             */
             async setQuestionData () {
                 const { data } = await getQuestionById(this.current);
 
                 this.name = data.name;
                 this.text = data.text;
             },
+
+            /**
+             * Обновить вопрос
+             *
+             * @returns {Promise<void>}
+             */
             async submitQuestion () {
                 try {
                     let objFormData = serializeFormByDomSelector('#edit_question_form');
                     objFormData.text = this.getHtml();
 
-                    // todo: не работает, почему-то ...
                     let { status } = await this.updateQuestion({
                         id: this.current,
                         data: objFormData

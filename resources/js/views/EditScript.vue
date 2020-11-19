@@ -76,6 +76,7 @@
     // стили для текстового редактора
     import 'tui-editor/dist/tui-editor.css'
     import 'tui-editor/dist/tui-editor-contents.css'
+    import {bus} from "../bus";
 
     export default {
         name: "EditScript",
@@ -110,6 +111,8 @@
         mounted () {
             this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
             this.$store.dispatch('setQuestionsInCurrentScript');
+
+            bus.$on('add-answer', () => this.currentEditQuestionId = 0);
         },
         computed: {
             ...mapGetters([
@@ -124,7 +127,8 @@
             ]),
 
             /**
-             * todo: написать комментарий
+             * эмитится из компонента answer при перетаскивании линии
+             * для привязки к вопросу
              */
             dragForBind ({offsetX, offsetY}, answerId) {
                 this.currentEditAnswerId = answerId;
@@ -137,7 +141,8 @@
             },
 
             /**
-             * todo: написать комментарий
+             * вешается на событие mousemove на элемент $refs.dynamicLine
+             * в методе dragForBind
              */
             moveForBind ({offsetX, offsetY}) {
                 this.pathCoords = `M ${this.dragOffsetX - offsetX} ${this.dragOffsetY - offsetY} L 0 0`;
@@ -154,7 +159,7 @@
             },
 
             /**
-             * todo: написать комментарий
+             * конец драга
              */
             dropForBind () {
                 this.dragOffsetX = this.dragOffsetY = null;
@@ -163,7 +168,9 @@
             },
 
             /**
-             * todo: написать комментарий
+             * вызывается в методе dropForBind (там где заканчивается перетаскивание)
+             * и если мышь с концом линии попала на вопрос обновить вопрос (создать привязку)
+             * todo: перерисовать линии
              */
             async dragEndForBind () {
                 if (this.currentEditQuestionId) {
@@ -175,8 +182,13 @@
                             }
                         });
 
-                        // todo: обновить линии и удалить старую
+                        if (200 == status) {
+                            this.currentEditQuestionId = 0;
+                            this.currentEditAnswerId = 0;
+                        }
                     }
+
+                    this.currentEditQuestionId = 0;
                 }
             },
 
@@ -213,8 +225,10 @@
                 };
 
                 this.dragOffsetX = this.dragOffsetY = null;
-                this.dragEnd();
                 this.$refs.dynamicLine.removeEventListener('mousemove', this.move);
+                this.$refs.dynamicLine.removeEventListener('mouseup', this.drop);
+
+                this.dragEnd();
             },
 
             /**
@@ -269,6 +283,9 @@
                 for (let state in this.CreatingUpdatingState) {
                     this.CreatingUpdatingState[state] = false;
                 }
+
+                this.currentEditQuestionId = 0;
+                this.pathCoords = '';
             },
 
             /**

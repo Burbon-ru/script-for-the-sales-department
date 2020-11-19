@@ -70,10 +70,15 @@
 
 <script>
     import {mapActions, mapGetters} from 'vuex';
+
     import serializeFormByDomSelector from './../../../functions/serializeFormByDomSelector.js';
+
     import { createAnswer } from './../../../functions/createStuff.js';
+
     import delay from "../../../functions/delay";
+
     import {bus} from "../../../bus";
+
 
     export default {
         name: "createAnswer",
@@ -95,9 +100,19 @@
             ...mapActions([
                 'getAnswerStatuses'
             ]),
+
+            /**
+             * эмитит событие для закрытия модальных окон
+             */
             closeModal () {
                 this.$emit('close-modal');
             },
+
+            /**
+             * Создать ответ
+             *
+             * @returns {Promise<void>}
+             */
             async submitAnswer () {
                 let objFormData = serializeFormByDomSelector('#create_answer_form');
                 objFormData.coords = JSON.parse(JSON.stringify(this.newAnswerCoords));
