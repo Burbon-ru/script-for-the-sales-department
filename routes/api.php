@@ -20,6 +20,7 @@ Route::post('/script/create', 'ScriptController@create');
 Route::post('/question/create', 'QuestionController@create');
 Route::get('/question/getQuestionsByScriptId', 'QuestionController@getQuestionsByScriptId');
 Route::get('/question/getQuestionById', 'QuestionController@getQuestionById');
+Route::get('/question/getFirstQuestion', 'QuestionController@getFirstQuestion');
 Route::patch('/question/update', 'QuestionController@update');
 Route::delete('/question/delete', 'QuestionController@destroy');
 

@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/test', 'TestController@index');
+//Route::get('/createStatuses', 'TestController@createStatuses');
 
 Route::get('/{any}', 'AppController@index')->where('any', '.*');

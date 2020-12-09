@@ -55,8 +55,6 @@ class QuestionController extends Controller
         $id = $data['id'];
         unset($data['id']);
 
-        $this->writeLogArray($data);
-
         if (isset($data['is_first'])) {
             if ($firstQuestionName = $this->getFirstQuestionName($data['script_id'], $id)) {
                 return response(json_encode([
@@ -164,6 +162,23 @@ class QuestionController extends Controller
         }
 
         return response($questions->jsonSerialize(), Response::HTTP_OK);
+    }
+
+    /**
+     * Получить первый вопрос
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function getFirstQuestion(Request $request)
+    {
+        $data = $request->input();
+
+        $question = Question::where('is_first', 1)
+            ->where('script_id', $data['scriptId'])
+            ->get();
+
+        return response($question->jsonSerialize(), Response::HTTP_OK);
     }
 
     /**

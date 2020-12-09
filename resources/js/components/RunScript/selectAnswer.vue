@@ -1,6 +1,7 @@
 <template>
     <div class="select-answer">
         <v-select
+            v-if="answersSelect.length"
             :options="answersSelect"
             @input="selectAnswer"
         />
@@ -8,14 +9,14 @@
 </template>
 
 <script>
-    import { getAnswersOfQuestionById, getAnswerById } from './../../functions/getStuffById.js';
+    import { getAnswersOfQuestionById } from './../../functions/getStuffById.js';
 
     import vSelect from "vue-select";
     import "vue-select/dist/vue-select.css";
 
     export default {
         name: "selectAnswer",
-        props: ['currentQuestion'],
+        props: ['currentQuestionId'],
         components: {
             vSelect
         },
@@ -23,20 +24,23 @@
             answers: [],
             answersSelect: []
         }),
-        async mounted () {
-            this.answers = await getAnswersOfQuestionById(this.currentQuestion);
+        watch: {
+            async currentQuestionId (val) {
+                this.answersSelect = [];
+                this.answers = await getAnswersOfQuestionById(val);
 
-            for (let answer of this.answers) {
-                this.answersSelect.push({
-                    label: answer.name,
-                    id: answer.id,
-                    next: answer.next_question_id
-                });
+                for (let answer of this.answers) {
+                    this.answersSelect.push({
+                        label: answer.name,
+                        id: answer.id,
+                        next: answer.next_question_id
+                    });
+                }
             }
         },
         methods: {
             selectAnswer (e) {
-                this.$emit('next-answer', e);
+                this.$emit('next-answer', e.id);
             }
         }
     }

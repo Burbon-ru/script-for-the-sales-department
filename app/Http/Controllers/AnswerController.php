@@ -14,7 +14,8 @@ class AnswerController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function create (Request $request) {
+    public function create(Request $request)
+    {
         $data = $request->input();
         $data['coords'] = serialize($data['coords']);
 
@@ -34,7 +35,8 @@ class AnswerController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function update (Request $request) {
+    public function update(Request $request)
+    {
         $data = $request->input();
         $id = $data['id'];
 
@@ -63,7 +65,8 @@ class AnswerController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function destroy (Request $request) {
+    public function destroy(Request $request)
+    {
         $data = $request->input();
 
         Answer::destroy($data['id']);
@@ -77,7 +80,8 @@ class AnswerController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function getAnswersOfQuestionById (Request $request) {
+    public function getAnswersOfQuestionById(Request $request)
+    {
         $data = $request->input();
 
         $answers = Answer::where('question_id', $data['id'])
@@ -96,7 +100,8 @@ class AnswerController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function getAnswerById (Request $request) {
+    public function getAnswerById(Request $request)
+    {
         $data = $request->input();
         $id = $data['id'];
 

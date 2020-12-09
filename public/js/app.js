@@ -2120,6 +2120,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "scriptsList",
@@ -34939,6 +34942,18 @@ var render = function() {
                     " (запустить)\n            "
                 )
               ]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { attrs: { to: { path: "/scripts/run_new/" + script.id } } },
+              [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(script.name) +
+                    " (запустить новый)\n            "
+                )
+              ]
             )
           ],
           1
@@ -51838,7 +51853,13 @@ var routes = [{
   path: '/scripts/run/:id',
   name: 'RunScript',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(1), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
+  }
+}, {
+  path: '/scripts/run_new/:id',
+  name: 'RunScript',
+  component: function component() {
+    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(1), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ../views/RunScriptNew.vue */ "./resources/js/views/RunScriptNew.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
