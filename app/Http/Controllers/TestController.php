@@ -9,9 +9,9 @@ use App\Models\Status;
 class TestController extends Controller
 {
     /**
-     *
+     * test
      */
-    public function index ()
+    public function index()
     {
 
     }
@@ -19,7 +19,7 @@ class TestController extends Controller
     /**
      * todo: перенести в сидоры
      */
-    public function createStatuses () {
+    public function createStatuses() {
         $texts = [
             "Плохой", "Хороший", "Нейтральный"
         ];

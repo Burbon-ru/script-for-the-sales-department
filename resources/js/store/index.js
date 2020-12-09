@@ -22,12 +22,6 @@ export default new Vuex.Store({
         questionsInCurrentScript: [],
 
         /**
-         * массив всех ответов
-         * todo: хорошая идея, надо бы использовать
-         */
-        answersInCurrentScript: [],
-
-        /**
          * массив всех статусов ответов
          */
         answerStatuses: [],
@@ -80,16 +74,6 @@ export default new Vuex.Store({
         },
 
         /**
-         * Ответы в текущем скрипте
-         *
-         * @param state
-         * @returns {Array}
-         */
-        answersInCurrentScript (state) {
-            return state.answersInCurrentScript;
-        },
-
-        /**
          * Статусы ответов
          *
          * @param state
@@ -120,36 +104,72 @@ export default new Vuex.Store({
         }
     },
     mutations: {
+        /**
+         * Добавить все скрипты
+         *
+         * @param state
+         * @param scripts
+         */
         setScriptsList (state, scripts) {
             state.scripts = scripts;
         },
+
+        /**
+         * Добавить созданный скрипт
+         *
+         * @param state
+         * @param script
+         */
         addItemScripts (state, script) {
             state.scripts.push(script);
         },
-        setVariablesList (state, variables) {
-            state.variables = variables;
-        },
-        addItemVariables (state, variable) {
-            state.variables.push(variable);
-        },
-        addQuestion (state, question) {
-            state.questions.push(question);
-        },
+
+        /**
+         * Добавить все статусы ответов
+         *
+         * @param state
+         * @param answerStatuses
+         */
         setAnswerStatuses (state, answerStatuses) {
             state.answerStatuses = answerStatuses;
         },
+
+        /**
+         * Добавить статус ответа
+         *
+         * @param state
+         * @param status
+         */
         addAnswerStatus (state, status) {
             state.answerStatuses.push(status);
         },
-        setAnswersList (state, answers) {
-            state.answers = answers;
-        },
+
+        /**
+         * Установить текущей id скрипта
+         *
+         * @param state
+         * @param id
+         */
         setCurrentScriptId (state, id) {
             state.currentScriptId = id;
         },
+
+        /**
+         * Установить все вопросы для текущего скрипта
+         *
+         * @param state
+         * @param questions
+         */
         setQuestionsInCurrentScriptInState (state, questions) {
             state.questionsInCurrentScript = questions;
         },
+
+        /**
+         * Добавить вопрос в список вопросов текущего скрипта
+         *
+         * @param state
+         * @param question
+         */
         addQuestionInCurrentScriptInState (state, question) {
             state.questionsInCurrentScript.push(question);
         },
@@ -164,12 +184,12 @@ export default new Vuex.Store({
             state.questionsInCurrentScript = state.questionsInCurrentScript.filter(el => el.id != questionId);
         },
 
-        setVariablesInCurrentScriptInState (state, variables) {
-            state.variablesInCurrentScript = variables;
-        },
-        setValueOfVariableInRunningScriptInState (state, variables) {
-            state.variableValuesInRunningScript = variables;
-        }
+        // setVariablesInCurrentScriptInState (state, variables) {
+        //     state.variablesInCurrentScript = variables;
+        // },
+        // setValueOfVariableInRunningScriptInState (state, variables) {
+        //     state.variableValuesInRunningScript = variables;
+        // }
     },
     actions: {
         /* creators */

@@ -4,7 +4,6 @@
             v-for="question in questionsInMessages"
             :key="question.id"
             :question="question"
-            :number="question.id"
             :currentQuestion="currentQuestion"
             :runningScriptId="runningScriptId"
             @change-step="changeStep"

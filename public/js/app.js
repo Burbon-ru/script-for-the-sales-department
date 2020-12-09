@@ -51832,13 +51832,13 @@ var routes = [{
   path: '/scripts/edit/:id',
   name: 'EditScript',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../views/EditScript.vue */ "./resources/js/views/EditScript.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../views/EditScript.vue */ "./resources/js/views/EditScript.vue"));
   }
 }, {
   path: '/scripts/run/:id',
   name: 'RunScript',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -51893,12 +51893,6 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     questionsInCurrentScript: [],
 
     /**
-     * массив всех ответов
-     * todo: хорошая идея, надо бы использовать
-     */
-    answersInCurrentScript: [],
-
-    /**
      * массив всех статусов ответов
      */
     answerStatuses: [],
@@ -51951,16 +51945,6 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
 
     /**
-     * Ответы в текущем скрипте
-     *
-     * @param state
-     * @returns {Array}
-     */
-    answersInCurrentScript: function answersInCurrentScript(state) {
-      return state.answersInCurrentScript;
-    },
-
-    /**
      * Статусы ответов
      *
      * @param state
@@ -51991,36 +51975,72 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     }
   },
   mutations: {
+    /**
+     * Добавить все скрипты
+     *
+     * @param state
+     * @param scripts
+     */
     setScriptsList: function setScriptsList(state, scripts) {
       state.scripts = scripts;
     },
+
+    /**
+     * Добавить созданный скрипт
+     *
+     * @param state
+     * @param script
+     */
     addItemScripts: function addItemScripts(state, script) {
       state.scripts.push(script);
     },
-    setVariablesList: function setVariablesList(state, variables) {
-      state.variables = variables;
-    },
-    addItemVariables: function addItemVariables(state, variable) {
-      state.variables.push(variable);
-    },
-    addQuestion: function addQuestion(state, question) {
-      state.questions.push(question);
-    },
+
+    /**
+     * Добавить все статусы ответов
+     *
+     * @param state
+     * @param answerStatuses
+     */
     setAnswerStatuses: function setAnswerStatuses(state, answerStatuses) {
       state.answerStatuses = answerStatuses;
     },
+
+    /**
+     * Добавить статус ответа
+     *
+     * @param state
+     * @param status
+     */
     addAnswerStatus: function addAnswerStatus(state, status) {
       state.answerStatuses.push(status);
     },
-    setAnswersList: function setAnswersList(state, answers) {
-      state.answers = answers;
-    },
+
+    /**
+     * Установить текущей id скрипта
+     *
+     * @param state
+     * @param id
+     */
     setCurrentScriptId: function setCurrentScriptId(state, id) {
       state.currentScriptId = id;
     },
+
+    /**
+     * Установить все вопросы для текущего скрипта
+     *
+     * @param state
+     * @param questions
+     */
     setQuestionsInCurrentScriptInState: function setQuestionsInCurrentScriptInState(state, questions) {
       state.questionsInCurrentScript = questions;
     },
+
+    /**
+     * Добавить вопрос в список вопросов текущего скрипта
+     *
+     * @param state
+     * @param question
+     */
     addQuestionInCurrentScriptInState: function addQuestionInCurrentScriptInState(state, question) {
       state.questionsInCurrentScript.push(question);
     },
@@ -52035,13 +52055,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       state.questionsInCurrentScript = state.questionsInCurrentScript.filter(function (el) {
         return el.id != questionId;
       });
-    },
-    setVariablesInCurrentScriptInState: function setVariablesInCurrentScriptInState(state, variables) {
-      state.variablesInCurrentScript = variables;
-    },
-    setValueOfVariableInRunningScriptInState: function setValueOfVariableInRunningScriptInState(state, variables) {
-      state.variableValuesInRunningScript = variables;
-    }
+    } // setVariablesInCurrentScriptInState (state, variables) {
+    //     state.variablesInCurrentScript = variables;
+    // },
+    // setValueOfVariableInRunningScriptInState (state, variables) {
+    //     state.variableValuesInRunningScript = variables;
+    // }
+
   },
   actions: {
     /* creators */

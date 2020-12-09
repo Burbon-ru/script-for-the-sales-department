@@ -22,7 +22,7 @@
 
     export default {
         name: "questionAnswers",
-        props: ['question', 'number', 'currentQuestion', 'runningScriptId'],
+        props: ['question', 'currentQuestion', 'runningScriptId'],
         components: {
             SelectAnswer,
             Messages
