@@ -19,6 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->string('name');
             $table->text('text');
             $table->string('coords');
+            $table->boolean('is_first')->nullable();
 
             $table->bigInteger('script_id')->unsigned();
 

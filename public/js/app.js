@@ -51898,12 +51898,6 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     answerStatuses: [],
 
     /**
-     * массив всех переменных
-     * todo: он не нужен
-     */
-    variables: [],
-
-    /**
      * массив переменных в текущем скрипте
      */
     variablesInCurrentScript: [],
@@ -52064,10 +52058,25 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
   },
   actions: {
-    /* creators */
-    createScript: function createScript(context, payload) {
+    /**
+     * Установить текущий id скрипта
+     *
+     * @param context
+     * @param id
+     */
+    setCurrentScriptId: function setCurrentScriptId(context, id) {
+      context.commit('setCurrentScriptId', id);
+    },
+
+    /**
+     * Получить все скрипты
+     *
+     * @param context
+     * @returns {Promise<*>}
+     */
+    getScripts: function getScripts(context) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _yield$axios$post, status, data;
+        var _yield$axios$get, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -52075,41 +52084,40 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 0:
                 _context.prev = 0;
                 _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/script/create', payload);
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/script');
 
               case 3:
-                _yield$axios$post = _context.sent;
-                status = _yield$axios$post.status;
-                data = _yield$axios$post.data;
+                _yield$axios$get = _context.sent;
+                data = _yield$axios$get.data;
+                context.commit('setScriptsList', data);
+                _context.next = 12;
+                break;
 
-                if (!(201 == status)) {
-                  _context.next = 9;
-                  break;
-                }
-
-                context.commit('addItemScripts', data);
-                return _context.abrupt("return", true);
-
-              case 9:
-                return _context.abrupt("return", false);
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+                console.error(_context.t0);
+                return _context.abrupt("return", _context.t0);
 
               case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](0);
-                console.error(error);
-                return _context.abrupt("return", error);
-
-              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 12]]);
+        }, _callee, null, [[0, 8]]);
       }))();
     },
-    createQuestion: function createQuestion(context, payload) {
+
+    /**
+     * Создать скрипт
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<boolean|*>}
+     */
+    createScript: function createScript(context, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _yield$axios$post2, status, data;
+        var _yield$axios$post, status, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -52117,77 +52125,82 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 0:
                 _context2.prev = 0;
                 _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/question/create', payload);
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/script/create', payload);
 
               case 3:
-                _yield$axios$post2 = _context2.sent;
-                status = _yield$axios$post2.status;
-                data = _yield$axios$post2.data;
+                _yield$axios$post = _context2.sent;
+                status = _yield$axios$post.status;
+                data = _yield$axios$post.data;
 
                 if (!(201 == status)) {
-                  _context2.next = 10;
+                  _context2.next = 9;
                   break;
                 }
 
                 context.commit('addItemScripts', data);
-                context.commit('addQuestionInCurrentScriptInState', data);
                 return _context2.abrupt("return", true);
 
-              case 10:
+              case 9:
                 return _context2.abrupt("return", false);
 
-              case 13:
-                _context2.prev = 13;
+              case 12:
+                _context2.prev = 12;
                 _context2.t0 = _context2["catch"](0);
                 console.error(error);
                 return _context2.abrupt("return", error);
 
-              case 17:
+              case 16:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 13]]);
+        }, _callee2, null, [[0, 12]]);
       }))();
     },
 
-    /* getters */
-    getScripts: function getScripts(context) {
+    /**
+     * Установить все вопросы для текущего скрипта
+     *
+     * @param context
+     * @returns {Promise<void>}
+     */
+    setQuestionsInCurrentScript: function setQuestionsInCurrentScript(context) {
+      var _this = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var _yield$axios$get, data;
+        var _yield$axios$get2, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _context3.prev = 0;
-                _context3.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/script');
+                _context3.next = 2;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/question/getQuestionsByScriptId/?id=' + _this.getters.currentScriptId);
 
-              case 3:
-                _yield$axios$get = _context3.sent;
-                data = _yield$axios$get.data;
-                context.commit('setScriptsList', data);
-                _context3.next = 12;
-                break;
+              case 2:
+                _yield$axios$get2 = _context3.sent;
+                data = _yield$axios$get2.data;
+                context.commit('setQuestionsInCurrentScriptInState', data);
 
-              case 8:
-                _context3.prev = 8;
-                _context3.t0 = _context3["catch"](0);
-                console.error(_context3.t0);
-                return _context3.abrupt("return", _context3.t0);
-
-              case 12:
+              case 5:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[0, 8]]);
+        }, _callee3);
       }))();
     },
-    getAnswerStatuses: function getAnswerStatuses(context) {
+
+    /**
+     * Создать вопрос
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<{data: T, status: number}|*>}
+     */
+    createQuestion: function createQuestion(context, payload) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var _yield$axios$get2, data;
+        var _yield$axios$post2, status, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
@@ -52195,31 +52208,45 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/status');
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/question/create', payload);
 
               case 3:
-                _yield$axios$get2 = _context4.sent;
-                data = _yield$axios$get2.data;
-                context.commit('setAnswerStatuses', data);
-                _context4.next = 12;
-                break;
+                _yield$axios$post2 = _context4.sent;
+                status = _yield$axios$post2.status;
+                data = _yield$axios$post2.data;
 
-              case 8:
-                _context4.prev = 8;
+                if (201 == status) {
+                  context.commit('addQuestionInCurrentScriptInState', data);
+                }
+
+                return _context4.abrupt("return", {
+                  status: status,
+                  data: data
+                });
+
+              case 10:
+                _context4.prev = 10;
                 _context4.t0 = _context4["catch"](0);
-                console.error(_context4.t0);
-                return _context4.abrupt("return", _context4.t0);
+                console.error(error);
+                return _context4.abrupt("return", error);
 
-              case 12:
+              case 14:
               case "end":
                 return _context4.stop();
             }
           }
-        }, _callee4, null, [[0, 8]]);
+        }, _callee4, null, [[0, 10]]);
       }))();
     },
 
-    /* updaters */
+    /**
+     * Обновить вопрос
+     *
+     * @param context
+     * @param id
+     * @param data
+     * @returns {Promise<AxiosResponse<T>>}
+     */
     // todo: сделать еще и комит
     updateQuestion: function updateQuestion(context, _ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
@@ -52240,7 +52267,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       }))();
     },
 
-    /* delete */
+    /**
+     * Удалить вопрос
+     *
+     * @param context
+     * @param id
+     * @returns {Promise<void>}
+     */
     deleteQuestion: function deleteQuestion(context, id) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
         var _yield$axios$delete, status;
@@ -52269,13 +52302,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       }))();
     },
 
-    /* setters */
-    setCurrentScriptId: function setCurrentScriptId(context, id) {
-      context.commit('setCurrentScriptId', id);
-    },
-    setQuestionsInCurrentScript: function setQuestionsInCurrentScript(context) {
-      var _this = this;
-
+    /**
+     * Получить все статусы ответов
+     *
+     * @param context
+     * @returns {Promise<*>}
+     */
+    getAnswerStatuses: function getAnswerStatuses(context) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var _yield$axios$get3, data;
 
@@ -52283,20 +52316,29 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                _context7.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/question/getQuestionsByScriptId/?id=' + _this.getters.currentScriptId);
+                _context7.prev = 0;
+                _context7.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/status');
 
-              case 2:
+              case 3:
                 _yield$axios$get3 = _context7.sent;
                 data = _yield$axios$get3.data;
-                context.commit('setQuestionsInCurrentScriptInState', data);
+                context.commit('setAnswerStatuses', data);
+                _context7.next = 12;
+                break;
 
-              case 5:
+              case 8:
+                _context7.prev = 8;
+                _context7.t0 = _context7["catch"](0);
+                console.error(_context7.t0);
+                return _context7.abrupt("return", _context7.t0);
+
+              case 12:
               case "end":
                 return _context7.stop();
             }
           }
-        }, _callee7);
+        }, _callee7, null, [[0, 8]]);
       }))();
     }
   }

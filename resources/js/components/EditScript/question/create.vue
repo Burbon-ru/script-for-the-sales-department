@@ -33,6 +33,11 @@
                                     >
                                 </div>
 
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" id="is_first" name="is_first">
+                                    <label class="form-check-label" for="is_first">Первый вопрос</label>
+                                </div>
+
                                 <editor
                                     :language="editorOptions.language"
                                     :initialEditType="editorOptions.initialEditType"
@@ -68,6 +73,7 @@
         data: () => ({
             text: '',
             name: '',
+            is_first: false,
             createIsDone: false,
             editorOptions: editorOptions
         }),
@@ -113,9 +119,13 @@
                 objFormData.coords = JSON.parse(JSON.stringify(this.newQuestionCoords));
                 objFormData.script_id = this.currentScriptId;
 
-                let createdQuestion = await this.createQuestion(objFormData);
+                const { status, data } = await this.createQuestion(objFormData);
 
-                if (createdQuestion) {
+                if (data.first_question_name) {
+                    alert('нельзя создать еще один первый вопрос. Название существующего первого вопроса: ' + data.first_question_name);
+                }
+
+                if (201 == status) {
                     this.createIsDone = true;
                     await delay(2);
                     this.closeModal();

@@ -15,15 +15,29 @@ class QuestionController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function create (Request $request) {
+    public function create(Request $request): Response
+    {
         $data = $request->input();
         $data['coords'] = serialize($data['coords']);
+
+        if (isset($data['is_first'])) {
+            if ($firstQuestionName = $this->getFirstQuestionName($data['script_id'])) {
+                return response(json_encode([
+                    'first_question_name' => $firstQuestionName
+                ]), Response::HTTP_OK);
+            }
+        }
 
         $item = new Question();
         $item->name = $data['name'];
         $item->text = $data['text'];
         $item->coords = $data['coords'];
         $item->script_id = $data['script_id'];
+
+        if (isset($data['is_first'])) {
+            $item->is_first = true;
+        }
+
         $item->save();
 
         return response($item->jsonSerialize(), Response::HTTP_CREATED);
@@ -35,15 +49,29 @@ class QuestionController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function update (Request $request) {
+    public function update(Request $request)
+    {
         $data = $request->input();
         $id = $data['id'];
+        unset($data['id']);
+
+        $this->writeLogArray($data);
+
+        if (isset($data['is_first'])) {
+            if ($firstQuestionName = $this->getFirstQuestionName($data['script_id'], $id)) {
+                return response(json_encode([
+                    'first_question_name' => $firstQuestionName
+                ]), Response::HTTP_OK);
+            }
+        }
 
         if (isset($data['coords'])) {
             $data['coords'] = serialize($data['coords']);
         }
 
-        unset($data['id']);
+        if (isset($data['is_first'])) {
+            $data['is_first'] = true;
+        }
 
         $result = Question::findOrFail($id)
             ->update($data);
@@ -57,14 +85,39 @@ class QuestionController extends Controller
     }
 
     /**
+     *
+     *
+     * @param int $scriptId
+     * @param int $questionId
+     * @return string
+     */
+    protected function getFirstQuestionName(int $scriptId, int $questionId = 0)
+    {
+        $firstQuestionName = '';
+
+        $questions = Question::where('script_id', $scriptId)
+            ->where('id', '!=', $questionId)
+            ->get();
+
+        foreach ($questions as $question) {
+            if (isset($question->is_first)) {
+                $firstQuestionName = $question->name;
+            }
+        }
+
+        return $firstQuestionName;
+    }
+
+    /**
      * Удаляет вопрос, все связанные с ним ответы
      * и привязки ответов к этому вопросу
-     * todo: нужен репозиторий, не дело это все в контроллере делать
+     * todo: нужен репозиторий (или пока protected методы), не дело это все в контроллере делать
      *
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function destroy (Request $request) {
+    public function destroy(Request $request)
+    {
         $data = $request->input();
         $id = $data['id'];
 
@@ -98,7 +151,8 @@ class QuestionController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function getQuestionsByScriptId (Request $request) {
+    public function getQuestionsByScriptId(Request $request)
+    {
         $data = $request->input();
         $id = $data['id'];
 
@@ -118,7 +172,8 @@ class QuestionController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function getQuestionById (Request $request) {
+    public function getQuestionById(Request $request)
+    {
         $data = $request->input();
         $id = $data['id'];
 

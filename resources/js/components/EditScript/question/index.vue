@@ -58,7 +58,7 @@
                     fill="#000"
                     y="24" x="30"
                 >
-                    {{ question.name }} (ID: {{ question.id }})
+                    {{ question.name }}
                 </text>
             </g>
 

@@ -33,6 +33,22 @@
                                     >
                                 </div>
 
+                                <div class="form-group form-check">
+                                    <input
+                                        type="checkbox"
+                                        class="form-check-input"
+                                        id="is_first"
+                                        name="is_first"
+                                        v-model="is_first"
+                                    >
+                                    <label
+                                        class="form-check-label"
+                                        for="is_first"
+                                    >
+                                        Первый вопрос
+                                    </label>
+                                </div>
+
                                 <editor
                                     v-if="text.length"
                                     :initialValue="text"
@@ -71,6 +87,7 @@
         data: () => ({
             name: '',
             text: '',
+            is_first: false,
             editIsDone: false,
             editorOptions: editorOptions
         }),
@@ -87,7 +104,8 @@
         },
         computed: {
             ...mapGetters([
-                'questionsInCurrentScript'
+                'questionsInCurrentScript',
+                'currentScriptId'
             ])
         },
         methods: {
@@ -121,6 +139,10 @@
 
                 this.name = data.name;
                 this.text = data.text;
+
+                if (1 == data.is_first) {
+                    this.is_first = true;
+                }
             },
 
             /**
@@ -132,13 +154,16 @@
                 try {
                     let objFormData = serializeFormByDomSelector('#edit_question_form');
                     objFormData.text = this.getHtml();
+                    objFormData.script_id = this.currentScriptId;
 
-                    let { status } = await this.updateQuestion({
+                    const { status, data } = await this.updateQuestion({
                         id: this.current,
                         data: objFormData
                     });
 
-                    if (200 == status) {
+                    if (data.first_question_name) {
+                        alert('нельзя создать еще один первый вопрос. Название существующего первого вопроса: ' + data.first_question_name);
+                    } else if (200 == status) {
                         this.editIsDone = true;
                     }
                 } catch (e) {
