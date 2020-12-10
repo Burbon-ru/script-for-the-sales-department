@@ -1,84 +1,99 @@
 <template>
     <div class="run_script">
-        <question-answers
-            v-for="question in questionsInMessages"
-            :key="question.id"
-            :question="question"
-            :currentQuestion="currentQuestion"
-            :runningScriptId="runningScriptId"
-            @change-step="changeStep"
+        <discussion
+            :questions="questions"
+            :answers="answers"
         />
+
+        <select-answer
+            :currentQuestionId="currentQuestionId"
+            @next-answer="nextAnswer"
+        />
+
+        <button
+            v-if="questions.length > 1"
+            @click="back"
+            type="button"
+            class="btn btn-warning"
+        >
+            Назад
+        </button>
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters} from 'vuex';
 
-    import QuestionAnswers from './../components/RunScript/questionAnswers.vue';
+    import discussion from './../components/RunScriptNew/discussion.vue';
+    import SelectAnswer from './../components/RunScriptNew/selectAnswer.vue';
+
+    import { getAnswerById, getQuestionById } from './../functions/getStuffById';
 
     export default {
-        name: "RunScript",
-        data: () => ({
-            currentQuestion: 0,
-            questionsInMessages: [],
-            dialogIsStarted: false,
-            runningScriptId: 0
-        }),
+        name: "RunScriptNew",
         components: {
-            QuestionAnswers
+            discussion,
+            SelectAnswer
         },
+        data: () => ({
+            questions: [],
+            answers: [],
+            currentQuestionId: 0
+        }),
         computed: {
             ...mapGetters([
-                'questionsInCurrentScript'
+                'currentScriptId'
             ])
         },
-        mounted () {
+        async mounted () {
             this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
-            this.$store.dispatch('setQuestionsInCurrentScript');
-        },
-        watch: {
-            questionsInCurrentScript (val) {
-                let key = this.getKeyCurrentQuestionInQuestionsInCurrentScriptArray();
 
-                this.currentQuestion = val[key].id;
-                this.questionsInMessages.push(val[key]);
+            const { data } = await this.getFirstQuestion();
+
+            if (data.length) {
+                this.questions = data;
+                this.currentQuestionId = this.questions[0].id;
             }
         },
         methods: {
             ...mapActions([
                 'setCurrentScriptId',
-                'setQuestionsInCurrentScript'
             ]),
 
             /**
+             * Получить первый вопрос
              *
+             * @returns {*}
              */
-            changeStep (next) {
-                this.currentQuestion = next;
-
-                if (typeof next == 'undefined') {
-                    return;
-                }
-
-                let key = this.getKeyCurrentQuestionInQuestionsInCurrentScriptArray();
-                this.questionsInMessages.push(this.questionsInCurrentScript[key]);
+            getFirstQuestion () {
+                return axios.get('/api/question/getFirstQuestion/?scriptId=' + this.currentScriptId);
             },
 
             /**
+             * Эмитится из компонента SelectAnswer
+             * добавляет выбранный ответ в массив answers
              *
-             *
-             * @returns {number}
+             * @param id
+             * @returns {Promise<void>}
              */
-            getKeyCurrentQuestionInQuestionsInCurrentScriptArray () {
-                let key = 0;
+            async nextAnswer (id) {
+                const { data } = await getAnswerById(id);
+                this.answers.push(data);
 
-                for (let questionKey in this.questionsInCurrentScript) {
-                    if (this.questionsInCurrentScript[questionKey].id == this.currentQuestion) {
-                        key = questionKey;
-                    }
+                if (data.next_question_id) {
+                    const nextQuestion = await getQuestionById(data.next_question_id);
+                    this.currentQuestionId = nextQuestion.data.id;
+                    this.questions.push(nextQuestion.data);
                 }
+            },
 
-                return key;
+            /**
+             * шаг назад в диалоге
+             */
+            back () {
+                this.answers.pop();
+                this.questions.pop();
+                this.currentQuestionId = this.questions[this.questions.length - 1].id
             }
         }
     }
