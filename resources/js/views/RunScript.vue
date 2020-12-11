@@ -24,8 +24,8 @@
 <script>
     import {mapActions, mapGetters} from 'vuex';
 
-    import discussion from './../components/RunScriptNew/discussion.vue';
-    import SelectAnswer from './../components/RunScriptNew/selectAnswer.vue';
+    import discussion from './../components/RunScript/discussion.vue';
+    import SelectAnswer from './../components/RunScript/selectAnswer.vue';
 
     import { getAnswerById, getQuestionById } from './../functions/getStuffById';
 

@@ -164,6 +164,7 @@
          * создаю линии ко всем ответам - в this.pathsCoords
          */
         async mounted () {
+            //todo: этот запрос ненужен. дергай объект из схрона
             const { data } = await getQuestionById(this.questionId);
             this.question = data;
 
