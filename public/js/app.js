@@ -2120,9 +2120,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "scriptsList",
@@ -34942,18 +34939,6 @@ var render = function() {
                     " (запустить)\n            "
                 )
               ]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              { attrs: { to: { path: "/scripts/run_new/" + script.id } } },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(script.name) +
-                    " (запустить новый)\n            "
-                )
-              ]
             )
           ],
           1
@@ -51853,13 +51838,7 @@ var routes = [{
   path: '/scripts/run/:id',
   name: 'RunScript',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(1), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
-  }
-}, {
-  path: '/scripts/run_new/:id',
-  name: 'RunScript',
-  component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(1), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ../views/RunScriptNew.vue */ "./resources/js/views/RunScriptNew.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -52183,7 +52162,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
      * Установить все вопросы для текущего скрипта
      *
      * @param context
-     * @returns {Promise<void>}
+     * @returns {Promise<boolean>}
      */
     setQuestionsInCurrentScript: function setQuestionsInCurrentScript(context) {
       var _this = this;
@@ -52202,8 +52181,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 _yield$axios$get2 = _context3.sent;
                 data = _yield$axios$get2.data;
                 context.commit('setQuestionsInCurrentScriptInState', data);
+                return _context3.abrupt("return", true);
 
-              case 5:
+              case 6:
               case "end":
                 return _context3.stop();
             }
@@ -52461,7 +52441,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! W:\domains\script-for-the-sales-department\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Екатерина\Дима\штуки-дрюки\OSPanel\domains\script-for-the-sales-department\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

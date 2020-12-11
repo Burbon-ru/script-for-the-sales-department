@@ -136,7 +136,7 @@
 
     export default {
         name: "question",
-        props: ['questionId'],
+        props: ['questionId', 'questionsIsLoaded'],
         data: () => ({
             stylesCoords: '',
             pathsCoords: [],
@@ -158,29 +158,40 @@
             Answer
         },
 
-        /**
-         * получаю вопрос - присваиваю this.question
-         * получаю ответы вопроса - присваиваю this.answers
-         * создаю линии ко всем ответам - в this.pathsCoords
-         */
-        async mounted () {
-            //todo: этот запрос ненужен. дергай объект из схрона
-            const { data } = await getQuestionById(this.questionId);
-            this.question = data;
 
-            if (this.question.coords) {
-                this.stylesCoords = `translate(${this.question.coords.x}, ${this.question.coords.y})`;
+        mounted () {
+
+        },
+        watch: {
+            /**
+             * получаю вопрос из стора когда они туда загружены
+             * получаю ответы вопроса - присваиваю this.answers
+             * создаю линии ко всем ответам - в this.pathsCoords
+             */
+            async questionsIsLoaded (val) {
+                if (val) {
+                    this.questionsInCurrentScript.forEach(el => {
+                        if (this.questionId == el.id) {
+                            this.question = el;
+                        }
+                    });
+
+                    if (this.question.coords) {
+                        this.stylesCoords = `translate(${this.question.coords.x}, ${this.question.coords.y})`;
+                    }
+
+                    this.answers = await getAnswersOfQuestionById(this.questionId);
+
+                    this.setPathsCoords();
+
+                    bus.$on('add-answer', this.addAnswer);
+                }
             }
-
-            this.answers = await getAnswersOfQuestionById(this.questionId);
-
-            this.setPathsCoords();
-
-            bus.$on('add-answer', this.addAnswer);
         },
         computed: {
             ...mapGetters([
-                'currentScriptId'
+                'currentScriptId',
+                'questionsInCurrentScript'
             ]),
             cursor () {
                 return `cursor: ${this.dragOffsetX ? 'grabbing' : 'grab'}, `;

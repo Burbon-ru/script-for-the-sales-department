@@ -13,6 +13,7 @@
                     v-for="question in questionsInCurrentScript"
                     :questionId="question.id"
                     :key="question.id"
+                    :questionsIsLoaded="questionsIsLoaded"
                     @click-question-edit="selectEditQuestion(question.id)"
                     @click-answer-edit="selectEditAnswer"
                     @click-answer-add-mousedown="drag"
@@ -106,12 +107,12 @@
             dragOffsetX: null,
             dragOffsetY: null,
             pathCoords: '',
-            stylesCoords: ''
+            stylesCoords: '',
+            questionsIsLoaded: false
         }),
-        mounted () {
+        async mounted () {
             this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
-            this.$store.dispatch('setQuestionsInCurrentScript');
-
+            this.questionsIsLoaded = await this.$store.dispatch('setQuestionsInCurrentScript');
             bus.$on('add-answer', () => this.currentEditQuestionId = 0);
         },
         computed: {

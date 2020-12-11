@@ -240,12 +240,14 @@ export default new Vuex.Store({
          * Установить все вопросы для текущего скрипта
          *
          * @param context
-         * @returns {Promise<void>}
+         * @returns {Promise<boolean>}
          */
         async setQuestionsInCurrentScript (context) {
             const { data } = await axios.get('/api/question/getQuestionsByScriptId/?id=' + this.getters.currentScriptId);
 
             context.commit('setQuestionsInCurrentScriptInState', data);
+
+            return true;
         },
 
         /**
