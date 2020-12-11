@@ -12,7 +12,8 @@ class Question extends Model
     protected $fillable = [
         'name',
         'text',
-        'coords'
+        'coords',
+        'is_first'
     ];
 
     /**
