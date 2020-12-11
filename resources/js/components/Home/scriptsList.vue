@@ -13,9 +13,6 @@
                 <router-link :to="{ path: '/scripts/run/' + script.id }">
                     {{ script.name }} (запустить)
                 </router-link>
-                <router-link :to="{ path: '/scripts/run_new/' + script.id }">
-                    {{ script.name }} (запустить новый)
-                </router-link>
             </li>
         </ul>
     </div>
