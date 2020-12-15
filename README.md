@@ -2,14 +2,14 @@
 
 ## Установка
 
-1. Git clone репозиторий
+1. git clone репозиторий
 
 2. Установить зависимости
 ````
 composer install
 ````
 
-3. В файле окружения (.env) указать базу данных
+3. Переименовать .env.example в .env и в файле окружения (.env) указать название базы данных, user_name и пароль
 
 4. Сгенерировать ключ приложения
 ````
@@ -18,7 +18,7 @@ php artisan key:generate
 
 5. Migrate
 ````
-php artisan migrate
+php artisan migrate --seed
 ````
 
 6. Install Node modules
@@ -26,7 +26,7 @@ php artisan migrate
 npm install
 ````
 
-7. Использовать команды из package.json в зависимости от окружения в котором происходит работа:  
-для локальной разработки ````npm run watch````  
-для разработки на сервере ````npm run dev````  
-для "Боевого использования" ````npm run prod````  
+## Как использовать
+
+- ```npm run watch``` или ```npm run dev```
+- ```php artisan serve```
