@@ -16,25 +16,4 @@ class TestController extends Controller
 
     }
 
-    /**
-     * todo: перенести в сидоры
-     */
-    public function createStatuses() {
-        $texts = [
-            "Плохой", "Хороший", "Нейтральный"
-        ];
-
-        $colors = [
-            "red", "green", "blue"
-        ];
-
-        for ($i = 0; $i < 3; $i++) {
-            $item = new Status();
-
-            $item->text = $texts[$i];
-            $item->color = $colors[$i];
-
-            $item->save();
-        }
-    }
 }
