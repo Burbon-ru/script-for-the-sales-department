@@ -115,7 +115,8 @@
             dragOffsetY: null,
             pathCoords: '',
             stylesCoords: '',
-            questionsIsLoaded: false
+            questionsIsLoaded: false,
+            elHelper: Element
         }),
         async mounted () {
             this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
@@ -169,8 +170,11 @@
 
                 if (test.classList.contains('for_bind')) {
                     this.currentEditQuestionId = test.id;
+                    this.elHelper = test;
+                    test.setAttribute("fill", "red");
                 } else {
                     this.currentEditQuestionId = 0;
+                    this.elHelper.setAttribute("fill", "transparent");
                 }
             },
 
