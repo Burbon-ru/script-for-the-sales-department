@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="container">
         <create-script />
         <scripts-list />
     </div>

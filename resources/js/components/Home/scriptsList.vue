@@ -1,21 +1,40 @@
 <template>
     <div class="scripts_list">
         <h3>Список скриптов</h3>
-        <ul>
+
+        <ul class="list-group">
             <li
-                class="li_item"
+                class="list-group-item"
                 v-for="(script) in scriptsList"
                 :key="script.id"
             >
-                <router-link :to="{ path: '/scripts/edit/' + script.id }">
-                    {{ script.name }} (редактирование)
-                </router-link> |
-                <router-link :to="{ path: '/scripts/variables/' + script.id }">
-                    {{ script.name }} (переменные)
-                </router-link> |
-                <router-link :to="{ path: '/scripts/run/' + script.id }">
-                    {{ script.name }} (запустить)
-                </router-link>
+                <div>
+                    {{ script.name }}
+                </div>
+
+                <div>
+                    <router-link
+                        :to="{ path: '/scripts/edit/' + script.id }"
+                    >
+                        редактирование
+                    </router-link>
+                </div>
+
+                <div>
+                    <router-link
+                        :to="{ path: '/scripts/run/' + script.id }"
+                    >
+                        запуск
+                    </router-link>
+                </div>
+
+                <div>
+                    <router-link
+                        :to="{ path: '/scripts/variables/' + script.id }"
+                    >
+                        переменные
+                    </router-link>
+                </div>
             </li>
         </ul>
     </div>

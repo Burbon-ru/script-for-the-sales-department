@@ -1,19 +1,24 @@
 <template>
     <div class="create_script">
         <h3>Создать новый скрипт</h3>
+
         <form
             @submit.prevent="addScript"
-            class="create_script_form"
+            class="form-inline"
         >
-            <input
-                type="text"
-                id="name"
-                v-model="name"
-            />
+            <div class="form-group mb-2">
+                <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    v-model="name"
+                />
+            </div>
 
             <input
                 type="submit"
                 value="создать"
+                class="btn btn-primary mb-2"
             />
         </form>
     </div>
@@ -41,7 +46,5 @@
 </script>
 
 <style>
-    .create_script_form {
-        padding: 10px;
-    }
+
 </style>
