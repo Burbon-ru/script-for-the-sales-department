@@ -1,5 +1,11 @@
 <template>
     <div class="edit-script__wrapper">
+        <div
+            v-if="0 == questionsInCurrentScript.length"
+        >
+            Для создания вопроса кликните 2 раза левой кнопкой мыши
+        </div>
+
         <svg
             id="svg"
             class="edit-script"
@@ -36,6 +42,7 @@
             v-if="CreatingUpdatingState.creatingQuestion"
             :newQuestionCoords="newQuestionCoords"
             @close-modal="closeAllModal"
+            @created="updateQuestions"
         />
 
         <!-- Компонент-модальное окно редактирования вопроса -->
@@ -126,6 +133,14 @@
                 'setCurrentScriptId',
                 'setQuestionsInCurrentScript'
             ]),
+
+            /**
+             * Если создался новый вопрос, обновим данные в сторе
+             */
+            async updateQuestions () {
+                this.questionsIsLoaded = false;
+                this.questionsIsLoaded = await this.$store.dispatch('setQuestionsInCurrentScript');
+            },
 
             /**
              * эмитится из компонента answer при перетаскивании линии

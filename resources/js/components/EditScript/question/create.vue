@@ -126,8 +126,11 @@
                 }
 
                 if (201 == status) {
+                    this.$emit('created');
+
                     this.createIsDone = true;
                     await delay(2);
+
                     this.closeModal();
                 }
             }
