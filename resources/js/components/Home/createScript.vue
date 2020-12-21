@@ -4,7 +4,6 @@
 
         <form
             @submit.prevent="addScript"
-            class="form-inline"
         >
             <div class="form-group mb-2">
                 <input

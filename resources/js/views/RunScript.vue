@@ -53,6 +53,8 @@
             if (data.length) {
                 this.questions = data;
                 this.currentQuestionId = this.questions[0].id;
+            } else {
+                alert('В редактировании скрипта не указан начальный вопрос');
             }
         },
         methods: {

@@ -1,7 +1,7 @@
 <template>
     <div class="edit-script__wrapper">
         <div
-            v-if="0 == questionsInCurrentScript.length"
+            v-if="0 == questionsInCurrentScript.length && questionsIsLoaded"
         >
             Для создания вопроса кликните 2 раза левой кнопкой мыши
         </div>
@@ -174,7 +174,10 @@
                     test.setAttribute("fill", "red");
                 } else {
                     this.currentEditQuestionId = 0;
-                    this.elHelper.setAttribute("fill", "transparent");
+
+                    if (typeof this.elHelper.attributes !== 'undefined') {
+                        this.elHelper.setAttribute("fill", "transparent");
+                    }
                 }
             },
 
@@ -185,6 +188,10 @@
                 this.dragOffsetX = this.dragOffsetY = null;
                 this.dragEndForBind();
                 this.$refs.dynamicLine.removeEventListener('mousemove', this.moveForBind);
+
+                this.elHelper.setAttribute("fill", "transparent");
+                this.pathCoords = '';
+                this.stylesCoords = '';
             },
 
             /**
@@ -210,6 +217,11 @@
                             this.currentEditQuestionId = 0;
                             this.currentEditAnswerId = 0;
                         }
+                    } else {
+                        this.elHelper.setAttribute("fill", "transparent");
+
+                        this.pathCoords = '';
+                        this.stylesCoords = '';
                     }
                 }
             },
