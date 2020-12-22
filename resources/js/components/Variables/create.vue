@@ -48,9 +48,10 @@
 </template>
 
 <script>
-    // import {mapActions, mapGetters} from 'vuex';
-    // import serializeFormByDomSelector from '@/functions/serializeFormByDomSelector.js';
-    // import {getScriptById} from '@/functions/getStuffById.js';
+    import {mapActions, mapGetters} from 'vuex';
+
+    import serializeFormByDomSelector from './../../functions/serializeFormByDomSelector.js';
+    import delay from "../../functions/delay";
 
     export default {
         name: "createVariable",
@@ -59,33 +60,40 @@
             createIsDone: false
         }),
         computed: {
-            // ...mapGetters([
-            //     'variablesInCurrentScript',
-            //     'currentScriptId'
-            // ])
+            ...mapGetters([
+                'variablesInCurrentScript',
+                'currentScriptId'
+            ])
         },
         methods: {
-            // ...mapActions([
-            //     'createVariable',
-            //     'updateScript'
-            // ]),
+            ...mapActions([
+                'createVariable'
+            ]),
+
+            /**
+             * эмитит событие для закрытия модальных окон
+             */
             closeModal () {
                 this.$emit('close-modal');
             },
+
+            /**
+             * Создает переменную
+             *
+             * @returns {Promise<void>}
+             */
             async submitVariables () {
-                // let objFormData = serializeFormByDomSelector('#create_variable_form');
-                //
-                // let createdVariable = await this.createVariable(objFormData);
-                // let updatedScript = await getScriptById(this.currentScriptId);
-                //
-                // let variables = updatedScript.data[0].variables;
-                // variables.push(createdVariable.data.id);
-                //
-                // let updateScriptRes = await this.updateScript({id: this.currentScriptId, data: {variables: variables}});
-                //
-                // if (updateScriptRes.status == 200) {
-                //     this.createIsDone = true;
-                // }
+                let objFormData = serializeFormByDomSelector('#create_variable_form');
+                objFormData.script_id = this.currentScriptId;
+
+                const { status, data } = await this.createVariable(objFormData);
+
+                if (201 == status) {
+                    this.createIsDone = true;
+                    await delay(2);
+
+                    this.closeModal();
+                }
             }
         }
     }

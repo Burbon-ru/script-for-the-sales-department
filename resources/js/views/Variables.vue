@@ -33,27 +33,28 @@
 
     export default {
         name: "Variables",
+
         components: {
             variablesList,
             createVariable,
             updateVariable
         },
+
         mounted () {
             this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
-            //this.$store.dispatch('setVariablesInCurrentScript');
         },
+
         data: () => ({
             CreatingUpdatingState: {
                 creating: false,
                 updating: false
             },
-            isSaved: false,
             editingVariableId: 0
         }),
+
         methods: {
             ...mapActions([
-                'setCurrentScriptId',
-                'setVariablesInCurrentScript'
+                'setCurrentScriptId'
             ]),
 
             /**

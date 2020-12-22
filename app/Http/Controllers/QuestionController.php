@@ -83,7 +83,7 @@ class QuestionController extends Controller
     }
 
     /**
-     *
+     * todo: написать комментарий
      *
      * @param int $scriptId
      * @param int $questionId

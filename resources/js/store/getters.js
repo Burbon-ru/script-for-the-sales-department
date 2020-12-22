@@ -1,4 +1,6 @@
+
 export default {
+
     /**
      * Массив всех скриптов
      *
@@ -58,4 +60,5 @@ export default {
     valuesOfVariableInRunningScript (state) {
         return state.variableValuesInRunningScript;
     }
+
 };

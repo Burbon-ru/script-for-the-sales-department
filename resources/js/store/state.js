@@ -1,4 +1,6 @@
+
 export default {
+
     /**
      * массив всех скриптов
      */
@@ -28,4 +30,5 @@ export default {
      * массив значений переменных в текущем запущенном скрипте
      */
     variableValuesInRunningScript: []
+
 };

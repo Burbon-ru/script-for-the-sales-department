@@ -1,4 +1,6 @@
+
 export default {
+
     /**
      * Добавить все скрипты
      *
@@ -79,10 +81,39 @@ export default {
         state.questionsInCurrentScript = state.questionsInCurrentScript.filter(el => el.id != questionId);
     },
 
-    // setVariablesInCurrentScriptInState (state, variables) {
-    //     state.variablesInCurrentScript = variables;
-    // },
+    /**
+     * Установить все переменные для текущего скрипта
+     *
+     * @param state
+     * @param variables
+     */
+    setVariablesInCurrentScriptInState (state, variables) {
+        state.variablesInCurrentScript = variables;
+    },
+
+    /**
+     * Добавить переменную в список вопросов текущего скрипта
+     *
+     * @param state
+     * @param variable
+     */
+    addVariableInCurrentScriptInState (state, variable) {
+        state.variablesInCurrentScript.push(variable);
+    },
+
+    /**
+     * Удалить переменную из текущего скрипта
+     *
+     * @param state
+     * @param variableId
+     */
+    deleteVariableInCurrentScriptInState (state, variableId) {
+        state.variablesInCurrentScript = state.variablesInCurrentScript.filter(el => el.id != variableId);
+    },
+
+
     // setValueOfVariableInRunningScriptInState (state, variables) {
     //     state.variableValuesInRunningScript = variables;
     // }
+
 };

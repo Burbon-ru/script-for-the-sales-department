@@ -18,7 +18,7 @@
                             <form
                                 v-if="!updateIsDone"
                                 id="update_variable_form"
-                                @submit.prevent="submitVariables"
+                                @submit.prevent="submitVariable"
                             >
                                 <div class="form-group">
                                     <label for="name">
@@ -48,47 +48,59 @@
 </template>
 
 <script>
-    // import {mapActions, mapGetters} from 'vuex';
-    // import serializeFormByDomSelector from '@/functions/serializeFormByDomSelector.js';
-    // import { getVariableById } from '@/functions/getStuffById.js';
+    import {mapActions, mapGetters} from 'vuex';
+
+    import serializeFormByDomSelector from './../../functions/serializeFormByDomSelector.js';
 
     export default {
         name: "editVariable",
+
         props: ['currentId'],
+
         data: () => ({
             name: '',
             updateIsDone: false
         }),
+
         mounted () {
-            this.setQuestionData();
+            this.setVariableData();
         },
+
         computed: {
-            // ...mapGetters([
-            //     'variablesInCurrentScript',
-            //     'currentScriptId'
-            // ])
+            ...mapGetters([
+                'variablesInCurrentScript',
+                'currentScriptId'
+            ])
         },
+
         methods: {
-            // ...mapActions([
-            //     'updateVariable'
-            // ]),
+            ...mapActions([
+                'updateVariable'
+            ]),
+
+            setVariableData () {
+                const variable = this.variablesInCurrentScript.filter(el => {
+                    if (el.id == this.currentId) {
+                        return el;
+                    }
+                });
+
+                this.name = variable[0].name;
+            },
+
+            async submitVariable () {
+                let objFormData = serializeFormByDomSelector('#update_variable_form');
+
+                let createdVariable = await this.updateVariable({id: this.currentId, data: objFormData});
+
+                if (createdVariable.status == 200) {
+                    this.updateIsDone = true;
+                }
+            },
+
             closeModal () {
                 this.$emit('close-modal');
             },
-            async setQuestionData () {
-                // const variable = await getVariableById(this.currentId);
-                //
-                // this.name = variable.data[0].name;
-            },
-            async submitVariables () {
-                // let objFormData = serializeFormByDomSelector('#update_variable_form');
-                //
-                // let createdVariable = await this.updateVariable({id: this.currentId, data: objFormData});
-                //
-                // if (createdVariable.status == 200) {
-                //     this.updateIsDone = true;
-                // }
-            }
         }
     }
 </script>

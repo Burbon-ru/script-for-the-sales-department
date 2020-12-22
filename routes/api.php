@@ -38,3 +38,11 @@ Route::get('/answer/getAnswersOfQuestionById', 'AnswerController@getAnswersOfQue
 Route::get('/answer/getAnswerById', 'AnswerController@getAnswerById');
 Route::patch('/answer/update', 'AnswerController@update');
 Route::delete('/answer/delete', 'AnswerController@destroy');
+
+/**
+ * Переменные
+ */
+Route::get('/variable/getVariablesByScriptId', 'VariablesController@getVariablesByScriptId');
+Route::post('/variable/create', 'VariablesController@create');
+Route::patch('/variable/update', 'VariablesController@update');
+Route::delete('/variable/delete', 'VariablesController@destroy');

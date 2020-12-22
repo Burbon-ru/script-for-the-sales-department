@@ -22,4 +22,13 @@ class Script extends Model
         return $this->hasMany(Question::class, 'script_id');
     }
 
+    /**
+     * Получить переменные скрипта
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function variables () {
+        return $this->hasMany(Variable::class, 'script_id');
+    }
+
 }

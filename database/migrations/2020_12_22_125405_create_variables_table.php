@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
+class CreateVariablesTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -13,13 +14,10 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('variables', function (Blueprint $table) {
+            $table->id();
 
             $table->string('name');
-            $table->text('text');
-            $table->string('coords');
-            $table->boolean('is_first')->nullable();
 
             $table->bigInteger('script_id')->unsigned();
             $table->foreign('script_id')->references('id')->on('scripts');
@@ -36,6 +34,7 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::dropIfExists('variables');
     }
+
 }

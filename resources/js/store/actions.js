@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export default {
+
     /**
      * Установить текущий id скрипта
      *
@@ -129,5 +130,75 @@ export default {
             console.error(error);
             return error;
         }
-    }
+    },
+
+    /**
+     * Установить все переменные для текущего скрипта
+     *
+     * @param context
+     * @returns {Promise<boolean>}
+     */
+    async setVariablesInCurrentScript (context) {
+        const { data } = await axios.get('/api/variable/getVariablesByScriptId/?id=' + this.getters.currentScriptId);
+
+        context.commit('setVariablesInCurrentScriptInState', data);
+
+        return true;
+    },
+
+    /**
+     * Создать переменную
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<{data: T, status: number}|*>}
+     */
+    async createVariable (context, payload) {
+        try {
+            const { status, data } = await axios.post('/api/variable/create', payload);
+
+            if (201 == status) {
+                context.commit('addVariableInCurrentScriptInState', data);
+            }
+
+            return { status, data };
+        } catch (err) {
+            console.error(err);
+            return err;
+        }
+    },
+
+    /**
+     * Обновить переменную
+     *
+     * @param context
+     * @param id
+     * @param data
+     * @returns {Promise<AxiosResponse<T>>}
+     */
+    async updateVariable (context, { id, data }) {
+        try {
+            await axios.patch('/api/variable/update/?id=' + id, data);
+        } catch (err) {
+            console.error(err);
+            return err;
+        }
+
+    },
+
+    /**
+     * Удалить переменную
+     *
+     * @param context
+     * @param id
+     * @returns {Promise<void>}
+     */
+    async deleteVariable (context, id) {
+        const { status } = await axios.delete('/api/variable/delete/?id=' + id);
+
+        if (200 == status) {
+            context.commit('deleteVariableInCurrentScriptInState', id);
+        }
+    },
+
 };

@@ -45,18 +45,21 @@
 
     export default {
         name: "scriptsList",
+
+        mounted () {
+            this.$store.dispatch('getScripts');
+        },
+
         computed: {
             ...mapGetters([
                 'scriptsList'
             ])
         },
+
         methods: {
             ...mapActions([
                 'getScripts'
             ])
-        },
-        mounted () {
-            this.$store.dispatch('getScripts');
         }
     }
 </script>
