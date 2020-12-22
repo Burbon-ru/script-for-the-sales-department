@@ -8,9 +8,9 @@
                 v-for="(script) in scriptsList"
                 :key="script.id"
             >
-                <div>
+                <h4>
                     {{ script.name }}
-                </div>
+                </h4>
 
                 <div>
                     <router-link

@@ -2,7 +2,7 @@
     <div>
         <div
             class="discussion"
-            v-for="(question, key) in questions"
+            v-for="(question, key) in QuestionWithReplace"
             :key="key"
         >
             <div
@@ -16,13 +16,60 @@
                 v-html="answers[key].name"
             ></div>
         </div>
+
+        <div class="input-group-sm">
+            <label
+                for="name"
+            >
+                Введите имя
+            </label>
+
+            <input
+                id="name"
+                type="text"
+                v-model="name"
+            />
+        </div>
     </div>
 </template>
 
 <script>
     export default {
         name: "discussion",
-        props: ['questions', 'answers']
+        props: ['questions', 'answers'],
+        data: () => ({
+            name: '',
+
+            /**
+             * todo: replaceArray - это массив переменных для скрипта
+             */
+            replaceArray: ['Имя:']
+        }),
+        computed: {
+            /**
+             * Заменяет в массиве this.questions
+             *
+             * @returns {*[]}
+             * @constructor
+             */
+            QuestionWithReplace () {
+                const newAr = [];
+                let comp = {};
+
+                for (const question of this.questions) {
+                    for (let i = 0; i < this.replaceArray.length; i++) {
+                        comp.text = question.text.replace(
+                            new RegExp('{' + this.replaceArray[i] + '}', 'gi'),
+                            '{' + this.replaceArray[i] + '}' + this.name
+                        );
+                    }
+
+                    newAr.push(comp);
+                }
+
+                return newAr;
+            }
+        }
     }
 </script>
 
