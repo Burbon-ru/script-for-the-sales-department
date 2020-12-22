@@ -102,6 +102,22 @@ export default {
     },
 
     /**
+     * Обновить переменную в сторе
+     *
+     * @param state
+     * @param variable
+     */
+    updateVariableInCurrentScriptInState (state, variable) {
+        state.variablesInCurrentScript = state.variablesInCurrentScript.map(el => {
+            if (el.id == variable.id) {
+                return variable;
+            }
+
+            return el;
+        });
+    },
+
+    /**
      * Удалить переменную из текущего скрипта
      *
      * @param state

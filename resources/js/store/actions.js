@@ -174,16 +174,23 @@ export default {
      * @param context
      * @param id
      * @param data
-     * @returns {Promise<AxiosResponse<T>>}
+     * @returns {Promise<boolean|*>}
      */
-    async updateVariable (context, { id, data }) {
+    async updateVariable (context, { id, variable }) {
         try {
-            await axios.patch('/api/variable/update/?id=' + id, data);
+            const { status, data } = await axios.patch('/api/variable/update/?id=' + id, variable);
+
+            if (200 == status) {
+                context.commit('updateVariableInCurrentScriptInState', data);
+
+                return true;
+            }
+
+            return false;
         } catch (err) {
             console.error(err);
             return err;
         }
-
     },
 
     /**

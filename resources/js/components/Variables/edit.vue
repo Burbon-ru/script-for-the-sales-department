@@ -51,6 +51,7 @@
     import {mapActions, mapGetters} from 'vuex';
 
     import serializeFormByDomSelector from './../../functions/serializeFormByDomSelector.js';
+    import delay from "../../functions/delay";
 
     export default {
         name: "editVariable",
@@ -91,13 +92,17 @@
             async submitVariable () {
                 let objFormData = serializeFormByDomSelector('#update_variable_form');
 
-                let createdVariable = await this.updateVariable({id: this.currentId, data: objFormData});
+                let createdVariable = await this.updateVariable({id: this.currentId, variable: objFormData});
 
-                if (createdVariable.status == 200) {
+                if (createdVariable) {
                     this.updateIsDone = true;
+                    await delay(2);
                 }
             },
 
+            /**
+             * эмитит событие закрытия модалок
+             */
             closeModal () {
                 this.$emit('close-modal');
             },
