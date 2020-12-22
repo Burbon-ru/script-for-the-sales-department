@@ -266,6 +266,22 @@
             },
 
             /**
+             * Сохраняет координаты двойного клика в this.newQuestionCoords
+             * и передает их в компонент создания вопроса
+             * вызывает модальное окно создания вопроса
+             *
+             * @param e {MouseEvent}
+             */
+            createQuestion ({offsetX, offsetY}) {
+                this.newQuestionCoords = {
+                    x: offsetX - this.square.x,
+                    y: offsetY - this.square.y,
+                };
+
+                this.updateCreatingUpdatingState('creatingQuestion');
+            },
+
+            /**
              * вызовет модалку для создания ответа
              * в событии drop
              */
@@ -320,22 +336,6 @@
 
                 this.currentEditQuestionId = 0;
                 this.pathCoords = '';
-            },
-
-            /**
-             * Сохраняет координаты двойного клика в this.newQuestionCoords
-             * и передает их в компонент создания вопроса
-             * вызывает модальное окно создания вопроса
-             *
-             * @param e {MouseEvent}
-             */
-            createQuestion ({offsetX, offsetY}) {
-                this.newQuestionCoords = {
-                    x: offsetX - this.square.x,
-                    y: offsetY - this.square.y,
-                };
-
-                this.updateCreatingUpdatingState('creatingQuestion');
             },
 
             /**

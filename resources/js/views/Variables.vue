@@ -55,18 +55,43 @@
                 'setCurrentScriptId',
                 'setVariablesInCurrentScript'
             ]),
+
+            /**
+             * Вызывает модальное окно создания переменной
+             */
             selectCreateVariable () {
                 this.updateCreatingUpdatingState('creating');
             },
+
+            /**
+             * Вызывает модальное окно создания переменной
+             *
+             * @param id
+             */
             selectEditVariable (id) {
                 this.editingVariableId = id;
                 this.updateCreatingUpdatingState('updating');
             },
+
+            /**
+             * Закрывает модальные окна
+             */
             closeAllModal () {
                 for (let state in this.CreatingUpdatingState) {
                     this.CreatingUpdatingState[state] = false;
                 }
+
+                this.editingVariableId = 0;
             },
+
+            /**
+             * Изменяет состояние CreatingUpdatingState имеющее 2 поля:
+             *
+             * creating - сейчас видно модальное окно создания переменной
+             * editing - сейчас видно модальное окно изменения переменной
+             *
+             * @param changingNow
+             */
             updateCreatingUpdatingState (changingNow) {
                 for (let state in this.CreatingUpdatingState) {
                     if (state == changingNow) {

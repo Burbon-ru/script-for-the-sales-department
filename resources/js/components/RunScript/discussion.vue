@@ -47,7 +47,8 @@
         }),
         computed: {
             /**
-             * Заменяет в массиве this.questions
+             * Заменяет в массиве this.questions то, что является переменной
+             * значением из input
              *
              * @returns {*[]}
              * @constructor
