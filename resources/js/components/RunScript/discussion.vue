@@ -17,38 +17,59 @@
             ></div>
         </div>
 
-        <div class="input-group-sm">
-            <label
-                for="name"
-            >
-                Введите имя
-            </label>
+        <div
+            class="variables"
+            v-for="variable in variablesInCurrentScript"
+            :key="variable.id"
+        >
+            <div class="input-group-sm">
+                <label
+                    :for="variable.code"
+                >
+                    {{ variable.name }}
+                </label>
 
-            <input
-                id="name"
-                type="text"
-                v-model="name"
-            />
+                <input
+                    :id="variable.code"
+                    type="text"
+                    @input="inputTest(variable.code, $event.target.value)"
+                />
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {mapActions, mapGetters} from 'vuex';
+
     export default {
         name: "discussion",
+
         props: ['questions', 'answers'],
+
         data: () => ({
             name: '',
 
             /**
-             * todo: replaceArray - это массив переменных для скрипта
+             * массив названий переменных для скрипта
              */
-            replaceArray: ['Имя:']
+            replaceArray: []
         }),
+
+        async mounted () {
+            this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
+            await this.$store.dispatch('setVariablesInCurrentScript');
+            this.replaceArray = this.createAndGetReplaceArray();
+        },
+
         computed: {
+            ...mapGetters([
+                'currentScriptId',
+                'variablesInCurrentScript'
+            ]),
+
             /**
-             * Заменяет в массиве this.questions то, что является переменной
-             * значением из input
+             * Заменяет в массиве this.questions то, что является переменной значением из input
              *
              * @returns {*[]}
              * @constructor
@@ -69,6 +90,35 @@
                 }
 
                 return newAr;
+            }
+        },
+
+        methods: {
+            ...mapActions([
+                'setVariablesInCurrentScript'
+            ]),
+
+            /**
+             * тестирую @инпут
+             *
+             * буду брать значение и менять
+             */
+            inputTest (code, eventVal) {
+                console.log(code);
+                console.log(eventVal);
+            },
+
+            /**
+             * создает и возвращает массив с именами переменных
+             */
+            createAndGetReplaceArray () {
+                const replaceArray = [];
+
+                for (const question of this.variablesInCurrentScript) {
+                    replaceArray.push(question.name);
+                }
+
+                return replaceArray;
             }
         }
     }

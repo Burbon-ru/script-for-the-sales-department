@@ -21,6 +21,7 @@ class VariablesController extends Controller
 
         $item = new Variable();
         $item->name = $data['name'];
+        $item->code = \Str::slug($data['name']);
         $item->script_id = $data['script_id'];
         $item->save();
 

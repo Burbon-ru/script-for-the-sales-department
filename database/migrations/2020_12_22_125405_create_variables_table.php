@@ -18,6 +18,7 @@ class CreateVariablesTable extends Migration
             $table->id();
 
             $table->string('name');
+            $table->string('code');
 
             $table->bigInteger('script_id')->unsigned();
             $table->foreign('script_id')->references('id')->on('scripts');

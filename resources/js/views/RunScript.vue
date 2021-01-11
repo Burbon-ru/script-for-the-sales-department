@@ -31,20 +31,24 @@
 
     export default {
         name: "RunScriptNew",
+
         components: {
             discussion,
             SelectAnswer
         },
+
         data: () => ({
             questions: [],
             answers: [],
             currentQuestionId: 0
         }),
+
         computed: {
             ...mapGetters([
                 'currentScriptId'
             ])
         },
+
         async mounted () {
             this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
 
@@ -57,6 +61,7 @@
                 alert('В редактировании скрипта не указан начальный вопрос');
             }
         },
+
         methods: {
             ...mapActions([
                 'setCurrentScriptId',

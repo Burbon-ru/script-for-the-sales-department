@@ -79,6 +79,9 @@
                 'updateVariable'
             ]),
 
+            /**
+             * Устанавливает начальное значение
+             */
             setVariableData () {
                 const variable = this.variablesInCurrentScript.filter(el => {
                     if (el.id == this.currentId) {
@@ -89,6 +92,9 @@
                 this.name = variable[0].name;
             },
 
+            /**
+             * Обновляет переменную
+             */
             async submitVariable () {
                 let objFormData = serializeFormByDomSelector('#update_variable_form');
 

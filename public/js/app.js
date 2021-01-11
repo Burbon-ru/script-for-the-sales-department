@@ -2064,6 +2064,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'CreateScript',
@@ -2120,14 +2124,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "scriptsList",
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['scriptsList'])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getScripts'])),
   mounted: function mounted() {
     this.$store.dispatch('getScripts');
-  }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['scriptsList'])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getScripts']))
 });
 
 /***/ }),
@@ -4804,25 +4830,6 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "h3 {\n  margin: 10px 0 10px;\n}\n.scripts_list, .create_script {\n  padding: 30px 0 30px;\n}\nul {\n  list-style-type: none;\n  padding: 0;\n}\nli {\n  display: block;\n  padding: 10px;\n}\na {\n  color: #42b983;\n}\n.li_item:hover {\n  cursor: pointer;\n}", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.create_script_form {\n    padding: 10px;\n}\n", ""]);
 
 // exports
 
@@ -34177,36 +34184,6 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css&":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--5-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--5-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./createScript.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -34850,7 +34827,6 @@ var render = function() {
     _c(
       "form",
       {
-        staticClass: "create_script_form",
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -34859,28 +34835,34 @@ var render = function() {
         }
       },
       [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.name,
-              expression: "name"
-            }
-          ],
-          attrs: { type: "text", id: "name" },
-          domProps: { value: _vm.name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+        _c("div", { staticClass: "form-group mb-2" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name"
               }
-              _vm.name = $event.target.value
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "name" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              }
             }
-          }
-        }),
+          })
+        ]),
         _vm._v(" "),
-        _c("input", { attrs: { type: "submit", value: "создать" } })
+        _c("input", {
+          staticClass: "btn btn-primary mb-2",
+          attrs: { type: "submit", value: "создать" }
+        })
       ]
     )
   ])
@@ -34912,37 +34894,55 @@ var render = function() {
     _vm._v(" "),
     _c(
       "ul",
+      { staticClass: "list-group" },
       _vm._l(_vm.scriptsList, function(script) {
-        return _c(
-          "li",
-          { key: script.id, staticClass: "li_item" },
-          [
-            _c(
-              "router-link",
-              { attrs: { to: { path: "/scripts/edit/" + script.id } } },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(script.name) +
-                    " (редактирование)\n            "
-                )
-              ]
-            ),
-            _vm._v(" |\n            "),
-            _c(
-              "router-link",
-              { attrs: { to: { path: "/scripts/run/" + script.id } } },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(script.name) +
-                    " (запустить)\n            "
-                )
-              ]
+        return _c("li", { key: script.id, staticClass: "list-group-item" }, [
+          _c("h4", [
+            _vm._v(
+              "\n                " + _vm._s(script.name) + "\n            "
             )
-          ],
-          1
-        )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c(
+                "router-link",
+                { attrs: { to: { path: "/scripts/edit/" + script.id } } },
+                [
+                  _vm._v(
+                    "\n                    редактирование\n                "
+                  )
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c(
+                "router-link",
+                { attrs: { to: { path: "/scripts/run/" + script.id } } },
+                [_vm._v("\n                    запуск\n                ")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _c(
+                "router-link",
+                { attrs: { to: { path: "/scripts/variables/" + script.id } } },
+                [_vm._v("\n                    переменные\n                ")]
+              )
+            ],
+            1
+          )
+        ])
       }),
       0
     )
@@ -34972,7 +34972,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "home" },
+    { staticClass: "container" },
     [_c("create-script"), _vm._v(" "), _c("scripts-list")],
     1
   )
@@ -51571,11 +51571,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+ //import Element from 'element-ui';
+//Vue.use(Element);
 
-
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Vue.config.devtools = true;
-// Vue.config.performance = true;
-
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
@@ -51662,9 +51661,7 @@ if (token) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _createScript_vue_vue_type_template_id_cc800c88___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createScript.vue?vue&type=template&id=cc800c88& */ "./resources/js/components/Home/createScript.vue?vue&type=template&id=cc800c88&");
 /* harmony import */ var _createScript_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createScript.vue?vue&type=script&lang=js& */ "./resources/js/components/Home/createScript.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _createScript_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createScript.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -51672,7 +51669,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _createScript_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _createScript_vue_vue_type_template_id_cc800c88___WEBPACK_IMPORTED_MODULE_0__["render"],
   _createScript_vue_vue_type_template_id_cc800c88___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -51701,22 +51698,6 @@ component.options.__file = "resources/js/components/Home/createScript.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_createScript_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./createScript.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Home/createScript.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_createScript_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css&":
-/*!****************************************************************************************!*\
-  !*** ./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css& ***!
-  \****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_createScript_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--5-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--5-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./createScript.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Home/createScript.vue?vue&type=style&index=0&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_createScript_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_createScript_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_createScript_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_5_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_5_2_node_modules_vue_loader_lib_index_js_vue_loader_options_createScript_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
 
 /***/ }),
 
@@ -51832,13 +51813,19 @@ var routes = [{
   path: '/scripts/edit/:id',
   name: 'EditScript',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../views/EditScript.vue */ "./resources/js/views/EditScript.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../views/EditScript.vue */ "./resources/js/views/EditScript.vue"));
+  }
+}, {
+  path: '/scripts/variables/:id',
+  name: 'Variables',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ../views/Variables.vue */ "./resources/js/views/Variables.vue"));
   }
 }, {
   path: '/scripts/run/:id',
   name: 'RunScript',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -51846,6 +51833,557 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: routes
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
+
+/***/ }),
+
+/***/ "./resources/js/store/actions.js":
+/*!***************************************!*\
+  !*** ./resources/js/store/actions.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /**
+   * Установить текущий id скрипта
+   *
+   * @param context
+   * @param id
+   */
+  setCurrentScriptId: function setCurrentScriptId(context, id) {
+    context.commit('setCurrentScriptId', id);
+  },
+
+  /**
+   * Получить все скрипты
+   *
+   * @param context
+   * @returns {Promise<*>}
+   */
+  getScripts: function getScripts(context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _yield$axios$get, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/script');
+
+            case 3:
+              _yield$axios$get = _context.sent;
+              data = _yield$axios$get.data;
+              context.commit('setScriptsList', data);
+              _context.next = 12;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+              return _context.abrupt("return", _context.t0);
+
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 8]]);
+    }))();
+  },
+
+  /**
+   * Создать скрипт
+   *
+   * @param context
+   * @param payload
+   * @returns {Promise<boolean|*>}
+   */
+  createScript: function createScript(context, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var _yield$axios$post, status, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/script/create', payload);
+
+            case 3:
+              _yield$axios$post = _context2.sent;
+              status = _yield$axios$post.status;
+              data = _yield$axios$post.data;
+
+              if (!(201 == status)) {
+                _context2.next = 9;
+                break;
+              }
+
+              context.commit('addItemScripts', data);
+              return _context2.abrupt("return", true);
+
+            case 9:
+              return _context2.abrupt("return", false);
+
+            case 12:
+              _context2.prev = 12;
+              _context2.t0 = _context2["catch"](0);
+              console.error(error);
+              return _context2.abrupt("return", error);
+
+            case 16:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[0, 12]]);
+    }))();
+  },
+
+  /**
+   * Установить все вопросы для текущего скрипта
+   *
+   * @param context
+   * @returns {Promise<boolean>}
+   */
+  setQuestionsInCurrentScript: function setQuestionsInCurrentScript(context) {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var _yield$axios$get2, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/question/getQuestionsByScriptId/?id=' + _this.getters.currentScriptId);
+
+            case 2:
+              _yield$axios$get2 = _context3.sent;
+              data = _yield$axios$get2.data;
+              context.commit('setQuestionsInCurrentScriptInState', data);
+              return _context3.abrupt("return", true);
+
+            case 6:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+
+  /**
+   * Создать вопрос
+   *
+   * @param context
+   * @param payload
+   * @returns {Promise<{data: T, status: number}|*>}
+   */
+  createQuestion: function createQuestion(context, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var _yield$axios$post2, status, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/question/create', payload);
+
+            case 3:
+              _yield$axios$post2 = _context4.sent;
+              status = _yield$axios$post2.status;
+              data = _yield$axios$post2.data;
+
+              if (201 == status) {
+                context.commit('addQuestionInCurrentScriptInState', data);
+              }
+
+              return _context4.abrupt("return", {
+                status: status,
+                data: data
+              });
+
+            case 10:
+              _context4.prev = 10;
+              _context4.t0 = _context4["catch"](0);
+              console.error(error);
+              return _context4.abrupt("return", error);
+
+            case 14:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[0, 10]]);
+    }))();
+  },
+
+  /**
+   * Обновить вопрос
+   *
+   * @param context
+   * @param id
+   * @param data
+   * @returns {Promise<AxiosResponse<T>>}
+   */
+  // todo: сделать еще и комит
+  updateQuestion: function updateQuestion(context, _ref) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var id, data;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              id = _ref.id, data = _ref.data;
+              return _context5.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch('/api/question/update/?id=' + id, data));
+
+            case 2:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
+  },
+
+  /**
+   * Удалить вопрос
+   *
+   * @param context
+   * @param id
+   * @returns {Promise<void>}
+   */
+  deleteQuestion: function deleteQuestion(context, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+      var _yield$axios$delete, status;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/question/delete/?id=' + id);
+
+            case 2:
+              _yield$axios$delete = _context6.sent;
+              status = _yield$axios$delete.status;
+
+              if (200 == status) {
+                context.commit('deleteQuestionInCurrentScriptInState', id);
+              }
+
+            case 5:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6);
+    }))();
+  },
+
+  /**
+   * Получить все статусы ответов
+   *
+   * @param context
+   * @returns {Promise<*>}
+   */
+  getAnswerStatuses: function getAnswerStatuses(context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
+      var _yield$axios$get3, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.prev = 0;
+              _context7.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/status');
+
+            case 3:
+              _yield$axios$get3 = _context7.sent;
+              data = _yield$axios$get3.data;
+              context.commit('setAnswerStatuses', data);
+              _context7.next = 12;
+              break;
+
+            case 8:
+              _context7.prev = 8;
+              _context7.t0 = _context7["catch"](0);
+              console.error(_context7.t0);
+              return _context7.abrupt("return", _context7.t0);
+
+            case 12:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7, null, [[0, 8]]);
+    }))();
+  },
+
+  /**
+   * Установить все переменные для текущего скрипта
+   *
+   * @param context
+   * @returns {Promise<boolean>}
+   */
+  setVariablesInCurrentScript: function setVariablesInCurrentScript(context) {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8() {
+      var _yield$axios$get4, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              _context8.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/variable/getVariablesByScriptId/?id=' + _this2.getters.currentScriptId);
+
+            case 2:
+              _yield$axios$get4 = _context8.sent;
+              data = _yield$axios$get4.data;
+              context.commit('setVariablesInCurrentScriptInState', data);
+              return _context8.abrupt("return", true);
+
+            case 6:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    }))();
+  },
+
+  /**
+   * Создать переменную
+   *
+   * @param context
+   * @param payload
+   * @returns {Promise<{data: T, status: number}|*>}
+   */
+  createVariable: function createVariable(context, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+      var _yield$axios$post3, status, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              _context9.prev = 0;
+              _context9.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/api/variable/create', payload);
+
+            case 3:
+              _yield$axios$post3 = _context9.sent;
+              status = _yield$axios$post3.status;
+              data = _yield$axios$post3.data;
+
+              if (201 == status) {
+                context.commit('addVariableInCurrentScriptInState', data);
+              }
+
+              return _context9.abrupt("return", {
+                status: status,
+                data: data
+              });
+
+            case 10:
+              _context9.prev = 10;
+              _context9.t0 = _context9["catch"](0);
+              console.error(_context9.t0);
+              return _context9.abrupt("return", _context9.t0);
+
+            case 14:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9, null, [[0, 10]]);
+    }))();
+  },
+
+  /**
+   * Обновить переменную
+   *
+   * @param context
+   * @param id
+   * @param data
+   * @returns {Promise<boolean|*>}
+   */
+  updateVariable: function updateVariable(context, _ref2) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
+      var id, variable, _yield$axios$patch, status, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              id = _ref2.id, variable = _ref2.variable;
+              _context10.prev = 1;
+              _context10.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch('/api/variable/update/?id=' + id, variable);
+
+            case 4:
+              _yield$axios$patch = _context10.sent;
+              status = _yield$axios$patch.status;
+              data = _yield$axios$patch.data;
+
+              if (!(200 == status)) {
+                _context10.next = 10;
+                break;
+              }
+
+              context.commit('updateVariableInCurrentScriptInState', data);
+              return _context10.abrupt("return", true);
+
+            case 10:
+              return _context10.abrupt("return", false);
+
+            case 13:
+              _context10.prev = 13;
+              _context10.t0 = _context10["catch"](1);
+              console.error(_context10.t0);
+              return _context10.abrupt("return", _context10.t0);
+
+            case 17:
+            case "end":
+              return _context10.stop();
+          }
+        }
+      }, _callee10, null, [[1, 13]]);
+    }))();
+  },
+
+  /**
+   * Удалить переменную
+   *
+   * @param context
+   * @param id
+   * @returns {Promise<void>}
+   */
+  deleteVariable: function deleteVariable(context, id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
+      var _yield$axios$delete2, status;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+        while (1) {
+          switch (_context11.prev = _context11.next) {
+            case 0:
+              _context11.next = 2;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"]('/api/variable/delete/?id=' + id);
+
+            case 2:
+              _yield$axios$delete2 = _context11.sent;
+              status = _yield$axios$delete2.status;
+
+              if (200 == status) {
+                context.commit('deleteVariableInCurrentScriptInState', id);
+              }
+
+            case 5:
+            case "end":
+              return _context11.stop();
+          }
+        }
+      }, _callee11);
+    }))();
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/getters.js":
+/*!***************************************!*\
+  !*** ./resources/js/store/getters.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /**
+   * Массив всех скриптов
+   *
+   * @param state
+   * @returns {[]|*[]|HTMLCollectionOf<HTMLScriptElement>}
+   */
+  scriptsList: function scriptsList(state) {
+    return state.scripts;
+  },
+
+  /**
+   * Id текущего скрипта
+   *
+   * @param state
+   * @returns {number}
+   */
+  currentScriptId: function currentScriptId(state) {
+    return state.currentScriptId;
+  },
+
+  /**
+   * Вопросы в текущем скрипте
+   *
+   * @param state
+   * @returns {Array}
+   */
+  questionsInCurrentScript: function questionsInCurrentScript(state) {
+    return state.questionsInCurrentScript;
+  },
+
+  /**
+   * Статусы ответов
+   *
+   * @param state
+   * @returns {[]|*[]}
+   */
+  answerStatusesList: function answerStatusesList(state) {
+    return state.answerStatuses;
+  },
+
+  /**
+   * Переменные в текущем скрипте
+   *
+   * @param state
+   * @returns {any}
+   */
+  variablesInCurrentScript: function variablesInCurrentScript(state) {
+    return state.variablesInCurrentScript;
+  },
+
+  /**
+   * Значения переменных в текущем запущенном скрипте
+   *
+   * @param state
+   * @returns {[]|*[]}
+   */
+  valuesOfVariableInRunningScript: function valuesOfVariableInRunningScript(state) {
+    return state.variableValuesInRunningScript;
+  }
+});
 
 /***/ }),
 
@@ -51858,492 +52396,218 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _state_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./state.js */ "./resources/js/store/state.js");
+/* harmony import */ var _getters_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./getters.js */ "./resources/js/store/getters.js");
+/* harmony import */ var _mutations_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mutations.js */ "./resources/js/store/mutations.js");
+/* harmony import */ var _actions_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions.js */ "./resources/js/store/actions.js");
 
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
-/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
-  state: {
-    /**
-     * массив всех скриптов
-     */
-    scripts: [],
 
-    /**
-     * id текущего скрипта (из роутинга)
-     */
-    currentScriptId: 0,
 
-    /**
-     * массив из полных объектов вопросов в текущем скрипте
-     */
-    questionsInCurrentScript: [],
 
-    /**
-     * массив всех статусов ответов
-     */
-    answerStatuses: [],
-
-    /**
-     * массив переменных в текущем скрипте
-     */
-    variablesInCurrentScript: [],
-
-    /**
-     * массив значений переменных в текущем запущенном скрипте
-     */
-    variableValuesInRunningScript: []
-  },
-  getters: {
-    /**
-     * Массив всех скриптов
-     *
-     * @param state
-     * @returns {[]|*[]|HTMLCollectionOf<HTMLScriptElement>}
-     */
-    scriptsList: function scriptsList(state) {
-      return state.scripts;
-    },
-
-    /**
-     * Id текущего скрипта
-     *
-     * @param state
-     * @returns {number}
-     */
-    currentScriptId: function currentScriptId(state) {
-      return state.currentScriptId;
-    },
-
-    /**
-     * Вопросы в текущем скрипте
-     *
-     * @param state
-     * @returns {Array}
-     */
-    questionsInCurrentScript: function questionsInCurrentScript(state) {
-      return state.questionsInCurrentScript;
-    },
-
-    /**
-     * Статусы ответов
-     *
-     * @param state
-     * @returns {[]|*[]}
-     */
-    answerStatusesList: function answerStatusesList(state) {
-      return state.answerStatuses;
-    },
-
-    /**
-     * Переменные в текущем скрипте
-     *
-     * @param state
-     * @returns {any}
-     */
-    variablesInCurrentScript: function variablesInCurrentScript(state) {
-      return state.variablesInCurrentScript;
-    },
-
-    /**
-     * Значения переменных в текущем запущенном скрипте
-     *
-     * @param state
-     * @returns {[]|*[]}
-     */
-    valuesOfVariableInRunningScript: function valuesOfVariableInRunningScript(state) {
-      return state.variableValuesInRunningScript;
-    }
-  },
-  mutations: {
-    /**
-     * Добавить все скрипты
-     *
-     * @param state
-     * @param scripts
-     */
-    setScriptsList: function setScriptsList(state, scripts) {
-      state.scripts = scripts;
-    },
-
-    /**
-     * Добавить созданный скрипт
-     *
-     * @param state
-     * @param script
-     */
-    addItemScripts: function addItemScripts(state, script) {
-      state.scripts.push(script);
-    },
-
-    /**
-     * Добавить все статусы ответов
-     *
-     * @param state
-     * @param answerStatuses
-     */
-    setAnswerStatuses: function setAnswerStatuses(state, answerStatuses) {
-      state.answerStatuses = answerStatuses;
-    },
-
-    /**
-     * Добавить статус ответа
-     *
-     * @param state
-     * @param status
-     */
-    addAnswerStatus: function addAnswerStatus(state, status) {
-      state.answerStatuses.push(status);
-    },
-
-    /**
-     * Установить текущей id скрипта
-     *
-     * @param state
-     * @param id
-     */
-    setCurrentScriptId: function setCurrentScriptId(state, id) {
-      state.currentScriptId = id;
-    },
-
-    /**
-     * Установить все вопросы для текущего скрипта
-     *
-     * @param state
-     * @param questions
-     */
-    setQuestionsInCurrentScriptInState: function setQuestionsInCurrentScriptInState(state, questions) {
-      state.questionsInCurrentScript = questions;
-    },
-
-    /**
-     * Добавить вопрос в список вопросов текущего скрипта
-     *
-     * @param state
-     * @param question
-     */
-    addQuestionInCurrentScriptInState: function addQuestionInCurrentScriptInState(state, question) {
-      state.questionsInCurrentScript.push(question);
-    },
-
-    /**
-     * Удалить вопрос из текущего скрипта
-     *
-     * @param state
-     * @param questionId
-     */
-    deleteQuestionInCurrentScriptInState: function deleteQuestionInCurrentScriptInState(state, questionId) {
-      state.questionsInCurrentScript = state.questionsInCurrentScript.filter(function (el) {
-        return el.id != questionId;
-      });
-    } // setVariablesInCurrentScriptInState (state, variables) {
-    //     state.variablesInCurrentScript = variables;
-    // },
-    // setValueOfVariableInRunningScriptInState (state, variables) {
-    //     state.variableValuesInRunningScript = variables;
-    // }
-
-  },
-  actions: {
-    /**
-     * Установить текущий id скрипта
-     *
-     * @param context
-     * @param id
-     */
-    setCurrentScriptId: function setCurrentScriptId(context, id) {
-      context.commit('setCurrentScriptId', id);
-    },
-
-    /**
-     * Получить все скрипты
-     *
-     * @param context
-     * @returns {Promise<*>}
-     */
-    getScripts: function getScripts(context) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _yield$axios$get, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/script');
-
-              case 3:
-                _yield$axios$get = _context.sent;
-                data = _yield$axios$get.data;
-                context.commit('setScriptsList', data);
-                _context.next = 12;
-                break;
-
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](0);
-                console.error(_context.t0);
-                return _context.abrupt("return", _context.t0);
-
-              case 12:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 8]]);
-      }))();
-    },
-
-    /**
-     * Создать скрипт
-     *
-     * @param context
-     * @param payload
-     * @returns {Promise<boolean|*>}
-     */
-    createScript: function createScript(context, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _yield$axios$post, status, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/script/create', payload);
-
-              case 3:
-                _yield$axios$post = _context2.sent;
-                status = _yield$axios$post.status;
-                data = _yield$axios$post.data;
-
-                if (!(201 == status)) {
-                  _context2.next = 9;
-                  break;
-                }
-
-                context.commit('addItemScripts', data);
-                return _context2.abrupt("return", true);
-
-              case 9:
-                return _context2.abrupt("return", false);
-
-              case 12:
-                _context2.prev = 12;
-                _context2.t0 = _context2["catch"](0);
-                console.error(error);
-                return _context2.abrupt("return", error);
-
-              case 16:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[0, 12]]);
-      }))();
-    },
-
-    /**
-     * Установить все вопросы для текущего скрипта
-     *
-     * @param context
-     * @returns {Promise<boolean>}
-     */
-    setQuestionsInCurrentScript: function setQuestionsInCurrentScript(context) {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var _yield$axios$get2, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/question/getQuestionsByScriptId/?id=' + _this.getters.currentScriptId);
-
-              case 2:
-                _yield$axios$get2 = _context3.sent;
-                data = _yield$axios$get2.data;
-                context.commit('setQuestionsInCurrentScriptInState', data);
-                return _context3.abrupt("return", true);
-
-              case 6:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3);
-      }))();
-    },
-
-    /**
-     * Создать вопрос
-     *
-     * @param context
-     * @param payload
-     * @returns {Promise<{data: T, status: number}|*>}
-     */
-    createQuestion: function createQuestion(context, payload) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var _yield$axios$post2, status, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.prev = 0;
-                _context4.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/question/create', payload);
-
-              case 3:
-                _yield$axios$post2 = _context4.sent;
-                status = _yield$axios$post2.status;
-                data = _yield$axios$post2.data;
-
-                if (201 == status) {
-                  context.commit('addQuestionInCurrentScriptInState', data);
-                }
-
-                return _context4.abrupt("return", {
-                  status: status,
-                  data: data
-                });
-
-              case 10:
-                _context4.prev = 10;
-                _context4.t0 = _context4["catch"](0);
-                console.error(error);
-                return _context4.abrupt("return", error);
-
-              case 14:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[0, 10]]);
-      }))();
-    },
-
-    /**
-     * Обновить вопрос
-     *
-     * @param context
-     * @param id
-     * @param data
-     * @returns {Promise<AxiosResponse<T>>}
-     */
-    // todo: сделать еще и комит
-    updateQuestion: function updateQuestion(context, _ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var id, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                id = _ref.id, data = _ref.data;
-                return _context5.abrupt("return", axios__WEBPACK_IMPORTED_MODULE_3___default.a.patch('/api/question/update/?id=' + id, data));
-
-              case 2:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
-
-    /**
-     * Удалить вопрос
-     *
-     * @param context
-     * @param id
-     * @returns {Promise<void>}
-     */
-    deleteQuestion: function deleteQuestion(context, id) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var _yield$axios$delete, status;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                _context6.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a["delete"]('/api/question/delete/?id=' + id);
-
-              case 2:
-                _yield$axios$delete = _context6.sent;
-                status = _yield$axios$delete.status;
-
-                if (200 == status) {
-                  context.commit('deleteQuestionInCurrentScriptInState', id);
-                }
-
-              case 5:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6);
-      }))();
-    },
-
-    /**
-     * Получить все статусы ответов
-     *
-     * @param context
-     * @returns {Promise<*>}
-     */
-    getAnswerStatuses: function getAnswerStatuses(context) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
-        var _yield$axios$get3, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                _context7.prev = 0;
-                _context7.next = 3;
-                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/status');
-
-              case 3:
-                _yield$axios$get3 = _context7.sent;
-                data = _yield$axios$get3.data;
-                context.commit('setAnswerStatuses', data);
-                _context7.next = 12;
-                break;
-
-              case 8:
-                _context7.prev = 8;
-                _context7.t0 = _context7["catch"](0);
-                console.error(_context7.t0);
-                return _context7.abrupt("return", _context7.t0);
-
-              case 12:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7, null, [[0, 8]]);
-      }))();
-    }
-  }
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  state: _state_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+  getters: _getters_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+  mutations: _mutations_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+  actions: _actions_js__WEBPACK_IMPORTED_MODULE_6__["default"]
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/mutations.js":
+/*!*****************************************!*\
+  !*** ./resources/js/store/mutations.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /**
+   * Добавить все скрипты
+   *
+   * @param state
+   * @param scripts
+   */
+  setScriptsList: function setScriptsList(state, scripts) {
+    state.scripts = scripts;
+  },
+
+  /**
+   * Добавить созданный скрипт
+   *
+   * @param state
+   * @param script
+   */
+  addItemScripts: function addItemScripts(state, script) {
+    state.scripts.push(script);
+  },
+
+  /**
+   * Добавить все статусы ответов
+   *
+   * @param state
+   * @param answerStatuses
+   */
+  setAnswerStatuses: function setAnswerStatuses(state, answerStatuses) {
+    state.answerStatuses = answerStatuses;
+  },
+
+  /**
+   * Добавить статус ответа
+   *
+   * @param state
+   * @param status
+   */
+  addAnswerStatus: function addAnswerStatus(state, status) {
+    state.answerStatuses.push(status);
+  },
+
+  /**
+   * Установить текущей id скрипта
+   *
+   * @param state
+   * @param id
+   */
+  setCurrentScriptId: function setCurrentScriptId(state, id) {
+    state.currentScriptId = id;
+  },
+
+  /**
+   * Установить все вопросы для текущего скрипта
+   *
+   * @param state
+   * @param questions
+   */
+  setQuestionsInCurrentScriptInState: function setQuestionsInCurrentScriptInState(state, questions) {
+    state.questionsInCurrentScript = questions;
+  },
+
+  /**
+   * Добавить вопрос в список вопросов текущего скрипта
+   *
+   * @param state
+   * @param question
+   */
+  addQuestionInCurrentScriptInState: function addQuestionInCurrentScriptInState(state, question) {
+    state.questionsInCurrentScript.push(question);
+  },
+
+  /**
+   * Удалить вопрос из текущего скрипта
+   *
+   * @param state
+   * @param questionId
+   */
+  deleteQuestionInCurrentScriptInState: function deleteQuestionInCurrentScriptInState(state, questionId) {
+    state.questionsInCurrentScript = state.questionsInCurrentScript.filter(function (el) {
+      return el.id != questionId;
+    });
+  },
+
+  /**
+   * Установить все переменные для текущего скрипта
+   *
+   * @param state
+   * @param variables
+   */
+  setVariablesInCurrentScriptInState: function setVariablesInCurrentScriptInState(state, variables) {
+    state.variablesInCurrentScript = variables;
+  },
+
+  /**
+   * Добавить переменную в список вопросов текущего скрипта
+   *
+   * @param state
+   * @param variable
+   */
+  addVariableInCurrentScriptInState: function addVariableInCurrentScriptInState(state, variable) {
+    state.variablesInCurrentScript.push(variable);
+  },
+
+  /**
+   * Обновить переменную в сторе
+   *
+   * @param state
+   * @param variable
+   */
+  updateVariableInCurrentScriptInState: function updateVariableInCurrentScriptInState(state, variable) {
+    state.variablesInCurrentScript = state.variablesInCurrentScript.map(function (el) {
+      if (el.id == variable.id) {
+        return variable;
+      }
+
+      return el;
+    });
+  },
+
+  /**
+   * Удалить переменную из текущего скрипта
+   *
+   * @param state
+   * @param variableId
+   */
+  deleteVariableInCurrentScriptInState: function deleteVariableInCurrentScriptInState(state, variableId) {
+    state.variablesInCurrentScript = state.variablesInCurrentScript.filter(function (el) {
+      return el.id != variableId;
+    });
+  } // setValueOfVariableInRunningScriptInState (state, variables) {
+  //     state.variableValuesInRunningScript = variables;
+  // }
+
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/state.js":
+/*!*************************************!*\
+  !*** ./resources/js/store/state.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /**
+   * массив всех скриптов
+   */
+  scripts: [],
+
+  /**
+   * id текущего скрипта (из роутинга)
+   */
+  currentScriptId: 0,
+
+  /**
+   * массив из полных объектов вопросов в текущем скрипте
+   */
+  questionsInCurrentScript: [],
+
+  /**
+   * массив всех статусов ответов
+   */
+  answerStatuses: [],
+
+  /**
+   * массив переменных в текущем скрипте
+   */
+  variablesInCurrentScript: [],
+
+  /**
+   * массив значений переменных в текущем запущенном скрипте
+   */
+  variableValuesInRunningScript: []
+});
 
 /***/ }),
 

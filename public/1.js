@@ -9,6 +9,27 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -30,9 +51,131 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "discussion",
-  props: ['questions', 'answers']
+  props: ['questions', 'answers'],
+  data: function data() {
+    return {
+      name: '',
+
+      /**
+       * массив названий переменных для скрипта
+       */
+      replaceArray: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _this.$store.dispatch('setCurrentScriptId', _this.$route.params.id);
+
+              _context.next = 3;
+              return _this.$store.dispatch('setVariablesInCurrentScript');
+
+            case 3:
+              _this.replaceArray = _this.createAndGetReplaceArray();
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['currentScriptId', 'variablesInCurrentScript'])), {}, {
+    /**
+     * Заменяет в массиве this.questions то, что является переменной значением из input
+     *
+     * @returns {*[]}
+     * @constructor
+     */
+    QuestionWithReplace: function QuestionWithReplace() {
+      var newAr = [];
+      var comp = {};
+
+      var _iterator = _createForOfIteratorHelper(this.questions),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var question = _step.value;
+
+          for (var i = 0; i < this.replaceArray.length; i++) {
+            comp.text = question.text.replace(new RegExp('{' + this.replaceArray[i] + '}', 'gi'), '{' + this.replaceArray[i] + '}' + this.name);
+          }
+
+          newAr.push(comp);
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+
+      return newAr;
+    }
+  }),
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['setVariablesInCurrentScript'])), {}, {
+    /**
+     * тестирую @инпут
+     *
+     * буду брать значение и менять
+     */
+    inputTest: function inputTest(code, eventVal) {
+      console.log(code);
+      console.log(eventVal);
+    },
+
+    /**
+     * создает и возвращает массив с именами переменных
+     */
+    createAndGetReplaceArray: function createAndGetReplaceArray() {
+      var replaceArray = [];
+
+      var _iterator2 = _createForOfIteratorHelper(this.variablesInCurrentScript),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var question = _step2.value;
+          replaceArray.push(question.name);
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+
+      return replaceArray;
+    }
+  })
 });
 
 /***/ }),
@@ -233,6 +376,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               if (data.length) {
                 _this.questions = data;
                 _this.currentQuestionId = _this.questions[0].id;
+              } else {
+                alert('В редактировании скрипта не указан начальный вопрос');
               }
 
             case 6:
@@ -430,22 +575,45 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.questions, function(question, key) {
-      return _c("div", { key: key, staticClass: "discussion" }, [
-        _c("div", {
-          staticClass: "bubble sender first",
-          domProps: { innerHTML: _vm._s(question.text) }
-        }),
-        _vm._v(" "),
-        _vm.answers[key]
-          ? _c("div", {
-              staticClass: "bubble recipient first",
-              domProps: { innerHTML: _vm._s(_vm.answers[key].name) }
+    [
+      _vm._l(_vm.QuestionWithReplace, function(question, key) {
+        return _c("div", { key: key, staticClass: "discussion" }, [
+          _c("div", {
+            staticClass: "bubble sender first",
+            domProps: { innerHTML: _vm._s(question.text) }
+          }),
+          _vm._v(" "),
+          _vm.answers[key]
+            ? _c("div", {
+                staticClass: "bubble recipient first",
+                domProps: { innerHTML: _vm._s(_vm.answers[key].name) }
+              })
+            : _vm._e()
+        ])
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.variablesInCurrentScript, function(variable) {
+        return _c("div", { key: variable.id, staticClass: "variables" }, [
+          _c("div", { staticClass: "input-group-sm" }, [
+            _c("label", { attrs: { for: variable.code } }, [
+              _vm._v(
+                "\n                " + _vm._s(variable.name) + "\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              attrs: { id: variable.code, type: "text" },
+              on: {
+                input: function($event) {
+                  return _vm.inputTest(variable.code, $event.target.value)
+                }
+              }
             })
-          : _vm._e()
-      ])
-    }),
-    0
+          ])
+        ])
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []

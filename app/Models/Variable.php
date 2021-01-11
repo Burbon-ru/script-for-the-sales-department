@@ -10,7 +10,8 @@ class Variable extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name'
+        'name',
+        'code'
     ];
 
 }

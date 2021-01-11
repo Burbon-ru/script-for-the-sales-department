@@ -489,6 +489,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -989,18 +997,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }
 
                 if (!(201 == status)) {
-                  _context.next = 15;
+                  _context.next = 16;
                   break;
                 }
 
+                _this.$emit('created');
+
                 _this.createIsDone = true;
-                _context.next = 14;
+                _context.next = 15;
                 return Object(_functions_delay_js__WEBPACK_IMPORTED_MODULE_2__["default"])(2);
 
-              case 14:
+              case 15:
                 _this.closeModal();
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -1289,6 +1299,18 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1885,6 +1907,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1926,7 +1955,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       dragOffsetY: null,
       pathCoords: '',
       stylesCoords: '',
-      questionsIsLoaded: false
+      questionsIsLoaded: false,
+      elHelper: Element
     };
   },
   mounted: function mounted() {
@@ -1959,6 +1989,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['currentScriptId', 'questionsInCurrentScript'])),
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['setCurrentScriptId', 'setQuestionsInCurrentScript'])), {}, {
     /**
+     * Если создался новый вопрос, обновим данные в сторе
+     */
+    updateQuestions: function updateQuestions() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.questionsIsLoaded = false;
+                _context2.next = 3;
+                return _this2.$store.dispatch('setQuestionsInCurrentScript');
+
+              case 3:
+                _this2.questionsIsLoaded = _context2.sent;
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+
+    /**
      * эмитится из компонента answer при перетаскивании линии
      * для привязки к вопросу
      */
@@ -1986,8 +2043,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       if (test.classList.contains('for_bind')) {
         this.currentEditQuestionId = test.id;
+        this.elHelper = test;
+        test.setAttribute("fill", "red");
       } else {
         this.currentEditQuestionId = 0;
+
+        if (typeof this.elHelper.attributes !== 'undefined') {
+          this.elHelper.setAttribute("fill", "transparent");
+        }
       }
     },
 
@@ -1998,6 +2061,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.dragOffsetX = this.dragOffsetY = null;
       this.dragEndForBind();
       this.$refs.dynamicLine.removeEventListener('mousemove', this.moveForBind);
+      this.elHelper.setAttribute("fill", "transparent");
+      this.pathCoords = '';
+      this.stylesCoords = '';
     },
 
     /**
@@ -2005,51 +2071,60 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
      * и если мышь с концом линии попала на вопрос обновить вопрос (создать привязку)
      */
     dragEndForBind: function dragEndForBind() {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var _yield$updateAnswer, status;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                if (!_this2.currentEditQuestionId) {
-                  _context2.next = 7;
+                if (!_this3.currentEditQuestionId) {
+                  _context3.next = 12;
                   break;
                 }
 
                 if (!confirm('Привязать к этому элементу?')) {
-                  _context2.next = 7;
+                  _context3.next = 9;
                   break;
                 }
 
-                _context2.next = 4;
+                _context3.next = 4;
                 return Object(_functions_updateStuff_js__WEBPACK_IMPORTED_MODULE_7__["updateAnswer"])({
-                  id: _this2.currentEditAnswerId,
+                  id: _this3.currentEditAnswerId,
                   data: {
-                    next_question_id: _this2.currentEditQuestionId
+                    next_question_id: _this3.currentEditQuestionId
                   }
                 });
 
               case 4:
-                _yield$updateAnswer = _context2.sent;
+                _yield$updateAnswer = _context3.sent;
                 status = _yield$updateAnswer.status;
 
                 if (200 == status) {
-                  _bus__WEBPACK_IMPORTED_MODULE_10__["bus"].$emit('question_is_bind', _this2.currentEditQuestionId);
-                  _this2.pathCoords = '';
-                  _this2.stylesCoords = '';
-                  _this2.currentEditQuestionId = 0;
-                  _this2.currentEditAnswerId = 0;
+                  _bus__WEBPACK_IMPORTED_MODULE_10__["bus"].$emit('question_is_bind', _this3.currentEditQuestionId);
+                  _this3.pathCoords = '';
+                  _this3.stylesCoords = '';
+                  _this3.currentEditQuestionId = 0;
+                  _this3.currentEditAnswerId = 0;
                 }
 
-              case 7:
+                _context3.next = 12;
+                break;
+
+              case 9:
+                _this3.elHelper.setAttribute("fill", "transparent");
+
+                _this3.pathCoords = '';
+                _this3.stylesCoords = '';
+
+              case 12:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
 
@@ -2092,6 +2167,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$refs.dynamicLine.removeEventListener('mousemove', this.move);
       this.$refs.dynamicLine.removeEventListener('mouseup', this.drop);
       this.dragEnd();
+    },
+
+    /**
+     * Сохраняет координаты двойного клика в this.newQuestionCoords
+     * и передает их в компонент создания вопроса
+     * вызывает модальное окно создания вопроса
+     *
+     * @param e {MouseEvent}
+     */
+    createQuestion: function createQuestion(_ref6) {
+      var offsetX = _ref6.offsetX,
+          offsetY = _ref6.offsetY;
+      this.newQuestionCoords = {
+        x: offsetX - this.square.x,
+        y: offsetY - this.square.y
+      };
+      this.updateCreatingUpdatingState('creatingQuestion');
     },
 
     /**
@@ -2149,23 +2241,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       this.currentEditQuestionId = 0;
       this.pathCoords = '';
-    },
-
-    /**
-     * Сохраняет координаты двойного клика в this.newQuestionCoords
-     * и передает их в компонент создания вопроса
-     * вызывает модальное окно создания вопроса
-     *
-     * @param e {MouseEvent}
-     */
-    createQuestion: function createQuestion(_ref6) {
-      var offsetX = _ref6.offsetX,
-          offsetY = _ref6.offsetY;
-      this.newQuestionCoords = {
-        x: offsetX - this.square.x,
-        y: offsetY - this.square.y
-      };
-      this.updateCreatingUpdatingState('creatingQuestion');
     },
 
     /**
@@ -2756,98 +2831,109 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("g", { on: { mousedown: _vm.drag, mouseup: _vm.drop } }, [
+        _c("text", { attrs: { x: "20", y: "24", fill: "#000" } }, [
+          _vm._v("\n            " + _vm._s(_vm.answer.name) + "\n        ")
+        ]),
+        _vm._v(" "),
         _c("rect", {
           staticClass: "answer",
           attrs: {
             width: "200",
             height: "40",
-            fill: "#fff",
+            fill: "transparent",
             stroke: _vm.blockColor,
             "stroke-width": "2"
           }
-        }),
-        _vm._v(" "),
-        _c("text", { attrs: { x: "20", y: "24", fill: "#000" } }, [
-          _vm._v("\n            " + _vm._s(_vm.answer.name) + "\n        ")
-        ])
+        })
       ]),
       _vm._v(" "),
-      _c("circle", {
-        attrs: {
-          cy: "40",
-          cx: "100",
-          r: "10",
-          stroke: "#cfcfcf",
-          "stroke-width": "1",
-          fill: "#fff"
-        }
-      }),
-      _vm._v(" "),
-      _c("path", {
-        staticClass: "question add-answer",
-        staticStyle: { fill: "#2f700f" },
-        attrs: {
-          d:
-            "M108.66,48.66h2.57a.51.51,0,0,0,.51-.51v-.34a.51.51,0,0,0-.51-.52h-2.57V44.73a.51.51,0,0,0-.51-.52h-.34a.52.52,0,0,0-.52.52v2.56h-2.56a.52.52,0,0,0-.52.52v.34a.51.51,0,0,0,.52.51h2.56v2.57a.51.51,0,0,0,.52.51h.34a.51.51,0,0,0,.51-.51Z",
-          y: "0",
-          x: "280",
-          transform: "translate(-40 -22) scale(1.3)",
-          width: "80",
-          height: "80"
+      _c(
+        "g",
+        {
+          staticClass: "question add-answer",
+          on: { mousedown: _vm.bindToNextQuestion }
         },
-        on: { mousedown: _vm.bindToNextQuestion }
-      }),
+        [
+          _c("circle", {
+            attrs: {
+              cy: "40",
+              cx: "100",
+              r: "10",
+              stroke: "#cfcfcf",
+              "stroke-width": "1",
+              fill: "#fff"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            staticStyle: { fill: "#2f700f" },
+            attrs: {
+              d:
+                "M108.66,48.66h2.57a.51.51,0,0,0,.51-.51v-.34a.51.51,0,0,0-.51-.52h-2.57V44.73a.51.51,0,0,0-.51-.52h-.34a.52.52,0,0,0-.52.52v2.56h-2.56a.52.52,0,0,0-.52.52v.34a.51.51,0,0,0,.52.51h2.56v2.57a.51.51,0,0,0,.52.51h.34a.51.51,0,0,0,.51-.51Z",
+              y: "0",
+              x: "280",
+              transform: "translate(-40 -22) scale(1.3)",
+              width: "80",
+              height: "80"
+            }
+          })
+        ]
+      ),
       _vm._v(" "),
-      _c("circle", {
-        attrs: {
-          cy: "0",
-          cx: "200",
-          r: "10",
-          stroke: "#f58d0f",
-          "stroke-width": "2",
-          fill: "white"
-        },
-        on: { click: _vm.editAnswer }
-      }),
+      _c(
+        "g",
+        { staticClass: "answer edit-answer", on: { click: _vm.editAnswer } },
+        [
+          _c("circle", {
+            attrs: {
+              cy: "0",
+              cx: "200",
+              r: "10",
+              stroke: "#f58d0f",
+              "stroke-width": "2",
+              fill: "white"
+            }
+          }),
+          _vm._v(" "),
+          _c("path", {
+            attrs: {
+              d:
+                "M206.68,11.07l-2-2,4.83-4.83,2,2Zm-2.19-1.65,1.83,1.83-2.74.92Zm7.63-3.8-.35.35-2-2,.35-.35a.89.89,0,0,1,1.26,0l.74.74A.89.89,0,0,1,212.12,5.62Z",
+              width: "80",
+              height: "80",
+              x: "200",
+              transform: "translate(-70 -10) scale(1.3)",
+              fill: "#4294ff"
+            }
+          })
+        ]
+      ),
       _vm._v(" "),
-      _c("path", {
-        staticClass: "answer edit-answer",
-        attrs: {
-          d:
-            "M206.68,11.07l-2-2,4.83-4.83,2,2Zm-2.19-1.65,1.83,1.83-2.74.92Zm7.63-3.8-.35.35-2-2,.35-.35a.89.89,0,0,1,1.26,0l.74.74A.89.89,0,0,1,212.12,5.62Z",
-          width: "80",
-          height: "80",
-          x: "200",
-          transform: "translate(-70 -10) scale(1.3)",
-          fill: "#4294ff"
-        }
-      }),
-      _vm._v(" "),
-      _c("circle", {
-        attrs: {
-          cy: "0",
-          cx: "0",
-          r: "10",
-          stroke: "#cfcfcf",
-          "stroke-width": "1",
-          fill: "#fff"
-        }
-      }),
-      _vm._v(" "),
-      _c("path", {
-        staticClass: "answer delete",
-        staticStyle: { fill: "#f00" },
-        attrs: {
-          d:
-            "M9,8l1.81-1.82a.51.51,0,0,0,0-.72l-.24-.24a.52.52,0,0,0-.73,0L8,7,6.16,5.2a.49.49,0,0,0-.72,0l-.24.24a.49.49,0,0,0,0,.72L7,8,5.2,9.79a.52.52,0,0,0,0,.73l.24.24a.51.51,0,0,0,.72,0L8,9l1.81,1.81a.52.52,0,0,0,.73,0l.24-.24a.52.52,0,0,0,0-.73Z",
-          y: "0",
-          x: "360",
-          transform: "translate(-12 -12) scale(1.5)",
-          width: "80",
-          height: "80"
-        },
-        on: { click: _vm.deleteA }
-      })
+      _c("g", { staticClass: "answer delete", on: { click: _vm.deleteA } }, [
+        _c("circle", {
+          attrs: {
+            cy: "0",
+            cx: "0",
+            r: "10",
+            stroke: "#cfcfcf",
+            "stroke-width": "1",
+            fill: "#fff"
+          }
+        }),
+        _vm._v(" "),
+        _c("path", {
+          staticStyle: { fill: "#f00" },
+          attrs: {
+            d:
+              "M9,8l1.81-1.82a.51.51,0,0,0,0-.72l-.24-.24a.52.52,0,0,0-.73,0L8,7,6.16,5.2a.49.49,0,0,0-.72,0l-.24.24a.49.49,0,0,0,0,.72L7,8,5.2,9.79a.52.52,0,0,0,0,.73l.24.24a.51.51,0,0,0,.72,0L8,9l1.81,1.81a.52.52,0,0,0,.73,0l.24-.24a.52.52,0,0,0,0-.73Z",
+            y: "0",
+            x: "360",
+            transform: "translate(-16 -16) scale(2)",
+            width: "80",
+            height: "80"
+          }
+        })
+      ])
     ]
   )
 }
@@ -3270,105 +3356,144 @@ var render = function() {
           attrs: { id: _vm.question.id, transform: _vm.stylesCoords }
         },
         [
-          _c("g", { on: { mousedown: _vm.drag, mouseup: _vm.drop } }, [
-            _c("rect", {
-              staticClass: "question for_bind",
-              attrs: {
-                id: _vm.question.id,
-                width: "200",
-                height: "40",
-                fill: "#fff",
-                stroke: "#cfcfcf",
-                "stroke-width": "1"
-              }
-            }),
-            _vm._v(" "),
-            _c("text", { attrs: { fill: "#000", y: "24", x: "30" } }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.question.name) +
-                  "\n            "
-              )
-            ])
-          ]),
+          _c(
+            "g",
+            { on: { mousedown: _vm.drag, mouseup: _vm.drop } },
+            [
+              _c(
+                "foreignObject",
+                { attrs: { x: "0", y: "15", width: "100", height: "150" } },
+                [
+                  _c(
+                    "div",
+                    { attrs: { xmlns: "http://www.w3.org/1999/xhtml" } },
+                    [
+                      _c(
+                        "text",
+                        { attrs: { fill: "#000", y: "24", x: "30" } },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.question.name) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("rect", {
+                staticClass: "question for_bind",
+                attrs: {
+                  id: _vm.question.id,
+                  width: "200",
+                  height: "40",
+                  fill: "transparent",
+                  stroke: "#cfcfcf",
+                  "stroke-width": "1"
+                }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("circle", {
-            attrs: {
-              cy: "40",
-              cx: "100",
-              r: "10",
-              stroke: "#cfcfcf",
-              "stroke-width": "1",
-              fill: "#fff"
-            }
-          }),
-          _vm._v(" "),
-          _c("path", {
-            staticClass: "question add-answer",
-            staticStyle: { fill: "#2f700f" },
-            attrs: {
-              d:
-                "M108.66,48.66h2.57a.51.51,0,0,0,.51-.51v-.34a.51.51,0,0,0-.51-.52h-2.57V44.73a.51.51,0,0,0-.51-.52h-.34a.52.52,0,0,0-.52.52v2.56h-2.56a.52.52,0,0,0-.52.52v.34a.51.51,0,0,0,.52.51h2.56v2.57a.51.51,0,0,0,.52.51h.34a.51.51,0,0,0,.51-.51Z",
-              y: "0",
-              x: "280",
-              transform: "translate(-40 -22) scale(1.3)",
-              width: "80",
-              height: "80"
+          _c(
+            "g",
+            {
+              staticClass: "question add-answer",
+              on: { mousedown: _vm.addAnswerMousedown }
             },
-            on: { mousedown: _vm.addAnswerMousedown }
-          }),
+            [
+              _c("circle", {
+                attrs: {
+                  cy: "40",
+                  cx: "100",
+                  r: "10",
+                  stroke: "#cfcfcf",
+                  "stroke-width": "1",
+                  fill: "#fff"
+                }
+              }),
+              _vm._v(" "),
+              _c("path", {
+                staticStyle: { fill: "#2f700f" },
+                attrs: {
+                  d:
+                    "M108.66,48.66h2.57a.51.51,0,0,0,.51-.51v-.34a.51.51,0,0,0-.51-.52h-2.57V44.73a.51.51,0,0,0-.51-.52h-.34a.52.52,0,0,0-.52.52v2.56h-2.56a.52.52,0,0,0-.52.52v.34a.51.51,0,0,0,.52.51h2.56v2.57a.51.51,0,0,0,.52.51h.34a.51.51,0,0,0,.51-.51Z",
+                  y: "0",
+                  x: "280",
+                  transform: "translate(-40 -22) scale(1.3)",
+                  width: "80",
+                  height: "80"
+                }
+              })
+            ]
+          ),
           _vm._v(" "),
-          _c("circle", {
-            attrs: {
-              cy: "0",
-              cx: "200",
-              r: "10",
-              stroke: "#cfcfcf",
-              "stroke-width": "1",
-              fill: "#fff"
-            }
-          }),
-          _vm._v(" "),
-          _c("path", {
-            staticClass: "question edit-question",
-            staticStyle: { fill: "#4294ff" },
-            attrs: {
-              d:
-                "M206.68,11.07l-2-2,4.83-4.83,2,2Zm-2.19-1.65,1.83,1.83-2.74.92Zm7.63-3.8-.35.35-2-2,.35-.35a.89.89,0,0,1,1.26,0l.74.74A.89.89,0,0,1,212.12,5.62Z",
-              y: "0",
-              x: "200",
-              transform: "translate(-70 -10) scale(1.3)",
-              width: "80",
-              height: "80"
+          _c(
+            "g",
+            {
+              staticClass: "question edit-question",
+              on: { click: _vm.editQuestion }
             },
-            on: { click: _vm.editQuestion }
-          }),
+            [
+              _c("circle", {
+                attrs: {
+                  cy: "0",
+                  cx: "200",
+                  r: "10",
+                  stroke: "#cfcfcf",
+                  "stroke-width": "1",
+                  fill: "#fff"
+                }
+              }),
+              _vm._v(" "),
+              _c("path", {
+                staticStyle: { fill: "#4294ff" },
+                attrs: {
+                  d:
+                    "M206.68,11.07l-2-2,4.83-4.83,2,2Zm-2.19-1.65,1.83,1.83-2.74.92Zm7.63-3.8-.35.35-2-2,.35-.35a.89.89,0,0,1,1.26,0l.74.74A.89.89,0,0,1,212.12,5.62Z",
+                  y: "0",
+                  x: "200",
+                  transform: "translate(-70 -10) scale(1.3)",
+                  width: "80",
+                  height: "80"
+                }
+              })
+            ]
+          ),
           _vm._v(" "),
-          _c("circle", {
-            attrs: {
-              cy: "0",
-              cx: "0",
-              r: "10",
-              stroke: "#cfcfcf",
-              "stroke-width": "1",
-              fill: "#fff"
-            }
-          }),
-          _vm._v(" "),
-          _c("path", {
-            staticClass: "question delete",
-            staticStyle: { fill: "#f00" },
-            attrs: {
-              d:
-                "M9,8l1.81-1.82a.51.51,0,0,0,0-.72l-.24-.24a.52.52,0,0,0-.73,0L8,7,6.16,5.2a.49.49,0,0,0-.72,0l-.24.24a.49.49,0,0,0,0,.72L7,8,5.2,9.79a.52.52,0,0,0,0,.73l.24.24a.51.51,0,0,0,.72,0L8,9l1.81,1.81a.52.52,0,0,0,.73,0l.24-.24a.52.52,0,0,0,0-.73Z",
-              y: "0",
-              x: "360",
-              transform: "translate(-12 -12) scale(1.5)",
-              width: "80",
-              height: "80"
-            },
-            on: { click: _vm.deleteQ }
-          })
+          _c(
+            "g",
+            { staticClass: "question delete", on: { click: _vm.deleteQ } },
+            [
+              _c("circle", {
+                attrs: {
+                  cy: "0",
+                  cx: "0",
+                  r: "10",
+                  stroke: "#cfcfcf",
+                  "stroke-width": "1",
+                  fill: "#fff"
+                }
+              }),
+              _vm._v(" "),
+              _c("path", {
+                staticStyle: { fill: "#f00" },
+                attrs: {
+                  d:
+                    "M9,8l1.81-1.82a.51.51,0,0,0,0-.72l-.24-.24a.52.52,0,0,0-.73,0L8,7,6.16,5.2a.49.49,0,0,0-.72,0l-.24.24a.49.49,0,0,0,0,.72L7,8,5.2,9.79a.52.52,0,0,0,0,.73l.24.24a.51.51,0,0,0,.72,0L8,9l1.81,1.81a.52.52,0,0,0,.73,0l.24-.24a.52.52,0,0,0,0-.73Z",
+                  y: "0",
+                  x: "360",
+                  transform: "translate(-12 -12) scale(1.5)",
+                  width: "80",
+                  height: "80"
+                }
+              })
+            ]
+          )
         ]
       ),
       _vm._v(" "),
@@ -3416,6 +3541,14 @@ var render = function() {
     "div",
     { staticClass: "edit-script__wrapper" },
     [
+      0 == _vm.questionsInCurrentScript.length && _vm.questionsIsLoaded
+        ? _c("div", [
+            _vm._v(
+              "\n        Для создания вопроса кликните 2 раза левой кнопкой мыши\n    "
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "svg",
         {
@@ -3464,7 +3597,10 @@ var render = function() {
       _vm.CreatingUpdatingState.creatingQuestion
         ? _c("create-question", {
             attrs: { newQuestionCoords: _vm.newQuestionCoords },
-            on: { "close-modal": _vm.closeAllModal }
+            on: {
+              "close-modal": _vm.closeAllModal,
+              created: _vm.updateQuestions
+            }
           })
         : _vm._e(),
       _vm._v(" "),
