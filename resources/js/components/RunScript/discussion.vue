@@ -48,18 +48,20 @@
         props: ['questions', 'answers'],
 
         data: () => ({
-            name: '',
 
             /**
-             * массив названий переменных для скрипта
+             * Map код => значение переменных для скрипта
              */
-            replaceArray: []
+            replaceMap: new Map()
         }),
 
         async mounted () {
             this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
             await this.$store.dispatch('setVariablesInCurrentScript');
-            this.replaceArray = this.createAndGetReplaceArray();
+
+            for (const variable of this.variablesInCurrentScript) {
+                this.replaceMap.set(variable.code, '');
+            }
         },
 
         computed: {
@@ -79,10 +81,10 @@
                 let comp = {};
 
                 for (const question of this.questions) {
-                    for (let i = 0; i < this.replaceArray.length; i++) {
+                    for (let [code, val] of this.replaceMap) {
                         comp.text = question.text.replace(
-                            new RegExp('{' + this.replaceArray[i] + '}', 'gi'),
-                            '{' + this.replaceArray[i] + '}' + this.name
+                            new RegExp('{' + code + '}', 'gi'),
+                            '{' + code + '}' + val
                         );
                     }
 
@@ -103,24 +105,13 @@
              *
              * буду брать значение и менять
              */
-            inputTest (code, eventVal) {
-                console.log(code);
-                console.log(eventVal);
-
-
-            },
-
-            /**
-             * создает и возвращает массив с именами переменных
-             */
-            createAndGetReplaceArray () {
-                const replaceArray = [];
-
-                for (const question of this.variablesInCurrentScript) {
-                    replaceArray.push(question.name);
+            inputTest (code, inputVal) {
+                for (let [key, val] of this.replaceMap) {
+                    if (key == code) {
+                        console.log(code, inputVal);
+                        this.replaceMap.set(code, inputVal);
+                    }
                 }
-
-                return replaceArray;
             }
         }
     }
