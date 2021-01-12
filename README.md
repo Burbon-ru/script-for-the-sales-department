@@ -25,8 +25,22 @@ php artisan migrate --seed
 ````
 npm install
 ````
-
-## Как использовать
+***
+## Запуск
 
 - ```npm run watch``` или ```npm run dev```
 - ```php artisan serve```
+***
+
+## Backend
+### Таблицы:
+* scripts
+* questions
+* answers
+* statuses
+* variables
+***
+
+## Frontend
+Нет модульности, но есть отображения views/example.vue (сейчас 4 компонента, они все используются в роутере) в папки находящихся в components/example  
+Т.е., например, views/EditScript.vue использует компоненты из папки components/EditScript
