@@ -2,7 +2,7 @@
     <div>
         <div
             class="discussion"
-            v-for="(question, key) in QuestionWithReplace"
+            v-for="(question, key) in questions"
             :key="key"
         >
             <div
@@ -50,7 +50,7 @@
         data: () => ({
 
             /**
-             * Map код => значение переменных для скрипта
+             * Map: код => значение переменных для скрипта
              */
             replaceMap: new Map()
         }),
