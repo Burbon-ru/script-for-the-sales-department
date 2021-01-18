@@ -2,7 +2,7 @@
     <div>
         <div
             class="discussion"
-            v-for="(question, key) in questions"
+            v-for="(question, key) in questionWithReplace"
             :key="key"
         >
             <div
@@ -32,7 +32,7 @@
                 <input
                     :id="variable.code"
                     type="text"
-                    @input="inputTest(variable.code, $event.target.value)"
+                    @input="changeVariableValue(variable.code, $event.target.value)"
                 />
             </div>
         </div>
@@ -52,7 +52,9 @@
             /**
              * Map: код => значение переменных для скрипта
              */
-            replaceMap: new Map()
+            replaceMap: new Map(),
+
+            questionWithReplace: []
         }),
 
         async mounted () {
@@ -64,35 +66,22 @@
             }
         },
 
+        watch: {
+
+            /**
+             * Это когда из родителя придут данные о вопросах
+             * (это почти как вызов в mounted)
+             */
+            questions (val) {
+                this.questionWithReplace = this.getQuestionWithReplace();
+            }
+        },
+
         computed: {
             ...mapGetters([
                 'currentScriptId',
                 'variablesInCurrentScript'
-            ]),
-
-            /**
-             * Заменяет в массиве this.questions то, что является переменной значением из input
-             *
-             * @returns {*[]}
-             * @constructor
-             */
-            QuestionWithReplace () {
-                const newAr = [];
-                let comp = {};
-
-                for (const question of this.questions) {
-                    for (let [code, val] of this.replaceMap) {
-                        comp.text = question.text.replace(
-                            new RegExp('{' + code + '}', 'gi'),
-                            '{' + code + '}' + val
-                        );
-                    }
-
-                    newAr.push(comp);
-                }
-
-                return newAr;
-            }
+            ])
         },
 
         methods: {
@@ -101,17 +90,43 @@
             ]),
 
             /**
-             * тестирую @инпут
-             *
-             * буду брать значение и менять
+             * Событие изменения значения переменной.
              */
-            inputTest (code, inputVal) {
+            changeVariableValue (code, inputVal) {
                 for (let [key, val] of this.replaceMap) {
                     if (key == code) {
-                        console.log(code, inputVal);
                         this.replaceMap.set(code, inputVal);
                     }
                 }
+
+                this.questionWithReplace = this.getQuestionWithReplace();
+            },
+
+            /**
+             * Заменяет в массиве this.questions то, что является переменной значением из input
+             *
+             * @returns {[]}
+             */
+            getQuestionWithReplace () {
+                const newAr = [];
+                let comp = {};
+
+                for (const question of this.questions) {
+                    for (let [code, val] of this.replaceMap) {
+                        if (val) {
+                            comp.text = question.text.replace(
+                                new RegExp('{' + code + '}', 'gi'),
+                                '{' + code + '}' + val
+                            );
+                        } else {
+                            comp.text = question.text;
+                        }
+                    }
+
+                    newAr.push(comp);
+                }
+
+                return newAr;
             }
         }
     }
