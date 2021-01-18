@@ -104,28 +104,12 @@
             },
 
             /**
-             * Заменяет в массиве this.questions то, что является переменной значением из input
+             * Начальная загрузка
              *
              * @returns {[]}
              */
             getQuestionWithReplaceFirst () {
-                const questionWithReplace = [];
-                let replacedObject = {};
-
-                for (const question of this.questions) {
-                    replacedObject = question;
-
-                    for (let [code, val] of this.replaceMap) {
-                        replacedObject.text = replacedObject.text.replace(
-                            new RegExp('{' + code + '}', 'gi'),
-                            '{' + code + '}' + val
-                        );
-                    }
-
-                    questionWithReplace.push(replacedObject);
-                }
-
-                return questionWithReplace;
+                return this.questions;
             },
 
             /**
@@ -134,23 +118,22 @@
              * @returns {[]}
              */
             getQuestionWithReplace (code) {
-                const questionWithReplace = [];
                 let replacedObject = {};
 
-                for (const question of this.questionWithReplace) {
+                const questionWithReplace = this.questionWithReplace.map(question => {
                     for (let [curCode, val] of this.replaceMap) {
                         if (code == curCode) {
                             replacedObject.text = question.text.replace(
-                                new RegExp('{{' + code + '}[a-z]*}', 'gi'),
+                                new RegExp('{{' + code + '}.*}', 'gi'),
                                 '{{' + code + '}' + val + '}'
                             );
-                        }
 
-                        //console.log('replacedObject', replacedObject);
+                            return replacedObject;
+                        }
                     }
 
-                    questionWithReplace.push(replacedObject);
-                }
+                    return question;
+                });
 
                 return questionWithReplace;
             }
