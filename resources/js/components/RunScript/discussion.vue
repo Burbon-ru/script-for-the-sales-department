@@ -1,3 +1,4 @@
+<script src="../../router/index.js"></script>
 <template>
     <div>
         <div
@@ -73,7 +74,7 @@
              * (это почти как вызов в mounted)
              */
             questions (val) {
-                this.questionWithReplace = this.getQuestionWithReplace();
+                this.questionWithReplace = this.getQuestionWithReplaceFirst();
             }
         },
 
@@ -99,7 +100,7 @@
                     }
                 }
 
-                this.questionWithReplace = this.getQuestionWithReplace();
+                this.questionWithReplace = this.getQuestionWithReplace(code);
             },
 
             /**
@@ -107,26 +108,51 @@
              *
              * @returns {[]}
              */
-            getQuestionWithReplace () {
-                const newAr = [];
-                let comp = {};
+            getQuestionWithReplaceFirst () {
+                const questionWithReplace = [];
+                let replacedObject = {};
 
                 for (const question of this.questions) {
+                    replacedObject = question;
+
                     for (let [code, val] of this.replaceMap) {
-                        if (val) {
-                            comp.text = question.text.replace(
-                                new RegExp('{' + code + '}', 'gi'),
-                                '{' + code + '}' + val
-                            );
-                        } else {
-                            comp.text = question.text;
-                        }
+                        replacedObject.text = replacedObject.text.replace(
+                            new RegExp('{' + code + '}', 'gi'),
+                            '{' + code + '}' + val
+                        );
                     }
 
-                    newAr.push(comp);
+                    questionWithReplace.push(replacedObject);
                 }
 
-                return newAr;
+                return questionWithReplace;
+            },
+
+            /**
+             * Заменяет в массиве this.questions то, что является переменной значением из input
+             *
+             * @returns {[]}
+             */
+            getQuestionWithReplace (code) {
+                const questionWithReplace = [];
+                let replacedObject = {};
+
+                for (const question of this.questionWithReplace) {
+                    for (let [curCode, val] of this.replaceMap) {
+                        if (code == curCode) {
+                            replacedObject.text = question.text.replace(
+                                new RegExp('{{' + code + '}[a-z]*}', 'gi'),
+                                '{{' + code + '}' + val + '}'
+                            );
+                        }
+
+                        //console.log('replacedObject', replacedObject);
+                    }
+
+                    questionWithReplace.push(replacedObject);
+                }
+
+                return questionWithReplace;
             }
         }
     }

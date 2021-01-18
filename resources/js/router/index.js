@@ -32,4 +32,4 @@ const router = new VueRouter({
     routes
 });
 
-export default router
+export default router;
