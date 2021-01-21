@@ -108,7 +108,21 @@
              * @returns {[]}
              */
             getQuestionWithReplaceFirst () {
-                return this.questions;
+                let replacedObject = {};
+                let test = {};
+
+                const questionWithReplace = this.questions.map(question => {
+                    for (let [code, val] of this.replaceMap) {
+                        replacedObject.text = question.text.replace(
+                            new RegExp('{{' + code + '}.*}', 'gi'),
+                            '{{' + code + '}' + val + '}'
+                        );
+
+                        return JSON.parse(JSON.stringify(replacedObject));
+                    }
+                });
+
+                return questionWithReplace;
             },
 
             /**
