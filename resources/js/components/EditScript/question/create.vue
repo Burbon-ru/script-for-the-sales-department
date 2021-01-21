@@ -70,6 +70,7 @@
 
     export default {
         name: "createQuestion",
+
         data: () => ({
             text: '',
             name: '',
@@ -77,15 +78,19 @@
             createIsDone: false,
             editorOptions: editorOptions
         }),
+
         props: ['newQuestionCoords'],
+
         components: {
             Editor
         },
+
         computed: {
             ...mapGetters([
                 'currentScriptId'
             ])
         },
+
         methods: {
             ...mapActions([
                 'createQuestion'

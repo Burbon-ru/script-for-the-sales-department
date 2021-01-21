@@ -111,13 +111,17 @@
                 let replacedObject = {};
 
                 const questionWithReplace = this.questions.map(question => {
-                    replacedObject.text = question.text;
+                    replacedObject = JSON.parse(JSON.stringify(question));
 
                     for (let [code, val] of this.replaceMap) {
+                        console.log('before', replacedObject.text);
+
                         replacedObject.text = replacedObject.text.replace(
                             new RegExp('{{' + code + '}.*}', 'gi'),
                             '{{' + code + '}' + val + '}'
                         );
+
+                        console.log('after', replacedObject.text);
                     }
 
                     return JSON.parse(JSON.stringify(replacedObject));

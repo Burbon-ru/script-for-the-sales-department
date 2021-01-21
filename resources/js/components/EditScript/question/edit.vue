@@ -83,7 +83,9 @@
 
     export default {
         name: "editQuestion",
+
         props: ['current'],
+
         data: () => ({
             name: '',
             text: '',
@@ -91,23 +93,28 @@
             editIsDone: false,
             editorOptions: editorOptions
         }),
+
         components: {
             Editor
         },
+
         mounted () {
             this.setQuestionData();
         },
+
         watch: {
             current: function () {
                 this.setQuestionData();
             }
         },
+
         computed: {
             ...mapGetters([
                 'questionsInCurrentScript',
                 'currentScriptId'
             ])
         },
+
         methods: {
             ...mapActions([
                 'updateQuestion'
