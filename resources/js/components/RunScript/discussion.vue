@@ -114,14 +114,11 @@
                     replacedObject = JSON.parse(JSON.stringify(question));
 
                     for (let [code, val] of this.replaceMap) {
-                        console.log('before', replacedObject.text);
 
                         replacedObject.text = replacedObject.text.replace(
-                            new RegExp('{{' + code + '}.*}', 'gi'),
+                            new RegExp('{{' + code + '}.*}', 'gim'),
                             '{{' + code + '}' + val + '}'
                         );
-
-                        console.log('after', replacedObject.text);
                     }
 
                     return JSON.parse(JSON.stringify(replacedObject));

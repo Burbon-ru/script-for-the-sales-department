@@ -15,6 +15,13 @@
                                 Вопрос успешно отредактирован
                             </div>
 
+                            <button
+                                class="btn"
+                                @click="addToMarkdown"
+                            >
+                                addToMarkdown
+                            </button>
+
                             <form
                                 v-if="!editIsDone"
                                 id="edit_question_form"
@@ -121,6 +128,13 @@
             ]),
 
             /**
+             *
+             */
+            addToMarkdown () {
+                this.$refs.toastuiEditor.invoke('setHtml', '{{imya}}');
+            },
+
+            /**
              * эмитит событие для закрытия модальных окон
              */
             closeModal () {
@@ -169,7 +183,7 @@
                     });
 
                     if (data.first_question_name) {
-                        alert('нельзя создать еще один первый вопрос. Название существующего первого вопроса: ' + data.first_question_name);
+                        alert('Нельзя создать еще один первый вопрос. Название существующего первого вопроса: ' + data.first_question_name);
                     } else if (200 == status) {
                         this.editIsDone = true;
                     }

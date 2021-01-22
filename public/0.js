@@ -1126,6 +1126,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1156,6 +1163,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['questionsInCurrentScript', 'currentScriptId'])),
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['updateQuestion'])), {}, {
+    /**
+     *
+     */
+    addToMarkdown: function addToMarkdown() {
+      this.$refs.toastuiEditor.invoke('setHtml', '{{imya}}');
+    },
+
     /**
      * эмитит событие для закрытия модальных окон
      */
@@ -1240,7 +1254,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 data = _yield$_this2$updateQ.data;
 
                 if (data.first_question_name) {
-                  alert('нельзя создать еще один первый вопрос. Название существующего первого вопроса: ' + data.first_question_name);
+                  alert('Нельзя создать еще один первый вопрос. Название существующего первого вопроса: ' + data.first_question_name);
                 } else if (200 == status) {
                   _this2.editIsDone = true;
                 }
@@ -3158,6 +3172,16 @@ var render = function() {
                       )
                     ])
                   : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn", on: { click: _vm.addToMarkdown } },
+                  [
+                    _vm._v(
+                      "\n                            addToMarkdown\n                        "
+                    )
+                  ]
+                ),
                 _vm._v(" "),
                 !_vm.editIsDone
                   ? _c(
