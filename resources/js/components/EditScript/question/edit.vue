@@ -5,22 +5,19 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Редактирование вопроса</h5>
+                            <h5 class="modal-title">
+                                Редактирование вопроса
+                            </h5>
+
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true" @click="closeModal">&times;</span>
                             </button>
                         </div>
+
                         <div class="modal-body">
                             <div v-if="editIsDone">
                                 Вопрос успешно отредактирован
                             </div>
-
-                            <button
-                                class="btn"
-                                @click="addToMarkdown"
-                            >
-                                addToMarkdown
-                            </button>
 
                             <form
                                 v-if="!editIsDone"
@@ -56,6 +53,10 @@
                                     </label>
                                 </div>
 
+                                <variables
+                                    @addToMarkdown="addToMarkdown"
+                                />
+
                                 <editor
                                     v-if="text.length"
                                     :initialValue="text"
@@ -88,6 +89,8 @@
     import { Editor } from '@toast-ui/vue-editor';
     import editorOptions from "./../../../settings/editorOptions";
 
+    import Variables from './../variables/index';
+
     export default {
         name: "editQuestion",
 
@@ -102,7 +105,8 @@
         }),
 
         components: {
-            Editor
+            Editor,
+            Variables
         },
 
         mounted () {
@@ -128,10 +132,10 @@
             ]),
 
             /**
-             *
+             * добавить в markdown
              */
-            addToMarkdown () {
-                this.$refs.toastuiEditor.invoke('setHtml', '{{imya}}');
+            addToMarkdown (code) {
+                this.$refs.toastuiEditor.invoke('setHtml', this.getHtml() + '{{' + code + '}}');
             },
 
             /**
@@ -146,7 +150,7 @@
              *
              * @returns {*}
              */
-            getHtml() {
+            getHtml () {
                 return this.$refs.toastuiEditor.invoke('getHtml');
             },
 

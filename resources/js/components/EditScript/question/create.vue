@@ -38,6 +38,10 @@
                                     <label class="form-check-label" for="is_first">Первый вопрос</label>
                                 </div>
 
+                                <variables
+                                    @addToMarkdown="addToMarkdown"
+                                />
+
                                 <editor
                                     :language="editorOptions.language"
                                     :initialEditType="editorOptions.initialEditType"
@@ -68,6 +72,8 @@
     import { Editor } from '@toast-ui/vue-editor';
     import editorOptions from "./../../../settings/editorOptions";
 
+    import Variables from './../variables/index';
+
     export default {
         name: "createQuestion",
 
@@ -82,7 +88,8 @@
         props: ['newQuestionCoords'],
 
         components: {
-            Editor
+            Editor,
+            Variables
         },
 
         computed: {
@@ -101,6 +108,13 @@
              */
             closeModal () {
                 this.$emit('close-modal');
+            },
+
+            /**
+             * добавить в markdown
+             */
+            addToMarkdown (code) {
+                this.$refs.toastuiEditor.invoke('setHtml', this.getHtml() + '{{' + code + '}}');
             },
 
             /**
