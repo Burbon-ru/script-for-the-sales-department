@@ -10,7 +10,8 @@ class Script extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name'
+        'name',
+        'is_favorite'
     ];
 
     /**

@@ -200,5 +200,4 @@ class QuestionController extends Controller
 
         return response($question->jsonSerialize(), Response::HTTP_OK);
     }
-
 }

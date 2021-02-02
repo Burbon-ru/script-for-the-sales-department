@@ -53,6 +53,31 @@ export default {
     },
 
     /**
+     * Обновить Script
+     *
+     * @param context
+     * @param id
+     * @param data
+     * @returns {Promise<boolean|*>}
+     */
+    async updateScript (context, { id, script }) {
+        try {
+            const { status, data } = await axios.patch('/api/script/update/?id=' + id, script);
+
+            if (200 == status) {
+                context.commit('updateScriptInState', data);
+
+                return true;
+            }
+
+            return false;
+        } catch (err) {
+            console.error(err);
+            return err;
+        }
+    },
+
+    /**
      * Установить все вопросы для текущего скрипта
      *
      * @param context

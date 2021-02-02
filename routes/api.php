@@ -8,7 +8,9 @@ $prefix = 'api\v1';
  * Скрипты
  */
 Route::get('/script', $prefix . '\ScriptController@index');
+Route::get('/script/getScriptById', $prefix . '\ScriptController@getScriptById');
 Route::post('/script/create', $prefix . '\ScriptController@create');
+Route::patch('/script/update', $prefix . '\ScriptController@update');
 
 /**
  * Вопросы

@@ -29,13 +29,19 @@
 
     export default {
         name: 'CreateScript',
+
         data: () => ({
             name: ''
         }),
+
         methods: {
             ...mapActions([
                 'createScript'
             ]),
+
+            /**
+             * Создать скрипт
+             */
             addScript () {
                 this.$store.dispatch('createScript', {name: this.name});
                 this.name = '';

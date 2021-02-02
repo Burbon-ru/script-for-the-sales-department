@@ -22,6 +22,22 @@ export default {
     },
 
     /**
+     * Обновить скрипт в хранилище
+     *
+     * @param state
+     * @param variable
+     */
+    updateScriptInState (state, script) {
+        state.scripts = state.scripts.map(el => {
+            if (el.id == script.id) {
+                return script;
+            }
+
+            return el;
+        });
+    },
+
+    /**
      * Добавить все статусы ответов
      *
      * @param state
@@ -102,7 +118,7 @@ export default {
     },
 
     /**
-     * Обновить переменную в сторе
+     * Обновить переменную в хранилище
      *
      * @param state
      * @param variable

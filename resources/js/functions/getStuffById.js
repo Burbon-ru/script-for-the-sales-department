@@ -1,5 +1,9 @@
 import axios from "axios";
 
+export function getScriptById (id) {
+    return axios.get('/api/script/getScriptById/?id=' + id);
+}
+
 export function getQuestionById (id) {
     return axios.get('/api/question/getQuestionById/?id=' + id);
 }

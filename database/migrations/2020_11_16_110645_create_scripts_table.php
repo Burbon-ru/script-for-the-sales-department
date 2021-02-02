@@ -17,6 +17,7 @@ class CreateScriptsTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
+            $table->boolean('is_favorite')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
