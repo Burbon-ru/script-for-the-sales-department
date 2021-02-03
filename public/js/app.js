@@ -2369,6 +2369,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -35305,7 +35309,15 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container" },
-    [_c("create-script"), _vm._v(" "), _c("scripts-list")],
+    [
+      _c("create-script"),
+      _vm._v(" "),
+      _c("scripts-list"),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: "/running" } }, [
+        _vm._v("\n        Запущенные скрипты\n    ")
+      ])
+    ],
     1
   )
 }
@@ -52303,6 +52315,12 @@ var routes = [{
   name: 'RunScript',
   component: function component() {
     return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
+  }
+}, {
+  path: '/running',
+  name: 'RunningScript',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ../views/RunningScript.vue */ "./resources/js/views/RunningScript.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

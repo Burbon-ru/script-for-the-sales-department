@@ -521,7 +521,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 data = _yield$axios$post.data;
                 status = _yield$axios$post.status;
 
-              case 6:
+                if (200 == status) {
+                  alert('Разговор сохранен');
+                }
+
+              case 7:
               case "end":
                 return _context2.stop();
             }

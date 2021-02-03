@@ -105,6 +105,10 @@
              */
             async isPrepareDialogResultData ({questions, answers}) {
                 const { data, status } = await axios.post('/api/RunningScript/saveSequence', {questions, answers});
+
+                if (200 == status) {
+                    alert('Разговор сохранен');
+                }
             },
 
             /**

@@ -24,7 +24,12 @@ const routes = [
         path:'/scripts/run/:id',
         name: 'RunScript',
         component: () => import('../views/RunScript.vue')
-    }
+    },
+    {
+        path:'/running',
+        name: 'RunningScript',
+        component: () => import('../views/RunningScript.vue')
+    },
 ];
 
 const router = new VueRouter({

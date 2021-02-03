@@ -10,6 +10,16 @@ use Illuminate\Http\Response;
 class RunningScriptController extends Controller
 {
     /**
+     * Палучить все запущенные скрипты
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function index()
+    {
+        return response(RunningScript::all()->jsonSerialize(), Response::HTTP_OK);
+    }
+
+    /**
      * Сохранить последовательность
      *
      * @param Request $request

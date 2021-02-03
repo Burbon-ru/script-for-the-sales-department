@@ -49,3 +49,4 @@ Route::delete('/variable/delete', $prefix . '\VariablesController@destroy');
  * Запущенные скрипты
  */
 Route::post('/RunningScript/saveSequence', $prefix . '\RunningScriptController@saveSequence');
+Route::get('/RunningScript/getAll', $prefix . '\RunningScriptController@index');

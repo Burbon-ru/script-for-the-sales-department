@@ -15,8 +15,11 @@ class CreateRunningScriptsTable extends Migration
     {
         Schema::create('running_scripts', function (Blueprint $table) {
             $table->id();
+
             $table->text('questions');
             $table->text('answers');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }
