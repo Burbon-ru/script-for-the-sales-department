@@ -1,17 +1,27 @@
 <template>
     <div class="run_script">
+        <button
+            v-if="!startScript"
+            @click="runScript"
+            class="btn btn-primary"
+        >
+            Запустить скрипт
+        </button>
+
         <discussion
+            :startScript="startScript"
             :questions="questions"
             :answers="answers"
         />
 
         <select-answer
+            :startScript="startScript"
             :currentQuestionId="currentQuestionId"
             @next-answer="nextAnswer"
         />
 
         <button
-            v-if="questions.length > 1"
+            v-if="questions.length > 1 && startScript"
             @click="back"
             type="button"
             class="btn btn-warning"
@@ -40,7 +50,8 @@
         data: () => ({
             questions: [],
             answers: [],
-            currentQuestionId: 0
+            currentQuestionId: 0,
+            startScript: false
         }),
 
         computed: {
@@ -66,6 +77,13 @@
             ...mapActions([
                 'setCurrentScriptId',
             ]),
+
+            /**
+             * Поехали!
+             */
+            runScript () {
+                this.startScript = true;
+            },
 
             /**
              * Получить первый вопрос

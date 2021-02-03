@@ -52296,13 +52296,13 @@ var routes = [{
   path: '/scripts/variables/:id',
   name: 'Variables',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ../views/Variables.vue */ "./resources/js/views/Variables.vue"));
+    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ../views/Variables.vue */ "./resources/js/views/Variables.vue"));
   }
 }, {
   path: '/scripts/run/:id',
   name: 'RunScript',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

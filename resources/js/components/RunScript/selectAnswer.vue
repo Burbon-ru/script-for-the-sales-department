@@ -1,7 +1,7 @@
 <template>
     <div class="select-answer">
         <v-select
-            v-if="answersSelect.length"
+            v-if="answersSelect.length && startScript"
             :options="answersSelect"
             @input="selectAnswer"
         />
@@ -16,14 +16,18 @@
 
     export default {
         name: "selectAnswer",
-        props: ['currentQuestionId'],
+
+        props: ['currentQuestionId', 'startScript'],
+
         components: {
             vSelect
         },
+
         data: () => ({
             answers: [],
             answersSelect: []
         }),
+
         watch: {
             async currentQuestionId (val) {
                 this.answersSelect = [];
@@ -38,6 +42,7 @@
                 }
             }
         },
+
         methods: {
             selectAnswer (e) {
                 this.$emit('next-answer', e.id);

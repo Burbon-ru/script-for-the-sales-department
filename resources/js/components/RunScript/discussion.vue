@@ -18,6 +18,7 @@
         </div>
 
         <div
+            v-if="startScript"
             class="variables"
             v-for="variable in variablesInCurrentScript"
             :key="variable.id"
@@ -45,7 +46,7 @@
     export default {
         name: "discussion",
 
-        props: ['questions', 'answers'],
+        props: ['questions', 'answers', 'startScript'],
 
         data: () => ({
 
@@ -69,10 +70,10 @@
         watch: {
 
             /**
-             * Это когда из родителя придут данные о вопросах
+             * Это когда из родителя придут данные что скрипт запустили
              * (это почти как вызов в mounted)
              */
-            questions (val) {
+            startScript (val) {
                 this.questionWithReplace = this.getQuestionWithReplaceFirst();
             }
         },
