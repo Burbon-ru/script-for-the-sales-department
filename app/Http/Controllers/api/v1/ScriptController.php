@@ -14,7 +14,7 @@ class ScriptController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index ()
+    public function index()
     {
         return response(Script::all()->jsonSerialize(), Response::HTTP_OK);
     }
@@ -25,7 +25,7 @@ class ScriptController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Routing\ResponseFactory|Response
      */
-    public function create (Request $request)
+    public function create(Request $request)
     {
         $data = $request->input();
 
@@ -42,7 +42,7 @@ class ScriptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update (Request $request)
+    public function update(Request $request)
     {
         $data = $request->input();
         $id = $data['id'];
@@ -55,7 +55,7 @@ class ScriptController extends Controller
             ->update($data);
 
         if ($result) {
-            return response('', Response::HTTP_OK);
+            return response(null, Response::HTTP_OK);
         }
     }
 
@@ -82,7 +82,7 @@ class ScriptController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy ($id)
+    public function destroy($id)
     {
         //
     }

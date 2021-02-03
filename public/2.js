@@ -83,7 +83,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "discussion",
-  props: ['questions', 'answers', 'startScript'],
+  props: ['questions', 'answers', 'startScript', 'clickEnd'],
   data: function data() {
     return {
       /**
@@ -132,12 +132,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }))();
   },
   watch: {
-    /**
-     * Это когда из родителя придут данные что скрипт запустили
-     * (это почти как вызов в mounted)
-     */
     startScript: function startScript(val) {
       this.questionWithReplace = this.getQuestionWithReplaceFirst();
+    },
+    questions: function questions(val) {
+      if (val.length > 1) {
+        this.questionWithReplace = this.getQuestionWithReplaceFirst();
+      }
+    },
+    clickEnd: function clickEnd() {
+      var questions = this.questionWithReplace.map(function (el) {
+        return el.text;
+      }).join(',');
+      var answers = this.answers.map(function (el) {
+        return el.name;
+      }).join(',');
+      this.$emit('isPrepareDialogResultData', {
+        questions: questions,
+        answers: answers
+      });
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['currentScriptId', 'variablesInCurrentScript'])),
@@ -362,6 +375,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_RunScript_discussion_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../components/RunScript/discussion.vue */ "./resources/js/components/RunScript/discussion.vue");
 /* harmony import */ var _components_RunScript_selectAnswer_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../components/RunScript/selectAnswer.vue */ "./resources/js/components/RunScript/selectAnswer.vue");
 /* harmony import */ var _functions_getStuffById__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./../functions/getStuffById */ "./resources/js/functions/getStuffById.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -407,6 +422,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -422,7 +449,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       questions: [],
       answers: [],
       currentQuestionId: 0,
-      startScript: false
+      startScript: false,
+      clickEnd: false
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['currentScriptId'])),
@@ -462,6 +490,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['setCurrentScriptId'])), {}, {
     /**
+     * Нажатие на завершить разговор, "сходить" в компонент discussion,
+     * забрать последовательность и в методе isPrepareDialogResultData
+     * сохранить разговор в БД
+     */
+    end: function end() {
+      this.clickEnd = true;
+    },
+
+    /**
+     * сохранить разговор в БД
+     */
+    isPrepareDialogResultData: function isPrepareDialogResultData(_ref) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var questions, answers, _yield$axios$post, data, status;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                questions = _ref.questions, answers = _ref.answers;
+                _context2.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('/api/RunningScript/saveSequence', {
+                  questions: questions,
+                  answers: answers
+                });
+
+              case 3:
+                _yield$axios$post = _context2.sent;
+                data = _yield$axios$post.data;
+                status = _yield$axios$post.status;
+
+              case 6:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+
+    /**
      * Поехали!
      */
     runScript: function runScript() {
@@ -474,7 +543,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
      * @returns {*}
      */
     getFirstQuestion: function getFirstQuestion() {
-      return axios.get('/api/question/getFirstQuestion/?scriptId=' + this.currentScriptId);
+      return axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/api/question/getFirstQuestion/?scriptId=' + this.currentScriptId);
     },
 
     /**
@@ -487,42 +556,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     nextAnswer: function nextAnswer(id) {
       var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var _yield$getAnswerById, data, nextQuestion;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                _context2.next = 2;
+                _context3.next = 2;
                 return Object(_functions_getStuffById__WEBPACK_IMPORTED_MODULE_4__["getAnswerById"])(id);
 
               case 2:
-                _yield$getAnswerById = _context2.sent;
+                _yield$getAnswerById = _context3.sent;
                 data = _yield$getAnswerById.data;
 
                 _this2.answers.push(data);
 
                 if (!data.next_question_id) {
-                  _context2.next = 11;
+                  _context3.next = 11;
                   break;
                 }
 
-                _context2.next = 8;
+                _context3.next = 8;
                 return Object(_functions_getStuffById__WEBPACK_IMPORTED_MODULE_4__["getQuestionById"])(data.next_question_id);
 
               case 8:
-                nextQuestion = _context2.sent;
+                nextQuestion = _context3.sent;
                 _this2.currentQuestionId = nextQuestion.data.id;
 
                 _this2.questions.push(nextQuestion.data);
 
               case 11:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
 
@@ -775,9 +844,11 @@ var render = function() {
       _c("discussion", {
         attrs: {
           startScript: _vm.startScript,
+          clickEnd: _vm.clickEnd,
           questions: _vm.questions,
           answers: _vm.answers
-        }
+        },
+        on: { isPrepareDialogResultData: _vm.isPrepareDialogResultData }
       }),
       _vm._v(" "),
       _c("select-answer", {
@@ -797,6 +868,18 @@ var render = function() {
               on: { click: _vm.back }
             },
             [_vm._v("\n        Назад\n    ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.startScript
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              attrs: { type: "button" },
+              on: { click: _vm.end }
+            },
+            [_vm._v("\n        Закончить разговор\n    ")]
           )
         : _vm._e()
     ],

@@ -34,5 +34,4 @@ class Answer extends Model
     public function status () {
         return $this->hasOne(Status::class, 'status_id');
     }
-
 }

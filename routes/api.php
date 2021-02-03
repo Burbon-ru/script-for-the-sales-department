@@ -44,3 +44,8 @@ Route::get('/variable/getVariablesByScriptId', $prefix . '\VariablesController@g
 Route::post('/variable/create', $prefix . '\VariablesController@create');
 Route::patch('/variable/update', $prefix . '\VariablesController@update');
 Route::delete('/variable/delete', $prefix . '\VariablesController@destroy');
+
+/**
+ * Запущенные скрипты
+ */
+Route::post('/RunningScript/saveSequence', $prefix . '\RunningScriptController@saveSequence');

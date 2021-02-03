@@ -46,7 +46,7 @@
     export default {
         name: "discussion",
 
-        props: ['questions', 'answers', 'startScript'],
+        props: ['questions', 'answers', 'startScript', 'clickEnd'],
 
         data: () => ({
 
@@ -68,13 +68,28 @@
         },
 
         watch: {
-
-            /**
-             * Это когда из родителя придут данные что скрипт запустили
-             * (это почти как вызов в mounted)
-             */
             startScript (val) {
                 this.questionWithReplace = this.getQuestionWithReplaceFirst();
+            },
+
+            questions (val) {
+                if (val.length > 1) {
+                    this.questionWithReplace = this.getQuestionWithReplaceFirst();
+                }
+            },
+
+            clickEnd () {
+                let questions = this.questionWithReplace.map((el) => {
+                    return el.text;
+                }).join(',');
+
+                let answers = this.answers.map((el) => {
+                    return el.name;
+                }).join(',');
+
+                this.$emit('isPrepareDialogResultData', {
+                    questions, answers
+                });
             }
         },
 
@@ -115,7 +130,6 @@
                     replacedObject = JSON.parse(JSON.stringify(question));
 
                     for (let [code, val] of this.replaceMap) {
-
                         replacedObject.text = replacedObject.text.replace(
                             new RegExp('{{' + code + '}.*}', 'gim'),
                             '{{' + code + '}' + val + '}'

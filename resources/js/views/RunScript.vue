@@ -10,8 +10,10 @@
 
         <discussion
             :startScript="startScript"
+            :clickEnd="clickEnd"
             :questions="questions"
             :answers="answers"
+            @isPrepareDialogResultData="isPrepareDialogResultData"
         />
 
         <select-answer
@@ -28,6 +30,15 @@
         >
             Назад
         </button>
+
+        <button
+            v-if="startScript"
+            @click="end"
+            type="button"
+            class="btn btn-danger"
+        >
+            Закончить разговор
+        </button>
     </div>
 </template>
 
@@ -38,6 +49,7 @@
     import SelectAnswer from './../components/RunScript/selectAnswer.vue';
 
     import { getAnswerById, getQuestionById } from './../functions/getStuffById';
+    import axios from "axios";
 
     export default {
         name: "RunScriptNew",
@@ -51,7 +63,8 @@
             questions: [],
             answers: [],
             currentQuestionId: 0,
-            startScript: false
+            startScript: false,
+            clickEnd: false
         }),
 
         computed: {
@@ -77,6 +90,22 @@
             ...mapActions([
                 'setCurrentScriptId',
             ]),
+
+            /**
+             * Нажатие на завершить разговор, "сходить" в компонент discussion,
+             * забрать последовательность и в методе isPrepareDialogResultData
+             * сохранить разговор в БД
+             */
+            end () {
+                this.clickEnd = true;
+            },
+
+            /**
+             * сохранить разговор в БД
+             */
+            async isPrepareDialogResultData ({questions, answers}) {
+                const { data, status } = await axios.post('/api/RunningScript/saveSequence', {questions, answers});
+            },
 
             /**
              * Поехали!
