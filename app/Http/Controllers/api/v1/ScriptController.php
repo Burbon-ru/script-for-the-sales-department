@@ -47,7 +47,7 @@ class ScriptController extends Controller
         $data = $request->input();
         $id = $data['id'];
 
-        if (isset($data['is_favorite'])) {
+        if (isset($data['is_favorite']) && !empty($data['is_favorite'])) {
             $data['is_favorite'] = true;
         }
 
@@ -55,7 +55,7 @@ class ScriptController extends Controller
             ->update($data);
 
         if ($result) {
-            return response('', Response::HTTP_OK);
+            return response(null, Response::HTTP_OK);
         }
     }
 
