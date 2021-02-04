@@ -77,6 +77,19 @@ class ScriptController extends Controller
     }
 
     /**
+     * Получить избранные скрипты
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function getFavoriteScripts()
+    {
+        $scripts = Script::where('is_favorite', 1)
+            ->get();
+
+        return response($scripts->jsonSerialize(), Response::HTTP_OK);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

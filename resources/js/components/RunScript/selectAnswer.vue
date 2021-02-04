@@ -16,14 +16,18 @@
 
     export default {
         name: "selectAnswer",
+
         props: ['currentQuestionId'],
+
         components: {
             vSelect
         },
+
         data: () => ({
             answers: [],
             answersSelect: []
         }),
+
         watch: {
             async currentQuestionId (val) {
                 this.answersSelect = [];
@@ -38,6 +42,7 @@
                 }
             }
         },
+
         methods: {
             selectAnswer (e) {
                 this.$emit('next-answer', e.id);

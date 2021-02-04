@@ -19,15 +19,18 @@
             Назад
         </button>
 
-
+        <favorites-scripts
+            @selectNextScript="selectNextScript"
+        />
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters} from 'vuex';
 
-    import discussion from './../components/RunScript/discussion.vue';
-    import SelectAnswer from './../components/RunScript/selectAnswer.vue';
+    import discussion from './../components/RunScript/discussion';
+    import FavoritesScripts from './../components/RunScript/favorites_scripts';
+    import SelectAnswer from './../components/RunScript/selectAnswer';
 
     import { getAnswerById, getQuestionById } from './../functions/getStuffById';
 
@@ -35,6 +38,7 @@
         name: "RunScriptNew",
 
         components: {
+            FavoritesScripts,
             discussion,
             SelectAnswer
         },
@@ -54,7 +58,7 @@
         async mounted () {
             this.$store.dispatch('setCurrentScriptId', this.$route.params.id);
 
-            const { data } = await this.getFirstQuestion();
+            const { data } = await this.getFirstQuestion(this.currentScriptId);
 
             if (data.length) {
                 this.questions = data;
@@ -70,12 +74,29 @@
             ]),
 
             /**
+             * При переключении на другой скрипт из избранных
+             */
+            async selectNextScript (script) {
+                const { data } = await this.getFirstQuestion(script.id);
+
+                if (data.length) {
+                    this.questions.push(data[0]);
+                    this.answers.push({name: 'Переключение на скрипт с именем "' + script.name + '"'});
+
+                    this.currentQuestionId = data[0].id;
+                    this.$store.dispatch('setCurrentScriptId', data[0].id);
+                } else {
+                    alert('В редактировании скрипта не указан начальный вопрос');
+                }
+            },
+
+            /**
              * Получить первый вопрос
              *
              * @returns {*}
              */
-            getFirstQuestion () {
-                return axios.get('/api/question/getFirstQuestion/?scriptId=' + this.currentScriptId);
+            getFirstQuestion (id) {
+                return axios.get('/api/question/getFirstQuestion/?scriptId=' + id);
             },
 
             /**
