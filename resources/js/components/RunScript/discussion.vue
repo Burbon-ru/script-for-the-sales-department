@@ -114,7 +114,6 @@
                     replacedObject = JSON.parse(JSON.stringify(question));
 
                     for (let [code, val] of this.replaceMap) {
-
                         replacedObject.text = replacedObject.text.replace(
                             new RegExp('{{' + code + '}.*}', 'gim'),
                             '{{' + code + '}' + val + '}'
