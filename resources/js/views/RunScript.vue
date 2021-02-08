@@ -39,6 +39,10 @@
         >
             Закончить разговор
         </button>
+
+        <favorites-scripts
+            @selectNextScript="selectNextScript"
+        />
     </div>
 </template>
 
@@ -46,6 +50,7 @@
     import {mapActions, mapGetters} from 'vuex';
 
     import discussion from './../components/RunScript/discussion.vue';
+    import FavoritesScripts from './../components/RunScript/favorites_scripts';
     import SelectAnswer from './../components/RunScript/selectAnswer.vue';
 
     import { getAnswerById, getQuestionById } from './../functions/getStuffById';
@@ -56,7 +61,8 @@
 
         components: {
             discussion,
-            SelectAnswer
+            SelectAnswer,
+            FavoritesScripts
         },
 
         data: () => ({
@@ -90,6 +96,21 @@
             ...mapActions([
                 'setCurrentScriptId',
             ]),
+
+            /**
+             * При переключении на другой скрипт из избранных
+             */
+            async selectNextScript (script) {
+                const { data } = await this.getFirstQuestion(script.id);
+                if (data.length) {
+                    this.questions.push(data[0]);
+                    this.answers.push({name: 'Переключение на скрипт с именем "' + script.name + '"'});
+                    this.currentQuestionId = data[0].id;
+                    this.$store.dispatch('setCurrentScriptId', data[0].id);
+                } else {
+                    alert('В редактировании скрипта не указан начальный вопрос');
+                }
+            },
 
             /**
              * Нажатие на завершить разговор, "сходить" в компонент discussion,

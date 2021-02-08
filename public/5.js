@@ -11,8 +11,6 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -34,8 +32,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//import runningScriptItem from './../components/RunningScript/item';
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RunningScript",
   data: function data() {
@@ -43,29 +39,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       list: []
     };
   },
-  // components: {
-  //     runningScriptItem
-  // },
   mounted: function mounted() {
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var _yield$axios$get, data, status;
+      var _yield$axios$get, data;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/RunningScript/getAll');
+              return axios.get('/api/RunningScript/getAll');
 
             case 2:
               _yield$axios$get = _context.sent;
               data = _yield$axios$get.data;
-              status = _yield$axios$get.status;
               _this.list = data;
 
-            case 6:
+            case 5:
             case "end":
               return _context.stop();
           }

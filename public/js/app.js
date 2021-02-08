@@ -2369,10 +2369,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -34987,7 +34983,15 @@ var render = function() {
       _c(
         "div",
         { attrs: { id: "nav" } },
-        [_c("router-link", { attrs: { to: "/" } }, [_vm._v("Home")])],
+        [
+          _c("router-link", { attrs: { to: "/" } }, [
+            _vm._v("\n            Home\n        ")
+          ]),
+          _vm._v(" "),
+          _c("router-link", { attrs: { to: "/running" } }, [
+            _vm._v("\n            Запущенные скрипты\n        ")
+          ])
+        ],
         1
       ),
       _vm._v(" "),
@@ -35309,15 +35313,7 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container" },
-    [
-      _c("create-script"),
-      _vm._v(" "),
-      _c("scripts-list"),
-      _vm._v(" "),
-      _c("router-link", { attrs: { to: "/running" } }, [
-        _vm._v("\n        Запущенные скрипты\n    ")
-      ])
-    ],
+    [_c("create-script"), _vm._v(" "), _c("scripts-list")],
     1
   )
 }
@@ -52308,19 +52304,25 @@ var routes = [{
   path: '/scripts/variables/:id',
   name: 'Variables',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ../views/Variables.vue */ "./resources/js/views/Variables.vue"));
+    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ../views/Variables.vue */ "./resources/js/views/Variables.vue"));
   }
 }, {
   path: '/scripts/run/:id',
   name: 'RunScript',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../views/RunScript.vue */ "./resources/js/views/RunScript.vue"));
   }
 }, {
   path: '/running',
   name: 'RunningScript',
   component: function component() {
     return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ../views/RunningScript.vue */ "./resources/js/views/RunningScript.vue"));
+  }
+}, {
+  path: '/running/:id',
+  name: 'runningScriptItem',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ../components/RunningScript/item.vue */ "./resources/js/components/RunningScript/item.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

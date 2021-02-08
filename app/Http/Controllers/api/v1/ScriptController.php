@@ -47,7 +47,7 @@ class ScriptController extends Controller
         $data = $request->input();
         $id = $data['id'];
 
-        if (isset($data['is_favorite'])) {
+        if (isset($data['is_favorite']) && !empty($data['is_favorite'])) {
             $data['is_favorite'] = true;
         }
 
@@ -74,6 +74,19 @@ class ScriptController extends Controller
             ->first();
 
         return response($script->jsonSerialize(), Response::HTTP_OK);
+    }
+
+    /**
+     * Получить избранные скрипты
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|Response
+     */
+    public function getFavoriteScripts()
+    {
+        $scripts = Script::where('is_favorite', 1)
+            ->get();
+
+        return response($scripts->jsonSerialize(), Response::HTTP_OK);
     }
 
     /**
