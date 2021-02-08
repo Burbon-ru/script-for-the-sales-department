@@ -53270,7 +53270,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Екатерина\Дима\штуки-дрюки\OSPanel\domains\script-for-the-sales-department\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Екатерина\Дима\OSPanel\domains\script-for-the-sales-department\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

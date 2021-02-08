@@ -7,7 +7,7 @@
             <router-link
                 :to="{path: '/running/' + item.id}"
             >
-                {{ item.created_at }}
+                {{ item.created }}
             </router-link>
         </div>
     </div>

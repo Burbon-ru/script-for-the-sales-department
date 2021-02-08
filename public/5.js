@@ -94,7 +94,7 @@ var render = function() {
           _c(
             "router-link",
             { attrs: { to: { path: "/running/" + item.id } } },
-            [_vm._v("\n            " + _vm._s(item.created_at) + "\n        ")]
+            [_vm._v("\n            " + _vm._s(item.created) + "\n        ")]
           )
         ],
         1

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RunningScript;
 use Illuminate\Http\Response;
+use Carbon\Carbon;
 
 class RunningScriptController extends Controller
 {
@@ -16,7 +17,14 @@ class RunningScriptController extends Controller
      */
     public function index()
     {
-        return response(RunningScript::all()->jsonSerialize(), Response::HTTP_OK);
+        $scripts = RunningScript::select(['id', 'created_at'])
+            ->get();
+
+        foreach ($scripts as &$script) {
+            $script['created'] = Carbon::parse($script['created_at'])->format('d M Y H:i');
+        }
+
+        return response($scripts->jsonSerialize(), Response::HTTP_OK);
     }
 
 
