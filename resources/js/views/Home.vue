@@ -2,10 +2,6 @@
     <div class="container">
         <create-script />
         <scripts-list />
-
-        <router-link to="/running">
-            Запущенные скрипты
-        </router-link>
     </div>
 </template>
 

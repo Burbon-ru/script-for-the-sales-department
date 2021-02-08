@@ -14,10 +14,6 @@
 </template>
 
 <script>
-    //import runningScriptItem from './../components/RunningScript/item';
-
-    import axios from "axios";
-
     export default {
         name: "RunningScript",
 
@@ -25,12 +21,8 @@
             list: []
         }),
 
-        // components: {
-        //     runningScriptItem
-        // },
-
         async mounted () {
-            const { data, status } = await axios.get('/api/RunningScript/getAll');
+            const { data } = await axios.get('/api/RunningScript/getAll');
 
             this.list = data;
         }

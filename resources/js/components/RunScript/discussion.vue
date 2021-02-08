@@ -79,11 +79,11 @@
             },
 
             clickEnd () {
-                let questions = this.questionWithReplace.map((el) => {
+                let questions = this.questionWithReplace.map(el => {
                     return el.text;
                 }).join(',');
 
-                let answers = this.answers.map((el) => {
+                let answers = this.answers.map(el => {
                     return el.name;
                 }).join(',');
 

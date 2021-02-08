@@ -30,6 +30,11 @@ const routes = [
         name: 'RunningScript',
         component: () => import('../views/RunningScript.vue')
     },
+    {
+        path:'/running/:id',
+        name: 'runningScriptItem',
+        component: () => import('../components/RunningScript/item.vue')
+    }
 ];
 
 const router = new VueRouter({

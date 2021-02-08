@@ -50,3 +50,4 @@ Route::delete('/variable/delete', $prefix . '\VariablesController@destroy');
  */
 Route::post('/RunningScript/saveSequence', $prefix . '\RunningScriptController@saveSequence');
 Route::get('/RunningScript/getAll', $prefix . '\RunningScriptController@index');
+Route::get('/RunningScript/getById/{id}', $prefix . '\RunningScriptController@getById');

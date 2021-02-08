@@ -19,6 +19,18 @@ class RunningScriptController extends Controller
         return response(RunningScript::all()->jsonSerialize(), Response::HTTP_OK);
     }
 
+
+    public function getById(int $id)
+    {
+        $script = RunningScript::find($id);
+
+        if ($script) {
+            return response($script->jsonSerialize(), Response::HTTP_OK);
+        } else {
+            return response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     /**
      * Сохранить последовательность
      *
